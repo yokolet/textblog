@@ -5,10 +5,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
+import ApolloClient from 'apollo-boost'
+import { ApolloProvider } from 'react-apollo'
 
-const Hello = props => (
-  <div>Hello {props.name}!</div>
-)
+const client = new ApolloClient({uri: window.location.origin + "/graphql"});
+
+const Hello = props => {
+  return (
+      <ApolloProvider client={client}>
+        <div>Hello {props.name}!</div>
+      </ApolloProvider>
+  )
+}
 
 Hello.defaultProps = {
   name: 'David'
