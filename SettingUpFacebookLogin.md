@@ -127,7 +127,7 @@ since Facebook often changes the way to setup and policies.
         [https://github.com/mkdynamic/omniauth-facebook/tree/master/example](https://github.com/mkdynamic/omniauth-facebook/tree/master/example).
         This is a good example to test. In this case, the callback is `/auth/facebook/callback`.
 
-        Input "https://03d406f9.ngrok.io/auth/facebook/callbak" in the
+        Input "https://03d406f9.ngrok.io/auth/facebook/callback" in the
         Valid OAuth redirect URIs, then click "Save Changes".
 
         ![Client Auth Settings](./docs/images/client_auth_setting.png)
@@ -232,12 +232,21 @@ since Facebook often changes the way to setup and policies.
         ```bash
         rackup -p 3000
         ```
+    2. Validate redirect URI
+    
+        For now Sinatra is up and running, so callback URI is active.
+        It's time to valida the redirect URI on Facebook.
+        
+        1. Go to Facebook App setting website.
+        2. Click Facebook Login, Settings tab on the left pane.
+        3. Input callback URI and click __Check URI__ button.
+            ![validate redirect uri](./docs/images/validate_redirect_uri.png)
 
-    2. Open Incognito or another browser
+    3. Open Incognito or another browser
     
-    3. Request `http://localhost:3000/servier-side`
+    4. Request `http://localhost:3000/servier-side`
     
-    4. Log in to Facebook as a test user (if not yet logged in)
+    5. Log in to Facebook as a test user (if not yet logged in)
     
         ![test user login](./docs/images/test_user_login.png)
 
