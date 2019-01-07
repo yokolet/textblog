@@ -235,7 +235,7 @@ since Facebook often changes the way to setup and policies.
     2. Validate redirect URI
     
         For now Sinatra is up and running, so callback URI is active.
-        It's time to valida the redirect URI on Facebook.
+        It's time to validate the redirect URI on Facebook.
         
         1. Go to Facebook App setting website.
         2. Click Facebook Login, Settings tab on the left pane.
