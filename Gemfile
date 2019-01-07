@@ -41,6 +41,10 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # Use GraphQL for communication between Rails and React
 gem 'graphql', '~> 1.8', '>= 1.8.11'
 
+# OAuth
+gem 'devise', '~> 4.5'
+gem 'omniauth-facebook', '~> 5.0'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -49,6 +53,7 @@ group :development, :test do
   gem 'faker', '~> 1.9', '>= 1.9.1'
   gem 'rspec-rails', '~> 3.8'
   gem 'shoulda-matchers', '~> 3.1', '>= 3.1.2'
+  gem 'dotenv-rails', '~> 2.5'
 end
 
 group :development do
