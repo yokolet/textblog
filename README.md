@@ -21,4 +21,9 @@ Things you may want to cover:
 
 * Deployment instructions
 
-* ...
+    1. [Getting Started](./GettingStarted.md)
+    2. [Adding React](./AddingReact.md)
+    3. [Adding GraphQL](./AddingGraphQL.md)
+    4. [Using GraphQL from React](./UsingGraphQLfromReact.md)
+    5. [OAuth Using GraphQL](./OAuthUsingGraphQL.md)
+        - [Setting Up Facebook Login](./SettingUpFacebookLogin.md)
