@@ -192,6 +192,12 @@ After the app's OAuth is confirmed to work, move on to GraphQL integration.
     
     ![A New User by OAuth](./docs/images/new_user_by_oauth.png)
 
+10. GraphQL schema update
+
+    So far, OAuth by Facebook as a provider feature is confirmed to work on this
+    Rails app. From this section, the next stage starts: OAuth user sign up from GraphQL.
+
+
 
 
 For now, textblog app got an user authentication feature. Next topic is
