@@ -1,13 +1,13 @@
-# OAuth Using GraphQL
+# Adding OAuth
 
-This document explains steps to authenticate users by OAuth on GraphQL.
+This document explains steps to authenticate users by OAuth using Facebook as OAuth provider.
 
 Before trying steps of this document, OAuth provider setting should be completed and tested.
 Read [Setting Up Facebook Login](./SettingUpFacebookLogin.md) to learn how to setup
 OAuth by Facebook.
 
-For the first stage, only OAuth portion will be implemented to make things simple.
-After the app's OAuth is confirmed to work, move on to GraphQL integration.
+This document focuses only on Rails side. Later, (by the next document),
+OAuth with GraphQL will be described.
 
 1. Install OAuth related gems
 
@@ -192,13 +192,6 @@ After the app's OAuth is confirmed to work, move on to GraphQL integration.
     
     ![A New User by OAuth](./docs/images/new_user_by_oauth.png)
 
-10. GraphQL schema update
 
-    So far, OAuth by Facebook as a provider feature is confirmed to work on this
-    Rails app. From this section, the next stage starts: OAuth user sign up from GraphQL.
-
-
-
-
-For now, textblog app got an user authentication feature. Next topic is
-about [OAuth on React](./OAuthOnReact.md)
+For now, textblog app got an user authentication feature by Facebook OAuth.
+Next topic is about [Using OAuth on GraphQL](./UsingOAuthOnGraphQL.md).
