@@ -6,15 +6,16 @@ Before trying steps of this document, OAuth provider setting should be completed
 Read [Setting Up Facebook Login](./SettingUpFacebookLogin.md) to learn how to setup
 OAuth by Facebook.
 
-This document focuses only on Rails side. Later, (by the next document),
-OAuth with GraphQL will be described.
+This document focuses only on Rails side. In another document,
+OAuth with React and GraphQL will be discussed. Rails side OAuth implementation is,
+just in case, the server side wants to authenticate a user. This is mostly testing purpose.
 
 1. Install OAuth related gems
 
     Typical gems for Rails to provide OAuth feature is `omniauth`, which works with `devise`.
-    Not to expose Facebook APP ID and Secret, `dotenv-rails` gem is used, but only for
-    development and test. When the app is deployed on cloud, such as Heroku,
-    a cloud specific way of setting environment variables exists.
+    Not to expose Facebook APP ID and Secret, `dotenv-rails` gem is used here,
+    but `dotenv` is only for development and test. When the app is deployed on cloud,
+    such as Heroku, a cloud specific way of setting environment variables exists.
     
     - Add `devise` and `omniauth-facebook` gems
         ```ruby
@@ -36,16 +37,21 @@ OAuth with GraphQL will be described.
 
 2. Setup `devise`
 
-    Do below to setup `devise`. This is a common ritual to start using `devise`.
-    The command below assumes User model is already there. In this app, the model
+    Do below to setup `devise`. These are common steps to start using `devise`.
+    The command below assumes User model is already there. In this app, the User model
     was created while going over [Getting Started](./GettingStarted.md).
 
     - `rails g devise:install`
     - `rails g devise User`
     
-    Before running migration, `email` line should be commented out since it is
-    there.
+    Some of devise setting blog posts include `rails g devise:views` in addition to two above.
+    However, this app doesn't need devise view. Since this app's client side is
+    ReactJS, it doesn't use a traditional HTML page.
     
+    Before running migration, `email` line should be commented out from the migration file
+    since `email` column has been created already.
+    
+    - Open `db/migrate/TIMESTAMP_add_devise_to_users.rb`
     - Comment out the line `# t.string :email, null: false, default: ""` 
     - `rails db:migrate`
 
@@ -75,17 +81,16 @@ OAuth with GraphQL will be described.
 
     - Create a migration
     ```bash
-    rails g migration AddOmniauthToUsers provider:string uid:string token:string token_expires_at:integer
+    rails g migration AddOmniauthToUsers provider:string uid:string
     ```
     - `rails db:migrate`
 
 6. Make the user model omniauthable
 
     Add `devise :omniauthable, omniauth_providers: [:facebook]` to `app/models/user.rb`.
+    Delete the rest of `devise` settings.
     ```ruby
-    devise :database_authenticatable, :registerable,
-           :recoverable, :rememberable, :validatable,
-           :omniauthable, omniauth_providers: [:facebook]
+    devise :omniauthable, omniauth_providers: [:facebook]
     ```
 
     Right after adding above, new paths for OAuth wil be added.
@@ -126,27 +131,18 @@ OAuth with GraphQL will be described.
         
           private
           def callback_for(provider)
-            user = User.from_omniauth(request.env["omniauth.auth"])
-            sign_in_and_redirect user, event: :authentication if user.persisted?
+            @user = User.from_omniauth(request.env["omniauth.auth"])
           end
         end
         ```
     - Add callback method, `from_omniauth`, in `app/models/user.rb`
         When the callback method in the controller gets invoked,
         User model's `from_omniauth` will be called and return a User instance.
-
-        The `password` field is not apparent as far as looking at schema and model
-        definition. However, `devise` requires to set some value as the password.
-        It is OAuth authentication, so this app never receives users' password.
-        A good value would be `Devise.friendly_token[0,20]`.
         
         ```ruby
         class User < ApplicationRecord
-          # Include default devise modules. Others available are:
-          # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-          devise :database_authenticatable, :registerable,
-                 :recoverable, :rememberable, :validatable,
-                 :omniauthable, omniauth_providers: [:facebook]
+          # Include devise modules.
+          devise :omniauthable, omniauth_providers: [:facebook]
           # validation
           validates_presence_of :name, :email
         
@@ -154,12 +150,20 @@ OAuth with GraphQL will be described.
             where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
               user.email = auth.info.email
               user.name = auth.info.name
-              user.token = auth.credentials.token
-              user.token_expires_at = auth.credentials.expires_at
-              user.password = Devise.friendly_token[0,20]
             end
           end
         end
+        ```
+    - Create a view to show result
+        To show what user is authenticated, create a simple view `app/views/users/omniauth_callbacks/facebook.html.erb`.
+        ```html
+        <h1>User Info</h1>
+        <ul>
+            <li>provider: <%= @user.provider %></li>
+            <li>uid: <%= @user.uid %></li>
+            <li>name: <%= @user.name %></li>
+            <li>email: <%= @user.email %></li>
+        </ul>
         ```
 
 8. Update __Valid OAuth Redirect URIs__
@@ -183,13 +187,9 @@ OAuth with GraphQL will be described.
     
     On a web browser, hit `http://localhost:3000/users/auth/facebook`.
     
-    After OAuth approval sequences, a user will be created. Then, the page is
-    redirected to root path.
-    
-    This app's root page shows a list of users as described in
-    [Using GraphQL from React](./UsingGraphQLfromReact.md). A newly created user by OAuth
+    After OAuth approval sequences, a user will be created. Then, the user's information
     will show up.
-    
+
     ![A New User by OAuth](./docs/images/new_user_by_oauth.png)
 
 
