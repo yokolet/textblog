@@ -1,20 +1,23 @@
 # Adding OAuth - Server Side Flow
 
 This document explains steps to authenticate users by OAuth using Facebook as OAuth provider.
+When all steps in this document are completed, the entire repository will look like this
+__[textblog repo](https://github.com/yokolet/textblog/tree/c414a43a4c526712c0bfaccd4d6ba32cb21fef3a)__.
 
 Before trying steps of this document, OAuth provider setting should be completed and tested.
 Read [Setting Up Facebook Login](./SettingUpFacebookLogin.md) to learn how to setup
 OAuth by Facebook.
 
-This document focuses only on Rails side. The authentication sequence is called a 
+This document focuses only on Rails side. This type of authentication sequence is called a
 server side flow. In this flow, the server will have `access_token` first.
 In another document, OAuth with React and GraphQL will be discussed.
-This another one is called client side flow. The ReactJS (client) will initiate
-the OAuth flow and have `access_token` first.
+Another one is called a client side flow. In case of the client side flow,
+ReactJS (client) will initiate the OAuth flow and have `access_token` first.
 
-This app will use the client side OAuth flow. Rails side OAuth implementation is,
-just in case, the server side flow is needed to authenticate a user.
-So, the server side flow is mostly for testing purpose.
+In the end, this app will use the client side OAuth flow.
+So, Rails side OAuth implementation is for, just in case,
+the server side flow is needed to authenticate a user.
+The server side flow here is mostly for testing purpose for this textblog app.
 
 1. Install OAuth related gems
 
