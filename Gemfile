@@ -44,6 +44,7 @@ gem 'graphql', '~> 1.8', '>= 1.8.11'
 # OAuth
 gem 'devise', '~> 4.5'
 gem 'omniauth-facebook', '~> 5.0'
+gem 'koala', '~> 2.4'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
