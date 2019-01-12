@@ -1,19 +1,21 @@
 # Using OAuth on GraphQL - Client Side Flow
 
 This document explains steps to authenticate users by OAuth using Facebook as OAuth provider.
+When all steps in this document are completed, the entire repository will look like this
+__[textblog repo](https://github.com/yokolet/textblog/tree/da7c055a6d887a07280b08fffeff5159c4b6c63b)__.
 
 Before trying steps of this document, OAuth provider setting should be completed and tested.
 Read [Setting Up Facebook Login](./SettingUpFacebookLogin.md) to learn how to setup
 OAuth by Facebook.
 
 This document focuses on ReactJS side and GraphQL. Only for this section,
-[Insomnia](https://insomnia.rest/) will be used to test a signUp sequence by GraphQL mutations.
+[Insomnia](https://insomnia.rest/) will be used to test a sign in sequence by GraphQL mutations.
 So far, the docs have used `GraphiQL`, which is an awesome IDE with nice code completion
 and schema documentation. However, unfortunately, it doesn't provide a feature to set HTTP header.
 
 The OAuth flow in this document is called a client side flow. The ReactJS (client) will
 initiate the OAuth flow and get `access_token` first. Then, a token based authentication
-starts. The `access_token` will be added to the HTTP request header, which is,
+starts. The `access_token` will be added to the HTTP request header,
 `Authorization: Bearer ACCESS_TOKEN`. The GraphQL controller on the Rails side gets the
 `access_token` and asks facebook to check who is making the request.
 
