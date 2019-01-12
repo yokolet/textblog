@@ -29,3 +29,4 @@ Things you may want to cover:
     4. [Using GraphQL from React](./UsingGraphQLfromReact.md)
     5. [Adding OAuth](./AddingOAuth.md)
         - [Setting Up Facebook Login](./SettingUpFacebookLogin.md)
+    6. [UsingOAuthOnGraphQL](./UsingOAuthOnGraphQL.md)
