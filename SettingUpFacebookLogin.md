@@ -1,5 +1,9 @@
 # Setting Up Facebook Login
 
+This document explains steps to setup Facebook OAuth and how to test it.
+When all steps in this document are completed, the entire repository will look like this
+__[textblog repo](https://github.com/yokolet/textblog/tree/5d0cbe8b29545439f1b208504cf6637a963a18f3)__.
+
 ### Facebook as an OAuth provider
 
 Among many OAuth providers, this app chooses Facebook as the first OAuth provider.
