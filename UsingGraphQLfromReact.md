@@ -1,6 +1,10 @@
 # Using GraphQL from React
 
 This document explains steps to use GraphQL from React.
+When all steps in this document are completed, the entire repository will look like this
+__[textblog repo](https://github.com/yokolet/textblog/tree/3811498301677c27d7eca1d111adefa7c2834c53)__.
+
+
 As in the [Adding React](AddingReact.md), React was installed by webpacker.
 The code resides in the directory, `app/javascript/packs`.
 
