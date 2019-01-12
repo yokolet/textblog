@@ -1,4 +1,6 @@
 class GraphqlController < ApplicationController
+  include GraphqlHelper
+
   skip_before_action :verify_authenticity_token
 
   def execute
@@ -9,6 +11,7 @@ class GraphqlController < ApplicationController
       # Query context goes here, for example:
       # current_user: current_user,
     }
+    context[:api] = get_api(request)
     result = TextblogSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
   rescue => e
