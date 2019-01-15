@@ -1,3 +1,28 @@
 // Place all the styles related to the home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+$text-color: #444;
+
+nav {
+  ul {
+    a {
+      color: $text-color;
+    }
+  }
+  .brand-logo {
+    color: $text-color;
+  }
+}
+
+.collection {
+  border: 1px solid #fff;
+}
+
+.post-info {
+  color: $text-color;
+  float: right;
+}
+
+.card {
+  margin: 2rem 0 1rem 0;
+}
