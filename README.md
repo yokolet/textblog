@@ -12,6 +12,7 @@ Detailed documents of how the app was created are here.
     5. [Setting Up Facebook Login](./SettingUpFacebookLogin.md)
     6. [Adding OAuth](./AddingOAuth.md)
     7. [UsingOAuthOnGraphQL](./UsingOAuthOnGraphQL.md)
+    8. [Creating Top Pagr](./CreatingTopPage.md)
 
 
 * Ruby/Rails version: 2.5.1/5.2.2
