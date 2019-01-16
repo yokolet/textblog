@@ -9,7 +9,7 @@ class NavBar extends Component {
           <div className="nav-wrapper container">
             <Link id="logo-container" to="/" className="brand-logo left">textblog</Link>
             <ul id="nav-mobile" className="right">
-              <li><Link to="/">Sign In</Link></li>
+              <li><Link to="/sign_in">Sign In</Link></li>
             </ul>
           </div>
         </nav>
