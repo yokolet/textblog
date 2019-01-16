@@ -306,38 +306,74 @@ Here, a realistic UI will be created.
         
         export default graphql(query)(PostList)
         ```
-    - Create `App` component
     
-        The `App` component is a main component. A React app often takes this style.
-        All components to form a web page are called in this component.
+    - Create `NavBar` component
+    
+        The `NavBar` component is, as in its name, a navigation bar component.
+        For now, it shows a logo and dummy sign in link.
         ```javascript
-        import React from "react"
-        import { BrowserRouter as Router, Route, Link } from "react-router-dom"
+        import React, { Component } from 'react'
+        import { Link } from 'react-router-dom'
+        
+        class NavBar extends Component {
+          render () {
+            return (
+              <div className="navbar-fixed">
+                <nav className="white">
+                  <div className="nav-wrapper container">
+                    <Link id="logo-container" to="/" className="brand-logo left">textblog</Link>
+                    <ul id="nav-mobile" className="right">
+                      <li><Link to="/">Sign In</Link></li>
+                    </ul>
+                  </div>
+                </nav>
+              </div>
+            )
+          }
+        }
+        
+        export default NavBar
+        ```
+    - Create `Main` component
+    
+        The `Main` component' purpose is a routing in the main area.
+        At this moment, only one route is there. Later, more routes will be added.
+        ```javascript
+        import React, { Component } from 'react'
+        import { Switch, Route } from 'react-router-dom'
         import PostList from './PostList'
         
-        const App = () => (
-          <Router>
-            <div>
-              <NavBar />
+        class Main extends Component {
+          render() {
+            return (
               <div className="container">
-                <Route exact path="/" component={PostList} />
+                <Switch>
+                  <Route exact path="/" component={PostList} />
+                </Switch>
               </div>
-            </div>
-          </Router>
-        )
+            )
+          }
+        }
         
-        const NavBar = () => (
-          <div className="navbar-fixed">
-            <nav className="white">
-              <div className="nav-wrapper container">
-                <Link id="logo-container" to="/" className="brand-logo left">textblog</Link>
-                <ul id="nav-mobile" className="right">
-                  <li><Link to="/">Sign In</Link></li>
-                </ul>
-              </div>
-            </nav>
-          </div>
-        )
+        export default Main
+        ```
+    - Create `App` component
+    
+        The `App` component defines a structure of the whole page.
+        As in the mock image, the page has a navigation bar and main area.
+        ```javascript
+        import React from 'react'
+        import NavBar from './NavBar'
+        import Main from './Main'
+        
+        const App = () => {
+          return (
+            <div>
+              <NavBar/>
+              <Main/>
+            </div>
+          )
+        }
         
         export default App
         ```
@@ -377,14 +413,15 @@ Here, a realistic UI will be created.
 
     Previously, `app/javascript/packs/hello_react.jsx` was created and referenced in
     `app/views/home/index.html.erb`. To make the app more realistic, let's change the
-    named to `index.jsx` or delete and create new. Also, let's remove
-    some snippets for testing. 
+    named to `index.jsx` or delete and create a new. Also, let's remove
+    some lines for testing. 
     - Reanme or create `app/javascript/packs/index.jsx`
         ```javascript
         import React from 'react'
         import ReactDOM from 'react-dom'
         import ApolloClient from 'apollo-boost'
         import { ApolloProvider } from 'react-apollo'
+        import { BrowserRouter as Router } from 'react-router-dom'
         import App from './components/App'
         
         const client = new ApolloClient({uri: window.location.origin + "/graphql"});
@@ -392,7 +429,7 @@ Here, a realistic UI will be created.
         const Root = props => {
           return (
             <ApolloProvider client={client}>
-              <App />
+              <Router><App /></Router>
             </ApolloProvider>
           )
         }
