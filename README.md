@@ -1,7 +1,7 @@
 # README
 
 This is an application by Rails, ReactJS, GraphQL and OAuth.
-Detailed documents of how the app was created are here.
+Detailed documents how the app was created are here.
 
 * Documents
 
@@ -11,8 +11,9 @@ Detailed documents of how the app was created are here.
     4. [Using GraphQL from React](./UsingGraphQLfromReact.md)
     5. [Setting Up Facebook Login](./SettingUpFacebookLogin.md)
     6. [Adding OAuth](./AddingOAuth.md)
-    7. [UsingOAuthOnGraphQL](./UsingOAuthOnGraphQL.md)
-    8. [Creating Top Pagr](./CreatingTopPage.md)
+    7. [Using OAuth on GraphQL](./UsingOAuthOnGraphQL.md)
+    8. [Creating Top Page](./CreatingTopPage.md)
+    9. [Add Sign In to React](./AddingSignInToReact.md)
 
 
 * Ruby/Rails version: 2.5.1/5.2.2

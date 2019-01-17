@@ -458,4 +458,4 @@ Here, a realistic UI will be created.
 
 For now, textblog app got the realistic top page. However, the sign in link
 doesn't have its supposed feature.
-Next topic is about [Integrating OAuth and GraphQL to ReactJS](./IntegratingOAuthGraphQLToReact.md).
+Next topic is about [Adding Sign In to React](./AddingSignInToReact.md).
