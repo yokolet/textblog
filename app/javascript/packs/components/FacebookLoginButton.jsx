@@ -1,30 +1,44 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import FacebookLogin from 'react-facebook-login'
+import { updateFacebookLogin } from '../actions'
 
 class FacebookLoginButton extends Component {
-    responseFacebook = (response) => {
-        console.log(response)
-        window.localStorage.setItem('_textblog:access_token', response.accessToken)
-        window.localStorage.setItem('_textblog:uid', response.id)
-        window.localStorage.setItem('_textblog:name', response.name)
-        window.localStorage.setItem('_textblog:email', response.email)
-    }
+  responseFacebook = (response) => {
+    this.props.updateFacebookLogin(response)
+  }
 
-    componentClicked = (e) => {
-        console.log(e)
+  render() {
+    const { access_token } = this.props
+    if (access_token) {
+      return (
+        <Redirect to="/" />
+      )
+    } else {
+      return (
+        <FacebookLogin
+          appId="2334273453512956"
+          autoLoad={true}
+          fields="id,name,email"
+          callback={this.responseFacebook}
+        />
+      )
     }
-
-    render() {
-        return (
-            <FacebookLogin
-                appId="2334273453512956"
-                autoLoad={true}
-                fields="id,name,email"
-                onClick={this.componentClicked}
-                callback={this.responseFacebook}
-            />
-        )
-    }
+  }
 }
 
-export default FacebookLoginButton
+FacebookLoginButton.propTypes = {
+  access_token: PropTypes.string.isRequired,
+  updateFacebookLogin: PropTypes.func.isRequired,
+}
+
+const mapStateToProps = state => ({
+  access_token: state.user ? state.user.access_token : '',
+})
+const mapDispatchToProps = dispatch => ({
+  updateFacebookLogin: (response) => dispatch(updateFacebookLogin(response))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(FacebookLoginButton)
