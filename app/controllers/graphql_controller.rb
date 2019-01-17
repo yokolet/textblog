@@ -11,7 +11,7 @@ class GraphqlController < ApplicationController
       # Query context goes here, for example:
       # current_user: current_user,
     }
-    context[:api] = get_api(request)
+    context[:api] = get_api(request, variables)
     result = TextblogSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
   rescue => e
