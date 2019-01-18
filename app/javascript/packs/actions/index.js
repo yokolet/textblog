@@ -1,5 +1,6 @@
 import {
-  UPDATE_SOCIAL_LOGIN
+  UPDATE_SOCIAL_LOGIN,
+  UPDATE_SERVER_LOGIN
 } from '../constants/actions'
 
 export const updateFacebookLogin = (response) => {
@@ -9,10 +10,16 @@ export const updateFacebookLogin = (response) => {
     name: response.name,
     email: response.email
   }
-  console.log('action')
   return {
     type: UPDATE_SOCIAL_LOGIN,
     provider: 'facebook',
     user
+  }
+}
+
+export const updateServerLogin = (data) => {
+  return {
+    type: UPDATE_SERVER_LOGIN,
+    user: data.signInUser
   }
 }
