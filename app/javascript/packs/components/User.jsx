@@ -21,19 +21,21 @@ class User extends Component {
   }
 
   handleLoad() {
-    if (this.props.access_token) {
-      this.props.mutate({
-        variables: { provider: this.props.provider },
-        context: { headers: { authorization: `Bearer ${this.props.access_token}` } }
+    const { access_token, isAuthenticated } = this.props
+    if (access_token && isAuthenticated === false) {
+      const { mutate, provider, updateServerLogin } = this.props
+      mutate({
+        variables: { provider },
+        context: { headers: { authorization: `Bearer ${access_token}` } }
       })
         .then(({ data }) => {
-          this.props.updateServerLogin(data)
+          updateServerLogin(data)
         })
     }
   }
 
   render () {
-    if (this.props.name) {
+    if (this.props.isAuthenticated) {
       const { user_id, name } = this.props
       return (
         <li key={user_id} className="grey darken-1">{name}</li>
@@ -72,7 +74,7 @@ const mapStateToProps = state => ({
   access_token: state.user ? state.user.access_token : '',
   user_id: state.user ? state.user.id : '',
   name: state.user ? state.user.name : '',
-  isAuthenticcated: state.isAuthenticated
+  isAuthenticated: state.isAuthenticated
 })
 
 const mapDispatchToProps = dispatch => ({
