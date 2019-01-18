@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import User from './User'
 
 class NavBar extends Component {
   render () {
@@ -22,7 +23,7 @@ class NavBar extends Component {
           <div className="nav-wrapper container">
             <Link id="logo-container" to="/" className="brand-logo left">textblog</Link>
             <ul id="nav-mobile" className="right">
-              {nameContent}
+              <User/>
               {linkContent}
             </ul>
           </div>
