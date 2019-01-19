@@ -2,7 +2,7 @@
 
 This document explains steps to connect React component with Redux state management to GraphQL.
 When all steps in this document are completed, the entire repository will look like this
-__[textblog repo]()__
+__[textblog repo](https://github.com/yokolet/textblog/tree/6dd1396df388346e82070e0a4069d5371a617dc4)__
 (the repository at this point in the history).
 
 So far, only on the client side, Facebook Login is working. The client has a user's access token
