@@ -1,6 +1,6 @@
 # README
 
-This is an application by Rails, ReactJS, GraphQL and OAuth.
+This is an application by Rails, ReactJS, Redux, GraphQL and OAuth.
 Detailed documents how the app was created are here.
 
 * Documents
@@ -14,17 +14,24 @@ Detailed documents how the app was created are here.
     7. [Using OAuth on GraphQL](./UsingOAuthOnGraphQL.md)
     8. [Creating Top Page](./CreatingTopPage.md)
     9. [Add Sign In to React](./AddingSignInToReact.md)
+    10. [Connecting React Sign In to GraphQL](./ConnectingReactSignInToGraphQL.md)
 
-
-* Ruby/Rails version: 2.5.1/5.2.2
-
-* System dependencies
+* Versions
+    * Ruby/Rails: 2.5.1/5.2.2
+    * node/yarn: v11.6.0/1.13.0
+    * PostgreSQL: stable 11.1
 
 * Configuration
 
-* Database creation
+    See "[Getting Started](./GettingStarted.md)"
 
-* Database initialization
+* How to run the app
+
+    `bundle install`
+    
+    `yarn install`
+    
+    `rails s`
 
 * How to run the test suite
 

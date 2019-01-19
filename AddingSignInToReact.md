@@ -422,4 +422,5 @@ in `window.localStorage[_textblog:access_toekn]`
     ![Nav Bar with Username](./docs/images/navbar_with_username.png)
     
 For now, textblog app was confirmed to manage User sign in. Also, the app can show
-a list of posts. Next topic is about [Testing GraphQL](./TestingGraphQL.md)
+a list of posts.
+Next topic is about [Connecting React Sign In to GraphQL](./ConnectingReactSignInToGraphQL.md).
