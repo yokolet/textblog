@@ -6,15 +6,11 @@ import User from './User'
 
 class NavBar extends Component {
   render () {
-    const { access_token, name } = this.props
-    let nameContent
+    const { isAuthenticated } = this.props
     let linkContent
-    if (name) {
-      nameContent =
-        <li className="grey darken-1">{name}</li>
+    if (isAuthenticated) {
       linkContent = <li><Link to="/">Sign Out</Link></li>
     } else {
-      nameContent = <li></li>
       linkContent = <li><Link to="/sign_in">Sign In</Link></li>
     }
     return (
@@ -34,13 +30,11 @@ class NavBar extends Component {
 }
 
 NavBar.propTypes = {
-  access_token: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
+  isAuthenticated: PropTypes.bool
 }
 
 const mapStateToProps = state => ({
-  access_token: state.user ? state.user.access_token : '',
-  name: state.user ? state.user.name : '',
+  isAuthenticated: state.isAuthenticated
 })
 
 export default connect(mapStateToProps, null)(NavBar)
