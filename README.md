@@ -13,7 +13,7 @@ Detailed documents how the app was created are here.
     6. [Adding OAuth](./AddingOAuth.md)
     7. [Using OAuth on GraphQL](./UsingOAuthOnGraphQL.md)
     8. [Creating Top Page](./CreatingTopPage.md)
-    9. [Add Sign In to React](./AddingSignInToReact.md)
+    9. [Adding Sign In to React](./AddingSignInToReact.md)
     10. [Connecting React Sign In to GraphQL](./ConnectingReactSignInToGraphQL.md)
 
 * Versions

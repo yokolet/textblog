@@ -2,7 +2,8 @@
 
 This document explains steps to add GraphQL and how to use it.
 When all steps in this document are completed, the entire repository will look like this
-__[textblog repo](https://github.com/yokolet/textblog/tree/06a62e49cb5f85d50a31c835a594c77e550692bf)__.
+__[textblog repo](https://github.com/yokolet/textblog/tree/06a62e49cb5f85d50a31c835a594c77e550692bf)__
+(the repository at this point in the history).
 
 
 As in the [Getting Started](GettingStarted.md), `user` model and seed data

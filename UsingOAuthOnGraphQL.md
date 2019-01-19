@@ -2,7 +2,8 @@
 
 This document explains steps to authenticate users by OAuth using Facebook as OAuth provider.
 When all steps in this document are completed, the entire repository will look like this
-__[textblog repo](https://github.com/yokolet/textblog/tree/da7c055a6d887a07280b08fffeff5159c4b6c63b)__.
+__[textblog repo](https://github.com/yokolet/textblog/tree/da7c055a6d887a07280b08fffeff5159c4b6c63b)__
+(the repository at this point in the history).
 
 Before trying steps of this document, OAuth provider setting should be completed and tested.
 Read [Setting Up Facebook Login](./SettingUpFacebookLogin.md) to learn how to setup

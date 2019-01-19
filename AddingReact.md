@@ -2,7 +2,8 @@
 
 This document explains steps to add ReactJS.
 When all steps in this document are completed, the entire repository will look like this
-__[textblog repo](https://github.com/yokolet/textblog/tree/d3a3c57656d2c4cc2eaf082215763cd028bca43e)__.
+__[textblog repo](https://github.com/yokolet/textblog/tree/d3a3c57656d2c4cc2eaf082215763cd028bca43e)__
+(the repository at this point in the history).
 
 
 As in the [Getting Started](GettingStarted.md), `node` and `yarn` should be

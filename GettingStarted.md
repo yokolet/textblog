@@ -4,7 +4,8 @@
 
 This document explains steps how this Rails app has been created on OSX.
 When all steps in this document are completed, the entire repository will look like this
-__[textblog repo](https://github.com/yokolet/textblog/tree/a61f504ae7416bbeb2a665b2c0ace9a33d52d5d0)__.
+__[textblog repo](https://github.com/yokolet/textblog/tree/a61f504ae7416bbeb2a665b2c0ace9a33d52d5d0)__
+(the repository at this point in the history).
 
 
 The app uses PostgreSQL as the database and webpacker for React 
