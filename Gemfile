@@ -56,6 +56,7 @@ group :development, :test do
   gem 'faker', '~> 1.9', '>= 1.9.1'
   gem 'rspec-rails', '~> 3.8'
   gem 'shoulda-matchers', '~> 3.1', '>= 3.1.2'
+  gem 'rspec-graphql_matchers', '~> 0.7.1'
   gem 'dotenv-rails', '~> 2.5'
 end
 
