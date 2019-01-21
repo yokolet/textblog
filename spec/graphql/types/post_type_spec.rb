@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Types::PostType do
+describe Types::PostType do
   types = GraphQL::Define::TypeDefiner.instance
 
   it 'defines a field id of type ID!' do

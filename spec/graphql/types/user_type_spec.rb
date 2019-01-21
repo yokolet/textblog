@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Types::UserType do
+describe Types::UserType do
   types = GraphQL::Define::TypeDefiner.instance
 
   it 'defines a field id of type ID!' do
