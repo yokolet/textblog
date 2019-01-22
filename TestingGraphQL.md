@@ -2,7 +2,7 @@
 
 This document explains steps to test GraphQL.
 When all steps in this document are completed, the entire repository will look like this
-__[textblog repo]()__
+__[textblog repo](https://github.com/yokolet/textblog/tree/437338d78ef38d7ee0a623fc61417de15b032afe)__
 (the repository at this point in the history).
 
 
