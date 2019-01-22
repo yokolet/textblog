@@ -282,4 +282,7 @@ since Facebook often changes the way to setup and policies.
     
         The page should have the icon with the app name. To test again,
         remove the app and request `http://localhost:3000/server-side` again.
-        Reload the apps and websites page, then the app will appear again. 
+        Reload the apps and websites page, then the app will appear again.
+
+For now, the textblog app was setup on Facebook to use OAuth (Facebook Login).
+Next topic is about [Adding OAuth](./AddingOAuth.md).

@@ -143,4 +143,4 @@ The code resides in the directory, `app/javascript/packs`.
     `http://localhost:3000/`. A list of users should show up.
     
 For now, textblog app was confirmed to work with GraphQL query from React.
-Next topic is about [Adding OAuth](./AddingOAuth.md).
+Next topic is about [Setting Up Facebook Login](./SettingUpFacebookLogin.md).
