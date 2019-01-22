@@ -17,6 +17,13 @@
     "redux": "^4.0.1"
   },
   "devDependencies": {
+    "babel-jest": "^23.6.0",
+    "babel-preset-env": "^1.7.0",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.7.1",
+    "enzyme-to-json": "^3.3.5",
+    "jest": "^23.6.0",
+    "redux-mock-store": "^1.5.3",
     "webpack-dev-server": ">=3.1.11"
   }
 }
