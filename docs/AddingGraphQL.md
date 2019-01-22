@@ -6,7 +6,7 @@ __[textblog repo](https://github.com/yokolet/textblog/tree/06a62e49cb5f85d50a31c
 (the repository at this point in the history).
 
 
-As in the [Getting Started](GettingStarted.md), `user` model and seed data
+As in the [Getting Started](./GettingStarted.md), `user` model and seed data
 should be added already. Those will be used here.
 
 1. Install GraphQL

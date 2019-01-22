@@ -26,7 +26,7 @@ in `window.localStorage[_textblog:access_toekn]`
     are on the nav bar.
 
     The Nav bar should look like:
-    ![Mock Nav Bar](./docs/images/mockup_nav_bar.png)
+    ![Mock Nav Bar](./images/mockup_nav_bar.png)
 
 2. Create Sign In page
 
@@ -134,7 +134,7 @@ in `window.localStorage[_textblog:access_toekn]`
         When those route settings are finished and Sign In link is clicked,
         the facebook button should show up.
         
-        ![Sign In Page](./docs/images/sign_in_page.png)
+        ![Sign In Page](./images/sign_in_page.png)
 
 4. Update Rails routes
 
@@ -420,7 +420,7 @@ in `window.localStorage[_textblog:access_toekn]`
     After going over OAuth sequence, the page will be redirected to the home.
     Now, the Nav bar should have the name as in the picture below.
     
-    ![Nav Bar with Username](./docs/images/navbar_with_username.png)
+    ![Nav Bar with Username](./images/navbar_with_username.png)
     
 For now, textblog app was confirmed to manage User sign in. Also, the app can show
 a list of posts.

@@ -16,7 +16,7 @@ Here, a realistic UI will be created.
     Still, to keep it simple, the top page design is a simple one as in the
     picture below.
 
-    ![Mock Top Page](./docs/images/mockup_top_page.png)
+    ![Mock Top Page](./images/mockup_top_page.png)
 
     - The page has Sign In link (in this document, just a dummy link)
     - The page has multiple posts
@@ -31,7 +31,7 @@ Here, a realistic UI will be created.
     In this app, all users should be created by a given access token.
     So, add more users at Facebook developer website.
     
-    ![Test Users at facebook for developers](./docs/images/test_users.png)
+    ![Test Users at facebook for developers](./images/test_users.png)
     
     At this moment, the sign in feature is not connected from ReactJS to Rails server.
     Create a user by making GraphQL mutation on Insomnia described in
@@ -182,7 +182,7 @@ Here, a realistic UI will be created.
     }
     ```
     Above query returns allPost along with user name.
-    ![GraphiQL allPosts query](./docs/images/graphiql_allposts.png)
+    ![GraphiQL allPosts query](./images/graphiql_allposts.png)
     
     - Anecdote
     
@@ -206,7 +206,7 @@ Here, a realistic UI will be created.
         }
         ```
         works without any issue. The result will be:
-        ![GraphiQL allPosts nested query](./docs/images/graphiql_allposts_nested.png)
+        ![GraphiQL allPosts nested query](./images/graphiql_allposts_nested.png)
 
 6. Install `materialize-sass` gem
 
@@ -454,7 +454,7 @@ Here, a realistic UI will be created.
     So far, the top page should look like the mock image. Request http://localhost:3000 and
     see what shows up. It should be below:
     
-    ![textblog top page](./docs/images/textblog_top_page.png)
+    ![textblog top page](./images/textblog_top_page.png)
 
 For now, textblog app got the realistic top page. However, the sign in link
 doesn't have its supposed feature.

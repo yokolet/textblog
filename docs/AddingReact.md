@@ -6,7 +6,7 @@ __[textblog repo](https://github.com/yokolet/textblog/tree/d3a3c57656d2c4cc2eaf0
 (the repository at this point in the history).
 
 
-As in the [Getting Started](GettingStarted.md), `node` and `yarn` should be
+As in the [Getting Started](./GettingStarted.md), `node` and `yarn` should be
 installed already. Also, this document assumes `--webpack` options was specified
 when the app was created.
 

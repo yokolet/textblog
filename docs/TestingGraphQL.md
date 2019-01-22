@@ -263,16 +263,16 @@ The first pick is a GraphQL testing.
         Go to http://localhost:3000/graphiql (careful, it is graphiql not graphql).
         Click "Docs" link on the top right.
         
-        ![GraphiQL Docs Link](./docs/images/graphiql_docs_link.png)
+        ![GraphiQL Docs Link](./images/graphiql_docs_link.png)
         
         The Root Type schema shows up.
         
-        ![GraphiQL Schema Root](./docs/images/graphiql_schema_root.png)
+        ![GraphiQL Schema Root](./images/graphiql_schema_root.png)
         
         If "Query" link gets clicked, it shows all available queries at
         this moment.
         
-        ![GraphiQL Query Schema](./docs/images/graphiql_query_schema.png)
+        ![GraphiQL Query Schema](./images/graphiql_query_schema.png)
         
         In the same steps, mutation schemas can be checked.
             

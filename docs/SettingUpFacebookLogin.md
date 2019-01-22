@@ -41,19 +41,19 @@ since Facebook often changes the way to setup and policies.
 
     1. Click __My App__.
        
-        ![My App](./docs/images/my_app_button.png)
+        ![My App](./images/my_app_button.png)
 
     2. Choose __Add New App__ from a dropdown menu.
        
-        ![Add New App](./docs/images/add_new_app_button.png)
+        ![Add New App](./images/add_new_app_button.png)
        
     2. Input Display Name and Contact Email, and click __Create App ID__ button.
 
-        ![Create New App ID](./docs/images/create_new_app_id.png)
+        ![Create New App ID](./images/create_new_app_id.png)
        
     3. Go over a security check.
     
-        ![Security Check](./docs/images/security_check.png)
+        ![Security Check](./images/security_check.png)
 
 4. Setup the App
 
@@ -62,11 +62,11 @@ since Facebook often changes the way to setup and policies.
     
     1. Choose __Integrate Facebook Login__ and click __Confirm__ button.
 
-        ![Select Scenario](./docs/images/select_scenario.png)
+        ![Select Scenario](./images/select_scenario.png)
 
     2. Click __Show__ button in the "App Secret" section. Take memo of both App ID and Secret.
 
-        ![App Secret](./docs/images/app_secret.png)
+        ![App Secret](./images/app_secret.png)
  
 5. Install and Run __ngrok__ (for testing)
 
@@ -135,7 +135,7 @@ since Facebook often changes the way to setup and policies.
         Input "https://03d406f9.ngrok.io/auth/facebook/callback" in the
         Valid OAuth redirect URIs, then click "Save Changes".
 
-        ![Client Auth Settings](./docs/images/client_auth_setting.png)
+        ![Client Auth Settings](./images/client_auth_setting.png)
 
 7. Create a test user
 
@@ -150,11 +150,11 @@ since Facebook often changes the way to setup and policies.
         the password should be set. Click __Edit__ button and choose "Change the name or
         password for this test user".
     
-        ![Test Users](./docs/images/test_user.png)
+        ![Test Users](./images/test_user.png)
 
     3. Input the password and click __Save__ button
 
-        ![Password setting](./docs/images/change_test_user_password.png)
+        ![Password setting](./images/change_test_user_password.png)
 
     4. (Optional) Log in to Facebook as a test user
     
@@ -253,18 +253,18 @@ since Facebook often changes the way to setup and policies.
     
     5. Log in to Facebook as a test user (if not yet logged in)
     
-        ![test user login](./docs/images/test_user_login.png)
+        ![test user login](./images/test_user_login.png)
 
     5. Approve the OAuth, "Continue as ACCOUNT"
 
-        ![continue as open](./docs/images/continue_as_account.png)
+        ![continue as open](./images/continue_as_account.png)
 
     6. Check the returned status
     
         The browser should show a bunch of parameters. On the bottom area, "omniauth.auth"
         key is there. This is the info for Rails to do some stuff.
         
-        ![omniauth.auth parameters](./docs/images/omniauth.auth_params.png)
+        ![omniauth.auth parameters](./images/omniauth.auth_params.png)
 
 10. Check App on Facebook
 
@@ -272,11 +272,11 @@ since Facebook often changes the way to setup and policies.
     
     1. Go to the test user's facebook account and click triangle button on the right end.
     
-        ![account setting dropdown](./docs/images/account_setting_dropdown.png)
+        ![account setting dropdown](./images/account_setting_dropdown.png)
 
     2. Click "Settings", then "Apps and Websites" on the left pane.
     
-        ![apps and websites](./docs/images/apps_websites.png)
+        ![apps and websites](./images/apps_websites.png)
 
     3. Re-test
     

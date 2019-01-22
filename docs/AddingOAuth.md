@@ -181,7 +181,7 @@ The server side flow here is mostly for testing purpose for this textblog app.
     To make OAuth run successfully, double check  __Valid OAuth Redirect URIs__ on
     Facebook Developer website.
     
-    ![Client Auth Settings Rails](./docs/images/client_auth_setting_rails.png)
+    ![Client Auth Settings Rails](./images/client_auth_setting_rails.png)
     
     The callback URI should be publicly reachable. For this purpose,
     [__ngrok__](https://ngrok.com/) is used for forwarding.
@@ -200,7 +200,7 @@ The server side flow here is mostly for testing purpose for this textblog app.
     After OAuth approval sequences, a user will be created. Then, the user's information
     will show up.
 
-    ![A New User by OAuth](./docs/images/new_user_by_oauth.png)
+    ![A New User by OAuth](./images/new_user_by_oauth.png)
 
 
 For now, textblog app got an user authentication feature by Facebook OAuth.

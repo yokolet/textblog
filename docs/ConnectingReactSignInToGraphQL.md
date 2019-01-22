@@ -126,7 +126,7 @@ the server will find or create a user on the server side, then return the user i
 
     - Set access token
 
-        ![Insominia Sign In Access Token](./docs/images/insomnia_signin_user_token.png)
+        ![Insominia Sign In Access Token](./images/insomnia_signin_user_token.png)
     - Write mutation and variable
 
         This time, a parameter is passed as a variable instead of hard coded.
@@ -151,7 +151,7 @@ the server will find or create a user on the server side, then return the user i
         When the 'Send' link gets clicked with the schema and variable, it shows the
         result of a user info.
 
-        ![Insominia Sign In Result](./docs/images/insomnia_signin_user_result.png) 
+        ![Insominia Sign In Result](./images/insomnia_signin_user_result.png)
 
 3. Add a new Redux action/reducer
 
@@ -414,7 +414,7 @@ the server will find or create a user on the server side, then return the user i
 
     Take a look at a JavaScript console.
 
-    ![JavaScript Console Two Logins](./docs/images/jsconsole_two_logins.png)
+    ![JavaScript Console Two Logins](./images/jsconsole_two_logins.png)
 
     Two actions, `UPDATE_SOCIAL_LOGIN` and `UPDATE_SERVER_LOGIN` were printed out.
     The first one, `UPDATE_SOCIAL_LOGIN`, was an update by a client side only social login.
@@ -427,7 +427,7 @@ the server will find or create a user on the server side, then return the user i
 
     Take a look at the terminal where Rails is running.
 
-    ![Terminal Rails Output](./docs/images/terminal_rails_output.png)
+    ![Terminal Rails Output](./images/terminal_rails_output.png)
 
     Above shows GraphQL mutation came in, then a query to the database
     happened. In this case, the user was already created on Rails side,

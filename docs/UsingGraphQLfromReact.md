@@ -6,7 +6,7 @@ __[textblog repo](https://github.com/yokolet/textblog/tree/3811498301677c27d7eca
 (the repository at this point in the history).
 
 
-As in the [Adding React](AddingReact.md), React was installed by webpacker.
+As in the [Adding React](./AddingReact.md), React was installed by webpacker.
 The code resides in the directory, `app/javascript/packs`.
 
 1. Install Apollo client

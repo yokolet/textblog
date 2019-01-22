@@ -91,15 +91,18 @@ starts. The `access_token` will be added to the HTTP request header,
 
     - Make a HTTP request to `http://localhost:3000/`
         "Login With Facebook" Button shows up.
-        ![Facebook Login Butoon](./docs/images/facebook_login_button.png)
+
+        ![Facebook Login Butoon](./images/facebook_login_button.png)
     - Open JavaScript console and click the button
         The `responseFacebook` function prints the response in the JavaScript console.
         Open the JavaScript console and click the button. The response looks like:
-        ![Facebook Logiin response](./docs/images/facebook_login_response.png)
+
+        ![Facebook Logiin response](./images/facebook_login_response.png)
     - Check localStorage
         Some of the response parameters are saved in localStorage.
         Type `window.localStorage` in the JavaScript console to see those.
-        ![values in localStorage](./docs/images/values_in_localstorage.png)
+
+        ![values in localStorage](./images/values_in_localstorage.png)
     - Take memo the value of access_token
         The access_token will be used to test GrapQL mutations. Save the value.
 
@@ -242,13 +245,13 @@ starts. The `access_token` will be added to the HTTP request header,
 
         For the first time, Insominia show the window like this:
 
-        ![Insominia Initial Window](./docs/images/insomnia_initial.png)
+        ![Insominia Initial Window](./images/insomnia_initial.png)
     - Create a new request
     
         On OSX, hit command-n key or click + (plus) button on the left pane, then
         create a new request.
         
-        ![Insomnia New Request](./docs/images/insomnia_new_request.png)
+        ![Insomnia New Request](./images/insomnia_new_request.png)
         
         HTTP method to make GraphQL is always POST. This can be checked by typing
         `rails routes`.
@@ -260,10 +263,10 @@ starts. The `access_token` will be added to the HTTP request header,
         Write POST URL, `http://localhost:3000/graphql`. Also, select `GraphQL` from Body
         dropdown.
         
-        ![Insominia GraphQL](./docs/images/insomnia_graphql.png)
+        ![Insominia GraphQL](./images/insomnia_graphql.png)
     - Select Bearer from Auth dropdown
     
-        ![Insominia Bearer](./docs/images/insomnia_bearer.png)
+        ![Insominia Bearer](./images/insomnia_bearer.png)
     - Write a mutation
         ```
         mutation {
@@ -276,14 +279,14 @@ starts. The `access_token` will be added to the HTTP request header,
           }
         }
         ```
-        ![Insomnia Mutation](./docs/images/insomnia_mutation.png)
+        ![Insomnia Mutation](./images/insomnia_mutation.png)
     - Set valid/invalid access token in Bearer or leave it blank
 
         In the section 4 of this document, the access token was shown in JavaScript console.
         This is the one to test. If the valid access token is set in Bearer and click "Send",
         a user information will be returned.
         
-        ![Insomnia Singin User](./docs/images/insomnia_signin_user.png)
+        ![Insomnia Singin User](./images/insomnia_signin_user.png)
         
         Additionally, if the user is not on the database, the user will be created.
         This can be checked by requesting http://localhost:3000/ or Rails console.
