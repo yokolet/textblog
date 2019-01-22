@@ -5,17 +5,17 @@ Detailed documents how the app was created are here.
 
 * Documents
 
-    1. [Getting Started](./GettingStarted.md)
-    2. [Adding React](./AddingReact.md)
-    3. [Adding GraphQL](./AddingGraphQL.md)
-    4. [Using GraphQL from React](./UsingGraphQLfromReact.md)
-    5. [Setting Up Facebook Login](./SettingUpFacebookLogin.md)
-    6. [Adding OAuth](./AddingOAuth.md)
-    7. [Using OAuth on GraphQL](./UsingOAuthOnGraphQL.md)
-    8. [Creating Top Page](./CreatingTopPage.md)
-    9. [Adding Sign In to React](./AddingSignInToReact.md)
-    10. [Connecting React Sign In to GraphQL](./ConnectingReactSignInToGraphQL.md)
-    11. [Testing GraphQL](./TestingGraphQL.md)
+    1. [Getting Started](./docs/GettingStarted.md)
+    2. [Adding React](./docs/AddingReact.md)
+    3. [Adding GraphQL](./docs/AddingGraphQL.md)
+    4. [Using GraphQL from React](./docs/UsingGraphQLfromReact.md)
+    5. [Setting Up Facebook Login](./docs/SettingUpFacebookLogin.md)
+    6. [Adding OAuth](./docs/AddingOAuth.md)
+    7. [Using OAuth on GraphQL](./docs/UsingOAuthOnGraphQL.md)
+    8. [Creating Top Page](./docs/CreatingTopPage.md)
+    9. [Adding Sign In to React](./docs/AddingSignInToReact.md)
+    10. [Connecting React Sign In to GraphQL](./docs/ConnectingReactSignInToGraphQL.md)
+    11. [Testing GraphQL](./docs/TestingGraphQL.md)
 
 * Versions
     * Ruby/Rails: 2.5.1/5.2.2
@@ -24,7 +24,7 @@ Detailed documents how the app was created are here.
 
 * Configuration
 
-    See "[Getting Started](./GettingStarted.md)"
+    See "[Getting Started](./docs/GettingStarted.md)"
 
 * How to run the app
 
