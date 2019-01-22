@@ -15,6 +15,7 @@ Detailed documents how the app was created are here.
     8. [Creating Top Page](./CreatingTopPage.md)
     9. [Adding Sign In to React](./AddingSignInToReact.md)
     10. [Connecting React Sign In to GraphQL](./ConnectingReactSignInToGraphQL.md)
+    11. [Testing GraphQL](./TestingGraphQL.md)
 
 * Versions
     * Ruby/Rails: 2.5.1/5.2.2

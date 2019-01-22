@@ -534,4 +534,4 @@ The first pick is a GraphQL testing.
         ```rspec spec/graphql/mutations```
 
 For now, textblog app got a GraphQL testing. Next topic is
-about [Testing ReactJS](./TestingReactjS.md)
+about [Testing ReactJS](./TestingReactjS.md).
