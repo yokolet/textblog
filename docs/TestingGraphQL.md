@@ -1,10 +1,12 @@
 # Testing GraphQL
 
 This document explains steps to test GraphQL.
-When all steps in this document are completed, the entire repository will look like this
-__[textblog repo](https://github.com/yokolet/textblog/tree/437338d78ef38d7ee0a623fc61417de15b032afe)__
-(the repository at this point in the history).
-
+When all steps in this document are completed, the entire repository will look like
+the repository at this point in the history [
+[__github__](https://github.com/yokolet/textblog/tree/437338d78ef38d7ee0a623fc61417de15b032afe)
+|
+[__gitlab__](https://gitlab.com/yokolet/textblog/tree/437338d78ef38d7ee0a623fc61417de15b032afe)
+].
 
 By now, the Rails server and ReactJS client are getting a shape.
 Still just a sample, but those are becoming a real application step by step.

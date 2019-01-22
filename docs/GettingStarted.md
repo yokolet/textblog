@@ -3,10 +3,12 @@
 ### How this app makes its shape
 
 This document explains steps how this Rails app has been created on OSX.
-When all steps in this document are completed, the entire repository will look like this
-__[textblog repo](https://github.com/yokolet/textblog/tree/a61f504ae7416bbeb2a665b2c0ace9a33d52d5d0)__
-(the repository at this point in the history).
-
+When all steps in this document are completed, the entire repository will look like
+the repository at this point in the history [
+[__github__](https://github.com/yokolet/textblog/tree/a61f504ae7416bbeb2a665b2c0ace9a33d52d5d0)
+|
+[__gitlab__](https://gitlab.com/yokolet/textblog/tree/a61f504ae7416bbeb2a665b2c0ace9a33d52d5d0)
+].
 
 The app uses PostgreSQL as the database and webpacker for React 
 on the front end.

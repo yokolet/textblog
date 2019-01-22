@@ -2,9 +2,12 @@
 
 This document explains steps to create a top page along with making GraphQL query
 to get data.
-When all steps in this document are completed, the entire repository will look like this
-__[textblog repo](https://github.com/yokolet/textblog/tree/976edb8e9b22463f291c5335a6b61fc1858e7292)__
-(the repository at this point in the history).
+When all steps in this document are completed, the entire repository will look like
+the repository at this point in the history [
+[__github__](https://github.com/yokolet/textblog/tree/976edb8e9b22463f291c5335a6b61fc1858e7292)
+|
+[__gitlab__](https://gitlab.com/yokolet/textblog/tree/976edb8e9b22463f291c5335a6b61fc1858e7292)
+].
 
 Going over all previous documents, very basic features by ReactJS, GraphQL and OAuth
 are conformed to work.

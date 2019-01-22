@@ -1,9 +1,12 @@
 # Connecting React Sign In to GraphQL
 
 This document explains steps to connect React component with Redux state management to GraphQL.
-When all steps in this document are completed, the entire repository will look like this
-__[textblog repo](https://github.com/yokolet/textblog/tree/6dd1396df388346e82070e0a4069d5371a617dc4)__
-(the repository at this point in the history).
+When all steps in this document are completed, the entire repository will look like
+the repository at this point in the history [
+[__github__](https://github.com/yokolet/textblog/tree/6dd1396df388346e82070e0a4069d5371a617dc4)
+|
+[__gitlab__](https://gitlab.com/yokolet/textblog/tree/6dd1396df388346e82070e0a4069d5371a617dc4)
+].
 
 So far, only on the client side, Facebook Login is working. The client has a user's access token
 and other info in Redux store. A state transition is working as expected on UI.

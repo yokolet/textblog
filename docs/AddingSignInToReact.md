@@ -2,9 +2,12 @@
 
 This document explains steps to make sign in to work on ReactJS which needs
 OAuth by Facebook.
-When all steps in this document are completed, the entire repository will look like this
-__[textblog repo](https://github.com/yokolet/textblog/tree/441aaa19baf2cd75bca454fb670a80ada02819bf)__
-(the repository at this point in the history).
+When all steps in this document are completed, the entire repository will look like
+the repository at this point in the history [
+[__github__](https://github.com/yokolet/textblog/tree/441aaa19baf2cd75bca454fb670a80ada02819bf)
+|
+[__gitlab__](https://gitlab.com/yokolet/textblog/tree/441aaa19baf2cd75bca454fb670a80ada02819bf)
+].
 
 This document assumes following three are already completed.
 - OAuth by Facebook is setup and works
