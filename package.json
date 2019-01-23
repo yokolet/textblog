@@ -34,8 +34,8 @@
       "node_modules",
       "app/javascript/packs"
     ],
-    "setupTestFrameworkScriptFile": "spec/javascript/setup/enzyme.js",
-    "testPathIgnorePatterns": ["spec/javascript/setup"]
+    "setupTestFrameworkScriptFile": "./spec/javascript/setup/enzyme.js",
+    "testPathIgnorePatterns": ["./spec/javascript/setup"]
   },
   "scripts": {
     "spec": "jest"
