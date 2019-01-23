@@ -4,7 +4,7 @@ import { compose } from 'redux'
 import { connect } from 'react-redux'
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
-import { updateServerLogin } from "../actions/update_server_login";
+import { updateServerLogin } from "../actions/update_server_login"
 
 class User extends Component {
   constructor(props) {
