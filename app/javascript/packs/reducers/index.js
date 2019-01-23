@@ -1,34 +1,8 @@
-import {
-  UPDATE_SOCIAL_LOGIN,
-  UPDATE_SERVER_LOGIN,
-} from '../constants/actions'
+import { combineReducers } from 'redux'
+import socialLogin from './social_login'
+import serverLogin from './server_login'
 
-const initialState = {
-  provider: '',
-  user: null,
-  isAuthenticated: false
-}
-
-const updateUser = (state = initialState, action) => {
-  switch (action.type) {
-    case UPDATE_SOCIAL_LOGIN:
-      return {
-        ...state,
-        provider: action.provider,
-        user: action.user
-      }
-    case UPDATE_SERVER_LOGIN:
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          id: action.user.id,
-        },
-        isAuthenticated: action.user && action.user.id ? true : false
-      }
-    default:
-      return state
-  }
-}
-
-export default updateUser
+export default combineReducers({
+  socialLogin,
+  serverLogin
+})
