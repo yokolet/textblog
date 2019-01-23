@@ -25,5 +25,19 @@
     "jest": "^23.6.0",
     "redux-mock-store": "^1.5.3",
     "webpack-dev-server": ">=3.1.11"
+  },
+  "jest": {
+    "roots": [
+      "spec/javascript"
+    ],
+    "moduleDirectories": [
+      "node_modules",
+      "app/javascript/packs"
+    ],
+    "setupTestFrameworkScriptFile": "spec/javascript/setup/enzyme.js",
+    "testPathIgnorePatterns": ["spec/javascript/setup"]
+  },
+  "scripts": {
+    "spec": "jest"
   }
 }
