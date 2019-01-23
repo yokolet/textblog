@@ -35,7 +35,7 @@ FacebookLoginButton.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  access_token: state.user ? state.user.access_token : '',
+  access_token: state.socialLogin.user ? state.socialLogin.user.access_token : '',
 })
 const mapDispatchToProps = dispatch => ({
   updateFacebookLogin: (response) => dispatch(updateFacebookLogin(response))

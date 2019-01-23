@@ -34,7 +34,7 @@ NavBar.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.isAuthenticated
+  isAuthenticated: state.serverLogin.isAuthenticated
 })
 
 export default connect(mapStateToProps, null)(NavBar)

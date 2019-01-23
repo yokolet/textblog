@@ -70,11 +70,11 @@ User.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  provider: state.provider,
-  access_token: state.user ? state.user.access_token : '',
-  user_id: state.user ? state.user.id : '',
-  name: state.user ? state.user.name : '',
-  isAuthenticated: state.isAuthenticated
+  provider: state.socialLogin.provider,
+  access_token: state.socialLogin.user ? state.socialLogin.user.access_token : '',
+  user_id: state.serverLogin.user ? state.serverLogin.user.id : '',
+  name: state.serverLogin.user ? state.serverLogin.user.name : '',
+  isAuthenticated: state.serverLogin.isAuthenticated
 })
 
 const mapDispatchToProps = dispatch => ({
