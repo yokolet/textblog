@@ -1,7 +1,4 @@
-import {
-  UPDATE_SOCIAL_LOGIN,
-  UPDATE_SERVER_LOGIN
-} from '../constants/actions'
+import { UPDATE_SOCIAL_LOGIN } from '../constants/actions'
 
 export const updateFacebookLogin = (response) => {
   let user = {
@@ -14,12 +11,5 @@ export const updateFacebookLogin = (response) => {
     type: UPDATE_SOCIAL_LOGIN,
     provider: 'facebook',
     user
-  }
-}
-
-export const updateServerLogin = (data) => {
-  return {
-    type: UPDATE_SERVER_LOGIN,
-    user: data.signInUser
   }
 }

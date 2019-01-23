@@ -3,7 +3,7 @@ import { Redirect } from 'react-router'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import FacebookLogin from 'react-facebook-login'
-import { updateFacebookLogin } from '../actions'
+import { updateFacebookLogin } from '../actions/update_facebook_login'
 
 class FacebookLoginButton extends Component {
   responseFacebook = (response) => {
