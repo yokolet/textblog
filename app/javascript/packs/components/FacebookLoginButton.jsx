@@ -19,7 +19,7 @@ class FacebookLoginButton extends Component {
     } else {
       return (
         <FacebookLogin
-          appId="2334273453512956"
+          appId={process.env.FB_APP_ID}
           autoLoad={true}
           fields="id,name,email"
           callback={this.responseFacebook}
