@@ -336,7 +336,7 @@ in `window.localStorage[_textblog:access_toekn]`
         } else {
           return (
             <FacebookLogin
-              appId="2334273453512956"
+              appId="YOURAPPID"
               autoLoad={true}
               fields="id,name,email"
               callback={this.responseFacebook}

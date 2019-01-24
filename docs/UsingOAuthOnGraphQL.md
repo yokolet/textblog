@@ -298,4 +298,4 @@ starts. The `access_token` will be added to the HTTP request header,
 
 
 For now, textblog app got an user authentication feature by GraphQL.
-Next topic is about [Creating Top Pagr](./CreatingTopPage.md).
+Next topic is about [Creating Top Page](./CreatingTopPage.md).
