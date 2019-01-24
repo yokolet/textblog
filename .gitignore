@@ -31,5 +31,8 @@
 yarn-debug.log*
 .yarn-integrity
 
-# Ignore env parameter filr
+# Ignore env parameter file
 .env
+
+# Ignore Jest coverage directory
+/coverage
