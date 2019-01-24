@@ -16,6 +16,7 @@ Detailed documents how the app was created are here.
     9. [Adding Sign In to React](./docs/AddingSignInToReact.md)
     10. [Connecting React Sign In to GraphQL](./docs/ConnectingReactSignInToGraphQL.md)
     11. [Testing GraphQL](./docs/TestingGraphQL.md)
+    12. [Testing React and Redux](./docs/TestingReactAndRedux.md)
 
 * Versions
     * Ruby/Rails: 2.5.1/5.2.2

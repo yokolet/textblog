@@ -12,7 +12,7 @@ By now, the Rails server and ReactJS client are getting a shape.
 Still just a sample, but those are becoming a real application step by step.
 At this moment, something significantly missing compared to a real application is
 testing. A couple of types of testings should be done for this app:
-ReactJS testing, GraphQL testing and Rails testing.
+React/Redux testing, GraphQL testing and Rails testing.
 The first pick is a GraphQL testing.
 
 1. What should be tested by GraphQL testing
@@ -536,4 +536,4 @@ The first pick is a GraphQL testing.
         ```rspec spec/graphql/mutations```
 
 For now, textblog app got a GraphQL testing. Next topic is
-about [Testing ReactJS](./TestingReactjS.md).
+about [Testing React and Redux](./TestingReactAndRedux.md).
