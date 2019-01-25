@@ -9,16 +9,16 @@ import * as actions from 'actions/update_facebook_login'
 import FacebookLoginButton from 'components/FacebookLoginButton'
 
 describe('<FacebookLoginButton />', () => {
-  describe('render()', () => {
+  describe('without Redux store', () => {
     let wrapper = shallow(<FacebookLoginButton/>)
 
-    it('renders a component', () => {
+    it('should render a component', () => {
       expect(toJson(wrapper)).toMatchSnapshot()
     })
   })
 
   describe('with Redux store', () => {
-    const store = createStore(reducer)
+    let store = createStore(reducer)
     let response = {
       accessToken: 'a1b2c3d4e5f6g7h8i9j0',
       userID: 1234567890,
@@ -26,7 +26,7 @@ describe('<FacebookLoginButton />', () => {
       email: 'myemail@example.com'
     }
 
-    it('sees store', () => {
+    it('should have Redirect link after dispatch', () => {
       store.dispatch(actions.updateFacebookLogin(response))
       let wrapper = mount(
         <Provider store={store}>
@@ -35,6 +35,7 @@ describe('<FacebookLoginButton />', () => {
           </Router>
         </Provider>)
       expect(wrapper.find(Redirect)).toHaveLength(1)
+      wrapper.unmount()
     })
   })
 })
