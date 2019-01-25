@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import { BrowserRouter as Router, Redirect } from 'react-router-dom'
 import { createStore } from 'redux'
 import reducer from 'reducers'
-import * as actions from 'actions/update_facebook_login'
+import { updateFacebookLogin } from 'actions/update_facebook_login'
 import FacebookLoginButton from 'components/FacebookLoginButton'
 
 describe('<FacebookLoginButton />', () => {
@@ -27,7 +27,7 @@ describe('<FacebookLoginButton />', () => {
     }
 
     it('should have Redirect link after dispatch', () => {
-      store.dispatch(actions.updateFacebookLogin(response))
+      store.dispatch(updateFacebookLogin(response))
       let wrapper = mount(
         <Provider store={store}>
           <Router>
