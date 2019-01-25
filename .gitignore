@@ -36,3 +36,6 @@ yarn-debug.log*
 
 # Ignore Jest coverage directory
 /coverage
+
+# Ignore Jest snapshot
+__snapshots__
