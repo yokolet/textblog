@@ -488,6 +488,108 @@ React/Redux testing.
 
 6. Create React component specs
 
+    When it comes to React testing, many kinds of testings are there.
+    Just a component rendering test, combination of Redux store change and
+    React component, GraphQL response driven component rendering, routing, etc.
+
+    UI is the part of application that changes frequently while developing.
+    Too many testings may cause frustration. What to test should be
+    considered.
+    This textblog app starts off by a small set of React component specs.
+    Thinking of the app now, components need to be tested are
+    `FacebookLoginButton` and `User`.
+
+    - Create `FacebookLoginButton` component spec
+
+        The `FacebookLoginButton` component initiates the client side OAuth flow.
+        Then, it updates Redux store and redirects to a home page.
+        This logic should be tested.
+
+        ```bash
+        mkdir -p spec/javascript/packs/components
+        touch spec/javascript/packs/components/FacebookLoginButton.spec.js
+        ```
+
+        The spec `FacebookLoginButton.spec.js` looks like this:
+
+        ```javascript
+        import React from 'react'
+        import { mount, shallow } from 'enzyme'
+        import toJson from 'enzyme-to-json'
+        import { Provider } from 'react-redux'
+        import { BrowserRouter as Router, Redirect } from 'react-router-dom'
+        import { createStore } from 'redux'
+        import reducer from 'reducers'
+        import * as actions from 'actions/update_facebook_login'
+        import FacebookLoginButton from 'components/FacebookLoginButton'
+        
+        describe('<FacebookLoginButton />', () => {
+          describe('render()', () => {
+            let wrapper
+            beforeEach(() => {
+              wrapper = shallow(<FacebookLoginButton/>)
+            })
+            it('renders a component', () => {
+              expect(toJson(wrapper)).toMatchSnapshot()
+            })
+          })
+        
+          describe('with Redux store', () => {
+            const store = createStore(reducer)
+            let response = {
+              accessToken: 'a1b2c3d4e5f6g7h8i9j0',
+              userID: 1234567890,
+              name: 'my name',
+              email: 'myemail@example.com'
+            }
+        
+            it('sees store', () => {
+              store.dispatch(actions.updateFacebookLogin(response))
+              let wrapper = mount(
+                <Provider store={store}>
+                  <Router>
+                    <FacebookLoginButton/>
+                  </Router>
+                </Provider>)
+              expect(wrapper.find(Redirect)).toHaveLength(1)
+            })
+          })
+        })
+        ```
+
+        Above spec has two kinds of tests. The first one tests
+        component output by Jest's `toMatchSnapshot` function.
+        Enzyme's `shallow` function renders a top level component,
+        so it's good to test existence.
+
+        The second one tests react-router's `Redirect` is rendered
+        after Redux `updateFacebookLogin` action is dispatched.
+        Enzyme's `mount` function renders full DOM including child
+        components. Also, it updates Redux store as well.
+        After Redux action is dispatched, `access_token` property
+        will have a value. It means the page will be redirected to
+        the home.
+
+    - Create `User` component spec
+
+        The `User` component has a scenario to be tested. The component is
+        mounted when the top page is rendered. The component specifically
+        looks at `socialLogin.access_token` and `serverLogin.isAuthenticated`
+        state values in Redux store and behaves accordingly:
+    
+        | access_token | isAuthenticated | component behavior     |
+        |:------------:|:---------------:|:----------------------:|
+        | undefined    | false           | renders `<li></li>`    |
+        | valid value  | false           | makes GraphQL mutation |
+        | valid value  | true            | renders `<li>NAME</li>`|
+    
+        Above should be tested.
+    
+        ```bash
+        touch spec/javascript/packs/components/User.spec.js
+        ```
+
+    
     
 For now, the textblog app got specs for Redux actions/reducers and React componenta.
 Next topic is about [Adding Error Handling](./AddingErrorHandling.md)
