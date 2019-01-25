@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
-import { updateServerLogin } from "../actions/update_server_login"
+import { updateServerLogin } from '../actions/update_server_login'
+import { signInUserGql } from './queries'
 
 class User extends Component {
   constructor(props) {
@@ -48,19 +48,7 @@ class User extends Component {
   }
 }
 
-const signInUser = gql`
-  mutation SignInUser($provider: String!) {
-    signInUser(provider: $provider) {
-      id
-      provider
-      uid
-      name
-      email
-    }
-  }
-`
-
-const gqlWrapper = graphql(signInUser)
+const gqlWrapper = graphql(signInUserGql)
 
 User.propTypes = {
   isAuthenticated: PropTypes.bool,
