@@ -3,9 +3,9 @@
 This document explains steps to test React and Redux.
 When all steps in this document are completed, the entire repository will look like
 the repository at this point in the history [
-[__github__](https://github.com/yokolet/textblog/tree/)
+[__github__](https://github.com/yokolet/textblog/tree/f451d6e426e502ebc1722fc3b264b8440bd3fd8e)
 |
-[__gitlab__](https://gitlab.com/yokolet/textblog/tree/)
+[__gitlab__](https://gitlab.com/yokolet/textblog/tree/f451d6e426e502ebc1722fc3b264b8440bd3fd8e)
 ].
 
 As stated in the previous document, [Testing GraphQL](./TestingGraphQL.md),
