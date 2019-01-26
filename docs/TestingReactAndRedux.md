@@ -520,22 +520,20 @@ React/Redux testing.
         import { BrowserRouter as Router, Redirect } from 'react-router-dom'
         import { createStore } from 'redux'
         import reducer from 'reducers'
-        import * as actions from 'actions/update_facebook_login'
+        import { updateFacebookLogin } from 'actions/update_facebook_login'
         import FacebookLoginButton from 'components/FacebookLoginButton'
         
         describe('<FacebookLoginButton />', () => {
-          describe('render()', () => {
-            let wrapper
-            beforeEach(() => {
-              wrapper = shallow(<FacebookLoginButton/>)
-            })
-            it('renders a component', () => {
+          describe('without Redux store', () => {
+            let wrapper = shallow(<FacebookLoginButton/>)
+        
+            it('should render a component', () => {
               expect(toJson(wrapper)).toMatchSnapshot()
             })
           })
         
           describe('with Redux store', () => {
-            const store = createStore(reducer)
+            let store = createStore(reducer)
             let response = {
               accessToken: 'a1b2c3d4e5f6g7h8i9j0',
               userID: 1234567890,
@@ -543,8 +541,8 @@ React/Redux testing.
               email: 'myemail@example.com'
             }
         
-            it('sees store', () => {
-              store.dispatch(actions.updateFacebookLogin(response))
+            it('should have Redirect link after dispatch', () => {
+              store.dispatch(updateFacebookLogin(response))
               let wrapper = mount(
                 <Provider store={store}>
                   <Router>
@@ -552,6 +550,7 @@ React/Redux testing.
                   </Router>
                 </Provider>)
               expect(wrapper.find(Redirect)).toHaveLength(1)
+              wrapper.unmount()
             })
           })
         })
@@ -565,22 +564,32 @@ React/Redux testing.
         The second one tests react-router's `Redirect` is rendered
         after Redux `updateFacebookLogin` action is dispatched.
         Enzyme's `mount` function renders full DOM including child
-        components. Also, it updates Redux store as well.
+        components. Also, it sees Redux store change as well.
         After Redux action is dispatched, `access_token` property
         will have a value. It means the page will be redirected to
         the home.
 
     - Create `User` component spec
 
-        The `User` component has a scenario to be tested. The component is
-        mounted when the top page is rendered. The component specifically
-        looks at `socialLogin.access_token` and `serverLogin.isAuthenticated`
-        state values in Redux store and behaves accordingly:
+        The `User` component has a scenario to be tested. The component
+        specifically looks at `socialLogin.access_token` and
+        `serverLogin.isAuthenticated` state values in Redux store and
+        behaves accordingly.
+        
+        At the beginning, those are undefined and false,
+        so the component doesn't output a name.
+        After the first action, `updateFacebookLogin`, is dispatched
+        (assuming OAuth login was successful), the component gets
+        `access_token`. However, `isAuthenticated` state remains false,
+        so still the component doesn't output the name.
+        When the second action, `updateServerLogin`, is dispatched
+        (assuming Rails server returns an expected user information),
+        `isAuthenticated` turns true. Finally, the user name shows up.
     
         | access_token | isAuthenticated | component behavior     |
         |:------------:|:---------------:|:----------------------:|
         | undefined    | false           | renders `<li></li>`    |
-        | valid value  | false           | makes GraphQL mutation |
+        | valid value  | false           | renders `<li></li>`    |
         | valid value  | true            | renders `<li>NAME</li>`|
     
         Above should be tested.
@@ -589,7 +598,133 @@ React/Redux testing.
         touch spec/javascript/packs/components/User.spec.js
         ```
 
-    
-    
-For now, the textblog app got specs for Redux actions/reducers and React componenta.
+        The spec, `User.spec.js` looks like below:
+        
+        > Note: The code had a bit of refactoring on GraphQL query.
+        The query string was moved to `app/javascript/packs/components/queries.js`
+        `User` component imports a query string so that `User` spec can
+        do the same.
+
+        ```javascript
+        import React from 'react'
+        import { mount, shallow } from 'enzyme'
+        import toJson from 'enzyme-to-json'
+        import { MockedProvider } from "react-apollo/test-utils";
+        import { createStore } from 'redux'
+        import { Provider } from "react-redux";
+        import reducer from 'reducers'
+        import { updateFacebookLogin } from 'actions/update_facebook_login'
+        import { updateServerLogin } from 'actions/update_server_login'
+        import User from 'components/User'
+        import { signInUserGql } from 'components/queries'
+        
+        describe('<User />', () => {
+          describe('without Redux store', () => {
+            let wrapper = shallow(<User/>)
+        
+            it('should render a component', () => {
+              expect(toJson(wrapper)).toMatchSnapshot()
+            })
+          })
+        
+          describe('with Redux store and Apollo', () => {
+            let gql_result = {
+              data: {
+                signInUser: {
+                  id: 1,
+                  provider: 'facebook',
+                  uid: 1234567890,
+                  name: 'my name',
+                  email: 'myemail@example.com'
+                }
+              }
+            }
+            let mocks = [
+              {
+                request: {
+                  query: signInUserGql,
+                  variable: { provider: 'facebook' }
+                },
+                result: {
+                  gql_result
+                }
+              }
+            ]
+            let response = {
+              accessToken: 'a1b2c3d4e5f6g7h8i9j0',
+              userID: 1234567890,
+              name: 'my name',
+              email: 'myemail@example.com'
+            }
+            let store = createStore(reducer)
+        
+            it('should have empty li', () => {
+              let wrapper = mount(
+                <MockedProvider mocks={mocks} >
+                  <Provider store={store}>
+                    <User />
+                  </Provider>
+                </MockedProvider>
+              )
+              expect(toJson(wrapper)).toMatchSnapshot()
+              expect(wrapper.find('li').text()).toEqual('')
+            })
+        
+            it('should have empty li after one dispatch', () => {
+              store.dispatch(updateFacebookLogin(response))
+              let wrapper = mount(
+                <MockedProvider mocks={mocks} >
+                  <Provider store={store}>
+                    <User />
+                  </Provider>
+                </MockedProvider>
+              )
+              expect(wrapper.find('li').text()).toEqual('')
+            })
+        
+            it('should have user name in li after dispatches', () => {
+              let data = {
+                "signInUser": {
+                  "id": "1",
+                  "provider": "facebook",
+                  "uid": "104149837337889",
+                  "name": "my name",
+                  "email": "myemail@example.com"
+                }
+              }
+              store.dispatch(updateFacebookLogin(response))
+              store.dispatch(updateServerLogin(data))
+              let wrapper = mount(
+                <MockedProvider mocks={mocks} >
+                  <Provider store={store}>
+                    <User />
+                  </Provider>
+                </MockedProvider>
+              )
+              expect(wrapper.find('li').text()).toEqual('my name')
+            })
+          })
+        })
+        ```
+
+        Above spec uses Apollo's `MockProvider` to avoid sending GraphQL
+        request to the server during the test. The first spec tests the
+        existence of component. The second test makes GraphQL mock query,
+        but, that's it. So the name won't show up. The third test
+        dispatches the first action, and that's it. So the name won't show up.
+        The fourth test dispatches the second action. Now, Reux store gets
+        another user info which is enough to turn `isAuthenticated` to true.
+        Finally, the name should show up.
+
+    - Run specs
+
+        Run the specs and see the result.
+
+        ```bash
+        yarn spec                                               # all specs run
+        yarn spec spec/javascript/packs/components              # all specs under components dir run
+        yarn spec spec/javascript/packs/components/User.spec.js # only User.spec.js runs
+        ```
+
+For now, the textblog app got Redux and React component specs. 
 Next topic is about [Adding Error Handling](./AddingErrorHandling.md)
