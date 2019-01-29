@@ -2,7 +2,7 @@ class User < ApplicationRecord
   # Include devise modules.
   devise :omniauthable, omniauth_providers: [:facebook]
   # validation
-  validates_presence_of :name, :email
+  validates_presence_of :provider, :uid, :name, :email
   # Association
   has_many :posts
 
