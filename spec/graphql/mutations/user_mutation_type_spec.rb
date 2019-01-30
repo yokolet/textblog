@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe Mutations::UserMutationType do
-  types = GraphQL::Define::TypeDefiner.instance
 
   it 'defines a field signInUser that returns Types::UserType type' do
     expect(subject).to have_a_field(:signInUser).that_returns(Types::UserType)

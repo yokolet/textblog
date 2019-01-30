@@ -5,7 +5,18 @@ module GraphqlHelper
     {access_token: access_token, social_api: social_api}
   end
 
-  def escape_angle_brackets(s)
+  def self.ensure_social_api(ctx)
+    access_token, social_api = ctx[:api][:access_token], ctx[:api][:social_api]
+    if access_token.nil?
+      raise StandardError.new('Authorization request header is missing.')
+    end
+    if social_api.nil?
+      raise StandardError.new('Authorization request header is invalid.')
+    end
+    social_api
+  end
+
+  def self.escape_angle_brackets(s)
     s.gsub('<', '&lt;').gsub('>', '&gt;')
   end
 

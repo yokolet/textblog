@@ -36,12 +36,45 @@ RSpec.describe GraphqlHelper, type: :helper do
     end
   end
 
-  describe 'escape_angle_brackets' do
+  context 'ensure_social_api' do
+    describe 'with nil in all params' do
+      let(:ctx) {
+        {
+            api: {
+                access_token: nil,
+                social_api: nil
+            }
+        }
+      }
+
+      it 'should raise an error' do
+        expect { subject.ensure_social_api(ctx) }.to raise_error(StandardError)
+      end
+    end
+
+    describe 'with correct values in all params' do
+      let(:social_api) { double("social_api") }
+      let(:ctx) {
+        {
+            api: {
+                access_token: "1a2b3c4d5e6f7g8h9i0j",
+                social_api: social_api
+            }
+        }
+      }
+
+      it 'should return social api' do
+        expect(subject.ensure_social_api(ctx)).to eq(social_api)
+      end
+    end
+  end
+
+  context 'escape_angle_brackets' do
     let(:text) { "--<<O>>--" }
     let(:expected) { "--&lt;&lt;O&gt;&gt;--" }
 
     it 'escapes angle brackets' do
-      expect(helper.escape_angle_brackets(text)).to eq(expected)
+      expect(subject.escape_angle_brackets(text)).to eq(expected)
     end
   end
 end
