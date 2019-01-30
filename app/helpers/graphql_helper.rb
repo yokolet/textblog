@@ -5,6 +5,10 @@ module GraphqlHelper
     {access_token: access_token, social_api: social_api}
   end
 
+  def escape_angle_brackets(s)
+    s.gsub('<', '&lt;').gsub('>', '&gt;')
+  end
+
   private
   def get_access_token(request)
     auth_header = request.headers["authorization"]
