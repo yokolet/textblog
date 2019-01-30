@@ -4,8 +4,6 @@ Types::UserType = GraphQL::ObjectType.define do
 
   field :id, !types.ID
   field :provider, !types.String
-  field :uid, !types.ID
   field :name, !types.String
-  field :email, !types.String
   field :posts, types[Types::PostType]
 end
