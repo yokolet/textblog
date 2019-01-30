@@ -8,7 +8,7 @@ describe Mutations::UserMutationType do
   end
 
   context 'with signInUser field' do
-    let(:facebook) {Faker::Omniauth.facebook }
+    let(:facebook) { Faker::Omniauth.facebook }
     let(:access_token) { facebook[:credentials][:token] }
     let(:me) {
       {
@@ -18,7 +18,7 @@ describe Mutations::UserMutationType do
       }
     }
     let(:social_api) { double("social_api") }
-    let(:args) { {provider: 'facebook'} }
+    let(:args) { { provider: 'facebook' } }
     let(:ctx) { {
         api: {
             access_token: access_token,
@@ -33,7 +33,7 @@ describe Mutations::UserMutationType do
     end
 
     describe 'a mutation is given' do
-      let(:vars) { {provider: "facebook"} }
+      let(:vars) { { provider: "facebook" } }
       let(:result) { TextblogSchema.execute(mutate_string, variables: vars, context: ctx) }
 
       context 'to sign in user' do
