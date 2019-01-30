@@ -37,13 +37,12 @@ describe Mutations::UserMutationType do
       let(:result) { TextblogSchema.execute(mutate_string, variables: vars, context: ctx) }
 
       context 'to sign in user' do
-        let(:mutate_string) { %|mutation SignInUser($provider: String!) { signInUser(provider: $provider) { id uid name } }| }
+        let(:mutate_string) { %|mutation SignInUser($provider: String!) { signInUser(provider: $provider) { id name } }| }
 
         it 'returns a user info' do
           allow(social_api).to receive(:get_object).and_return(me)
           result_user = result["data"]["signInUser"]
           expect(result_user["id"]).not_to be_nil
-          expect(result_user["uid"]).to eq(me["id"])
           expect(result_user["name"]).to eq(me["name"])
         end
       end
