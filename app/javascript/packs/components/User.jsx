@@ -10,6 +10,7 @@ class User extends Component {
   constructor(props) {
     super(props)
     this.handleLoad = this.handleLoad.bind(this)
+    this.state = { errors: [] }
   }
 
   componentDidMount() {
@@ -30,6 +31,12 @@ class User extends Component {
       })
         .then(({ data }) => {
           updateServerLogin(data)
+        })
+        .catch(res => {
+          if (res.graphQLErrors) {
+            let errors = res.graphQLErrors.map(error => error.message);
+            this.setState({ errors })
+          }
         })
     }
   }
