@@ -5,9 +5,7 @@ export const signInUserGql = gql`
     signInUser(provider: $provider) {
       id
       provider
-      uid
       name
-      email
     }
   }
 `

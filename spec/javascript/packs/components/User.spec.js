@@ -25,9 +25,7 @@ describe('<User />', () => {
         signInUser: {
           id: 1,
           provider: 'facebook',
-          uid: 1234567890,
           name: 'my name',
-          email: 'myemail@example.com'
         }
       }
     }
@@ -79,9 +77,7 @@ describe('<User />', () => {
         "signInUser": {
           "id": "1",
           "provider": "facebook",
-          "uid": "104149837337889",
           "name": "my name",
-          "email": "myemail@example.com"
         }
       }
       store.dispatch(updateFacebookLogin(response))
