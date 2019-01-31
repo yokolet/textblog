@@ -14,9 +14,7 @@ describe('updateServerLogin', () => {
     "signInUser": {
       "id": "1",
       "provider": "facebook",
-      "uid": "104149837337889",
-      "name": "my name",
-      "email": "myemail@example.com"
+      "name": "my name"
     }
   }
 
@@ -25,9 +23,7 @@ describe('updateServerLogin', () => {
     user: {
       id: "1",
       provider: "facebook",
-      uid: "104149837337889",
-      name: "my name",
-      email: "myemail@example.com"
+      name: "my name"
     }
   }
 
