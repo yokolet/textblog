@@ -9,3 +9,18 @@ export const signInUserGql = gql`
     }
   }
 `
+
+export const allPostsGql = gql`
+  query {
+    allPosts {
+      id
+      title
+      content
+      updated_at
+      user {
+        id
+        name
+      }
+    }
+  }
+`
