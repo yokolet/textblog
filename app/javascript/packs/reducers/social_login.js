@@ -2,7 +2,7 @@ import { UPDATE_SOCIAL_LOGIN, } from '../constants/actions'
 
 const initialState = {
   provider: '',
-  user: null,
+  access_token: null,
 }
 
 const socialLogin = (state = initialState, action) => {
@@ -11,7 +11,7 @@ const socialLogin = (state = initialState, action) => {
       return {
         ...state,
         provider: action.provider,
-        user: action.user
+        access_token: action.access_token
       }
     default:
       return state

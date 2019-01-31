@@ -21,9 +21,6 @@ describe('<FacebookLoginButton />', () => {
     let store = createStore(reducer)
     let response = {
       accessToken: 'a1b2c3d4e5f6g7h8i9j0',
-      userID: 1234567890,
-      name: 'my name',
-      email: 'myemail@example.com'
     }
 
     it('should have Redirect link after dispatch', () => {

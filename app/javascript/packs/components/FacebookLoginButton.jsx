@@ -30,12 +30,12 @@ class FacebookLoginButton extends Component {
 }
 
 FacebookLoginButton.propTypes = {
-  access_token: PropTypes.string.isRequired,
+  access_token: PropTypes.string,
   updateFacebookLogin: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
-  access_token: state.socialLogin.user ? state.socialLogin.user.access_token : '',
+  access_token: state.socialLogin.access_token ? state.socialLogin.access_token : null,
 })
 const mapDispatchToProps = dispatch => ({
   updateFacebookLogin: (response) => dispatch(updateFacebookLogin(response))

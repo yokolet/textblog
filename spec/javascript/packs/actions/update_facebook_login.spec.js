@@ -12,20 +12,12 @@ describe('updateFacebookLogin', () => {
 
   const response = {
     accessToken: 'a1b2c3d4e5f6g7h8i9j0',
-    userID: 1234567890,
-    name: 'my name',
-    email: 'myemail@example.com'
   }
 
   const expectedAction = {
     type: types.UPDATE_SOCIAL_LOGIN,
     provider: 'facebook',
-    user: {
-      access_token: 'a1b2c3d4e5f6g7h8i9j0',
-      uid: 1234567890,
-      name: 'my name',
-      email: 'myemail@example.com'
-    }
+    access_token: 'a1b2c3d4e5f6g7h8i9j0',
   }
 
   it('should create an action to return user info', () => {

@@ -59,14 +59,14 @@ const gqlWrapper = graphql(signInUserGql)
 
 User.propTypes = {
   isAuthenticated: PropTypes.bool,
-  access_token: PropTypes.string.isRequired,
+  access_token: PropTypes.string,
   name: PropTypes.string.isRequired,
   user_id: PropTypes.string
 }
 
 const mapStateToProps = state => ({
   provider: state.socialLogin.provider,
-  access_token: state.socialLogin.user ? state.socialLogin.user.access_token : '',
+  access_token: state.socialLogin.access_token ? state.socialLogin.access_token : null,
   user_id: state.serverLogin.user ? state.serverLogin.user.id : '',
   name: state.serverLogin.user ? state.serverLogin.user.name : '',
   isAuthenticated: state.serverLogin.isAuthenticated
