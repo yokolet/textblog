@@ -3,13 +3,20 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import User from './User'
+import { updateServerLogin } from "../actions/update_server_login";
+import { updateFacebookLogin } from "../actions/update_facebook_login";
 
 class NavBar extends Component {
+  onSignoutClick() {
+    this.props.updateFacebookLogin({})
+    this.props.updateServerLogin({})
+  }
+
   render () {
     const { isAuthenticated } = this.props
     let linkContent
     if (isAuthenticated) {
-      linkContent = <li><Link to="/">Sign Out</Link></li>
+      linkContent = <li><a onClick={this.onSignoutClick.bind(this)}>Sign Out</a></li>
     } else {
       linkContent = <li><Link to="/sign_in">Sign In</Link></li>
     }
@@ -37,4 +44,9 @@ const mapStateToProps = state => ({
   isAuthenticated: state.serverLogin.isAuthenticated
 })
 
-export default connect(mapStateToProps, null)(NavBar)
+const mapDispatchToProps = dispatch => ({
+  updateFacebookLogin: (response) => dispatch(updateFacebookLogin(response)),
+  updateServerLogin: (user) => dispatch(updateServerLogin(user))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar)
