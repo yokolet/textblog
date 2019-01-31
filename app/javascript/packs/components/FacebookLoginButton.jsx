@@ -20,7 +20,7 @@ class FacebookLoginButton extends Component {
       return (
         <FacebookLogin
           appId={process.env.FB_APP_ID}
-          autoLoad={true}
+          autoLoad={false}
           fields="id,name,email"
           callback={this.responseFacebook}
         />
