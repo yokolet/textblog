@@ -1,4 +1,4 @@
-import { GET_POST_LIST } from '../constants/actions'
+import { GET_POST_LIST, ADD_POST } from '../constants/actions'
 
 const initialState = {
   posts: []
@@ -10,6 +10,11 @@ const postList = (state = initialState, action) => {
       return {
         ...state,
         posts: action.posts ? action.posts : []
+      }
+    case ADD_POST:
+      return {
+        ...state,
+        posts: action.post ? [...state.posts, action.post] : state.posts
       }
     default:
       return state
