@@ -28,7 +28,7 @@ describe('<FacebookLoginButton />', () => {
       let wrapper = mount(
         <Provider store={store}>
           <Router>
-            <FacebookLoginButton/>
+            <FacebookLoginButton prevPath="/" />
           </Router>
         </Provider>)
       expect(wrapper.find(Redirect)).toHaveLength(1)

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Redirect } from 'react-router'
+import { Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import FacebookLogin from 'react-facebook-login'
@@ -11,10 +11,10 @@ class FacebookLoginButton extends Component {
   }
 
   render() {
-    const { access_token } = this.props
+    const { access_token, prevPath } = this.props
     if (access_token) {
       return (
-        <Redirect to="/" />
+        <Redirect to={prevPath} />
       )
     } else {
       return (

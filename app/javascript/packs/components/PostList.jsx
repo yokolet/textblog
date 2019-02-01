@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import { graphql } from 'react-apollo'
 import { allPostsGql } from './queries'
 import PropTypes from "prop-types";

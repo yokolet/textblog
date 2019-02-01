@@ -12,7 +12,7 @@ class SignIn extends Component {
         <div className="col s12 m12">
           <div className="card-panel white">
             <div  className="sign_in_container">
-              <FacebookLoginButton/>
+              <FacebookLoginButton prevPath={this.props.location.state.prevPath}/>
             </div>
           </div>
         </div>

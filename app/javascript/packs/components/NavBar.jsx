@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import User from './User'
@@ -18,7 +18,7 @@ class NavBar extends Component {
     if (isAuthenticated) {
       linkContent = <li><a onClick={this.onSignoutClick.bind(this)}>Sign Out</a></li>
     } else {
-      linkContent = <li><Link to="/sign_in">Sign In</Link></li>
+      linkContent = <li><Link to={{pathname: "/sign_in", state: {prevPath: this.props.location.pathname}}}>Sign In</Link></li>
     }
     return (
       <div className="navbar-fixed">
@@ -49,4 +49,4 @@ const mapDispatchToProps = dispatch => ({
   updateServerLogin: (user) => dispatch(updateServerLogin(user))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(NavBar)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NavBar))
