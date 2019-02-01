@@ -50,6 +50,12 @@ class PostList extends Component {
     }
     return (
       <div>
+        <Link
+          to="/posts/new"
+          className="btn-floating btn-large brown darken-1 right"
+        >
+          <i className="material-icons">add</i>
+        </Link>
         <ul className="collection">
           {this.renderPosts()}
         </ul>

@@ -24,3 +24,18 @@ export const allPostsGql = gql`
     }
   }
 `
+
+export const addPostGql = gql`
+  mutation AddPost($provider: String!, $title: String!, $content: String!) {
+    addPost(provider: $provider, title: $title, content: $content) {
+      id
+      title
+      content
+      updated_at
+      user {
+        id
+        name
+      }
+    }
+  }
+`
