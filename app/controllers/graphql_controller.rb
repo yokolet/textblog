@@ -3,6 +3,8 @@ class GraphqlController < ApplicationController
 
   skip_before_action :verify_authenticity_token
 
+  MAX_DEPTH = 5
+
   def execute
     variables = ensure_hash(params[:variables])
     query = params[:query]
@@ -12,7 +14,10 @@ class GraphqlController < ApplicationController
       # current_user: current_user,
     }
     context[:api] = get_api(request, variables)
-    result = TextblogSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
+    result = TextblogSchema.execute(query, max_depth: MAX_DEPTH,
+                                    variables: variables,
+                                    context: context,
+                                    operation_name: operation_name)
     render json: result
   rescue => e
     raise e unless Rails.env.development?
