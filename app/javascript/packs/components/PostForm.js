@@ -48,6 +48,7 @@ class PostForm extends Component {
           if (res.graphQLErrors) {
             let errors = res.graphQLErrors.map(error => error.message);
             this.setState({ errors })
+            M.toast({html: errors.toString()})
           }
         })
     }

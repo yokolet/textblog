@@ -37,5 +37,57 @@ describe Mutations::PostMutationType do
       result = subject.fields['addPost'].resolve(nil, args, ctx)
       expect(result.id).not_to be_nil
     end
+
+    describe 'given a wrong input' do
+      let(:empty) {
+        {
+            provider: 'facebook',
+            title: '',
+            content: ''
+        }
+      }
+      let(:too_long) {
+        {
+            provider: 'facebook',
+            title: Faker::Lorem.characters(51),
+            content: ''
+        }
+      }
+
+      it('should raise error for empty input') do
+        allow(social_api).to receive(:get_object).and_return(me)
+        expect {subject.fields['addPost'].resolve(nil, empty, ctx)}.to raise_exception(GraphQL::ExecutionError)
+      end
+
+      it('should raise error for too long input') do
+        allow(social_api).to receive(:get_object).and_return(me)
+        expect {subject.fields['addPost'].resolve(nil, too_long, ctx)}.to raise_exception(GraphQL::ExecutionError)
+      end
+    end
+
+    describe 'mutation is given' do
+      let(:mutate_string) {
+        %{mutation AddPost($provider: String!, $title: String!, $content: String!) {
+            addPost(provider: $provider, title: $title, content: $content) {
+              id
+              title
+              content
+              updated_at
+              user {
+                id
+                name
+              }
+            }
+          }}
+      }
+      let(:vars) { { provider: "facebook", title: Faker::Lorem.characters(55), content: "" } }
+      it('should return error in json with too long input') do
+        allow(social_api).to receive(:get_object).and_return(me)
+        result = TextblogSchema.execute(mutate_string, variables: vars, context: ctx)
+        expect(result["data"]["addPost"]).to be_nil
+        expect(result["errors"]).not_to be_nil
+        expect(result["errors"].first[:status]).to eq(400)
+      end
+    end
   end
 end
