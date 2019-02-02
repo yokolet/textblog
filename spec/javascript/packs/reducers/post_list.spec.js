@@ -106,16 +106,6 @@ describe('post list', () => {
       let expectedState = {
         posts: [
           {
-            "id": "1",
-            "title": "Repudiandae tempora nobis qui.",
-            "content": "Omnis et minima. Ratione sit ut. Est animi veniam.",
-            "updated_at": "2019-01-29 22:12:36 UTC",
-            "user": {
-              "id": "1",
-              "name": "Open Graph Test User"
-            }
-          },
-          {
             "id": "2",
             "title": "Sed excepturi rerum voluptatem.",
             "content": "Hic molestiae omnis. Aspernatur ducimus molestiae. Aliquid adipisci est.",
@@ -123,6 +113,16 @@ describe('post list', () => {
             "user": {
               "id": "2",
               "name": "Gandalf The White"
+            }
+          },
+          {
+            "id": "1",
+            "title": "Repudiandae tempora nobis qui.",
+            "content": "Omnis et minima. Ratione sit ut. Est animi veniam.",
+            "updated_at": "2019-01-29 22:12:36 UTC",
+            "user": {
+              "id": "1",
+              "name": "Open Graph Test User"
             }
           }
         ]

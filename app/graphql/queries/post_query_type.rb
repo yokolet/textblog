@@ -6,7 +6,7 @@ Queries::PostQueryType = GraphQL::ObjectType.define do
     type types[Types::PostType]
     description "returns a list of all posts"
     resolve -> (obj, args, ctx) {
-      Post.all
+      Post.order(updated_at: :desc)
     }
   end
 end

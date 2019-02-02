@@ -14,7 +14,7 @@ const postList = (state = initialState, action) => {
     case ADD_POST:
       return {
         ...state,
-        posts: action.post ? [...state.posts, action.post] : state.posts
+        posts: action.post ? [action.post, ...state.posts] : state.posts
       }
     default:
       return state

@@ -13,7 +13,7 @@ describe Queries::PostQueryType do
     it 'returns all posts' do
       result = subject.fields['allPosts'].resolve(nil, nil, nil)
       expect(result.size).to eq(6)
-      expect(result.first.user.id).to eq(users.first.id)
+      expect(result.first.user.id).to eq(users.last.id)
     end
 
     describe 'a query is given' do
