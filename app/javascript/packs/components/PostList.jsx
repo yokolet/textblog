@@ -36,7 +36,7 @@ class PostList extends Component {
           <div className="card">
             <div className="card-content">
               <span className="card-title">{post.title}</span>
-              <div className="post-content">{post.content}</div>
+              <div className="post-content"><pre>{post.content}</pre></div>
             </div>
           </div>
         </li>
@@ -52,7 +52,7 @@ class PostList extends Component {
       <div>
         <Link
           to="/posts/new"
-          className="btn-floating btn-large brown darken-1 right"
+          className="btn-floating btn-large teal darken-1 right"
         >
           <i className="material-icons">add</i>
         </Link>
