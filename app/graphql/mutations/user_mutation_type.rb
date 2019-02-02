@@ -16,7 +16,7 @@ Mutations::UserMutationType = GraphQL::ObjectType.define do
           user.email = me['email']
         end
       rescue => e
-        GraphQL::ExecutionError.new(e.message)
+        raise GraphQL::ExecutionError.new(e.message, options: {status: 500})
       end
     }
   end
