@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import { getPostList } from "../actions/get_post_list";
 import { connect } from "react-redux";
 import { compose } from "redux";
+import Pagination from './Pagination'
 
 class PostList extends Component {
   constructor(props) {
@@ -59,6 +60,7 @@ class PostList extends Component {
         <ul className="collection">
           {this.renderPosts()}
         </ul>
+        <Pagination/>
       </div>
     )
   }
