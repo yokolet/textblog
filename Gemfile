@@ -19,6 +19,8 @@ gem 'uglifier', '>= 1.3.0'
 gem 'webpacker'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
+# User kaminari-activerecord for pagination
+gem 'kaminari-activerecord', '~> 1.1', '>= 1.1.1'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
@@ -58,6 +60,7 @@ group :development, :test do
   gem 'shoulda-matchers', '~> 3.1', '>= 3.1.2'
   gem 'rspec-graphql_matchers', '~> 0.7.1'
   gem 'dotenv-rails', '~> 2.5'
+  gem 'rb-readline', '~> 0.5.5'
 end
 
 group :development do
