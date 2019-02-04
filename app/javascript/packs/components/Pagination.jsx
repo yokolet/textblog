@@ -3,31 +3,42 @@ import PropTypes from 'prop-types'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { graphql } from 'react-apollo'
-import { updateServerLogin } from '../actions/update_server_login'
-import { signInUserGql } from './queries'
+import { setPerPage, setLastPage, setCurrentPage } from '../actions/set_pages'
+import { pagesGql } from './queries'
 
 class Pagination extends Component {
   constructor(props) {
     super(props)
-    this.state = { cur: 1, start: 1, size: 9}
+
+    this.state = { first: 1 }
   }
 
-  componentDidMount() {
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  componentWillUpdate(nextProps) {
+    const { per, last, cur, setPerPage, setLastPage, setCurrentPage } = this.props
+    if (this.props.data.loading && !nextProps.data.loading) {
+      if (per !== nextProps.data.pages.per) {
+        setPerPage(nextProps.data.pages.per)
+      }
+      if (last !== nextProps.data.pages.last) {
+        setLastPage(nextProps.data.pages.last)
+      }
+      if (cur === 0) {
+        setCurrentPage(this.state.first)
+      }
+    }
   }
 
   renderLinks() {
-    let { start, size} = this.state
-    let pages = Array.from(Array(size), (x, i) => i + start)
-    return pages.map(page => {
+    const { first } = this.state
+    const { cur, last, setCurrentPage } = this.props
+    let numbers = Array.from(Array(last - first + 1), (x, i) => i + first)
+    return numbers.map(number => {
       return (
-        <li className={page === this.state.cur ? "active" : "waves-effect"}
-            key={page}
-            onClick={e => this.setState({cur: page})}
+        <li className={number === cur ? "active" : "waves-effect"}
+            key={number}
+            onClick={e => setCurrentPage(number)}
         >
-          <a>{page}</a>
+          <a>{number}</a>
         </li>
       )
     })
@@ -36,33 +47,35 @@ class Pagination extends Component {
   dec(event) {
     event.preventDefault()
 
-    const { cur, start } = this.state
-    if (cur > start) {
-      this.setState({ cur: cur - 1 })
+    const { first } = this.state
+    const { cur, setCurrentPage } = this.props
+    if (cur > first) {
+      setCurrentPage(cur - 1)
     }
   }
 
   inc(event) {
     event.preventDefault()
 
-    const { cur, start, size } = this.state
-    if (cur < (start + size - 1)) {
-      this.setState({ cur: cur + 1 })
+    const { cur, last, setCurrentPage } = this.props
+    if (cur < last) {
+      setCurrentPage(cur + 1)
     }
   }
 
   render () {
-    const { cur, start, size } = this.state
+    const { first } = this.state
+    const { cur, last } = this.props
     return (
       <div className="center">
         <ul className="pagination">
-          <li className={cur === 1 ? "disabled" : "waves-effect"}
+          <li className={cur === first ? "disabled" : "waves-effect"}
               onClick={this.dec.bind(this)}
           >
             <a><i className="material-icons">chevron_left</i></a>
           </li>
           {this.renderLinks()}
-          <li className={cur === (start + size - 1) ? "disabled" : "waves-effect"}
+          <li className={cur === last ? "disabled" : "waves-effect"}
               onClick={this.inc.bind(this)}
           >
             <a><i className="material-icons">chevron_right</i></a>
@@ -73,4 +86,28 @@ class Pagination extends Component {
   }
 }
 
-export default Pagination
+const gqlWrapper = graphql(pagesGql)
+
+Pagination.propTypes = {
+  per: PropTypes.number,
+  last: PropTypes.number,
+  cur: PropTypes.number,
+  setPerPage: PropTypes.func.isRequired,
+  setLastPage: PropTypes.func.isRequired,
+  setCurrentPage: PropTypes.func.isRequired
+}
+
+const mapStateToProps = state => ({
+  per: state.pages.per,
+  last: state.pages.last,
+  cur: state.pages.cur
+})
+
+const mapDispatchToProps = dispatch => ({
+  setPerPage: (per) => dispatch(setPerPage(per)),
+  setLastPage: (last) => dispatch(setLastPage(last)),
+  setCurrentPage: (cur) => dispatch(setCurrentPage(cur))
+})
+
+const reduxWrapper = connect(mapStateToProps, mapDispatchToProps)
+export default compose(reduxWrapper, gqlWrapper)(Pagination)

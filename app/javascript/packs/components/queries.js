@@ -39,3 +39,12 @@ export const addPostGql = gql`
     }
   }
 `
+
+export const pagesGql = gql`
+  query {
+    pages {
+      per
+      last
+    }
+  }
+`
