@@ -11,7 +11,7 @@ describe('getPostList', () => {
   })
 
   const data = {
-    "allPosts": [
+    "posts": [
       {
         "title": "Porro amet suscipit fugiat.",
         "content": "Dolorem blanditiis animi. Magni fugit in. Dicta vel unde.",

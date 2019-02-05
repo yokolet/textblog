@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { graphql } from 'react-apollo'
-import { allPostsGql } from './queries'
+import { postsGql } from './queries'
 import PropTypes from "prop-types";
 import { getPostList } from "../actions/get_post_list";
 import { connect } from "react-redux";
@@ -15,17 +15,20 @@ class PostList extends Component {
     this.state = { errors: [] }
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (!prevProps.data.allPosts && this.props.data.allPosts) {
-      this.props.getPostList(this.props.data)
+  componentWillUpdate(nextProps) {
+    if (this.props.data.loading && !nextProps.data.loading) {
+      this.props.getPostList(nextProps.data)
+      if (nextProps.data.error) {
+        this.setState({
+          errors: [
+            ...this.state.errors,
+            this.props.data.error.message
+          ]
+        })
+      }
     }
-    if (!prevProps.data.error && this.props.data.error) {
-      this.setState({
-        errors: [
-          ...this.state.errors,
-          this.props.data.error.message
-        ]
-      })
+    if (!this.props.data.loading && (this.props.cur !== nextProps.cur)) {
+      this.props.getPostList(nextProps.data)
     }
   }
 
@@ -66,9 +69,15 @@ class PostList extends Component {
   }
 }
 
-const gqlWrapper = graphql(allPostsGql)
+const gqlWrapper = graphql(postsGql, {
+  options: (props) => {
+    console.log('gqlwrapper', props)
+    return  { variables: { page: props.cur } }
+  }
+})
 
 PostList.propTypes = {
+  cur: PropTypes.number.isRequired,
   posts: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -85,6 +94,7 @@ PostList.propTypes = {
 }
 
 const mapStateToProps = state => ({
+  cur: state.pages.cur,
   posts: state.postList.posts,
 })
 
