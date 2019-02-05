@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { graphql } from 'react-apollo'
 import { postsGql } from './queries'
-import PropTypes from "prop-types";
-import { getPostList } from "../actions/get_post_list";
-import { connect } from "react-redux";
-import { compose } from "redux";
+import PropTypes from 'prop-types'
+import { getPostList } from '../actions/get_post_list'
+import { connect } from 'react-redux'
+import { compose } from 'redux'
 import Pagination from './Pagination'
 
 class PostList extends Component {

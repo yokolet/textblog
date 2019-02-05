@@ -5,7 +5,7 @@ import { compose } from 'redux'
 import { graphql } from "react-apollo";
 import { addPost } from '../actions/add_post'
 import { addPostGql } from './queries'
-import {Redirect} from "react-router-dom";
+import { Redirect } from 'react-router-dom'
 
 class PostForm extends Component {
   constructor(props) {
