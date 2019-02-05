@@ -7,7 +7,7 @@ import {
 const initialState = {
   per: 0,
   last: 0,
-  cur: 0,
+  cur: 1,
 }
 
 const pages = (state = initialState, action) => {

@@ -10,9 +10,9 @@ export const signInUserGql = gql`
   }
 `
 
-export const allPostsGql = gql`
-  query {
-    allPosts {
+export const postsGql = gql`
+  query Posts($page: Int!) {
+    posts(page: $page) {
       id
       title
       content
