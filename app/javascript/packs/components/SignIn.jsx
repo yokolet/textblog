@@ -7,12 +7,14 @@ class SignIn extends Component {
       marginTop: '20px'
     }
 
+    let prev = this.props.location.state ? this.props.location.state.prevPath : "/"
+
     return (
       <div className="row" style={styles}>
         <div className="col s12 m12">
           <div className="card-panel white">
             <div  className="sign_in_container">
-              <FacebookLoginButton prevPath={this.props.location.state.prevPath}/>
+              <FacebookLoginButton prevPath={prev}/>
             </div>
           </div>
         </div>
