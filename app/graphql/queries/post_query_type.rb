@@ -14,4 +14,18 @@ Queries::PostQueryType = GraphQL::ObjectType.define do
       result
     }
   end
+
+  field :post do
+    type Types::PostType
+    description "returns a post of a specified id"
+    argument :id, !types.ID
+    resolve -> (obj, args, ctx) {
+      puts "post args #{args}"
+      begin
+        Post.find(args[:id])
+      rescue => e
+        raise GraphQL::ExecutionError.new(e.message, options: {status: 400})
+      end
+    }
+  end
 end

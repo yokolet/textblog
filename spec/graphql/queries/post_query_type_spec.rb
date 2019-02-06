@@ -7,7 +7,11 @@ describe Queries::PostQueryType do
     expect(subject).to have_a_field(:posts).that_returns(types[Types::PostType])
   end
 
-  context 'with posts' do
+  it 'defines a field post that returns Types::PostType type' do
+    expect(subject).to have_a_field(:post).that_returns(Types::PostType)
+  end
+
+  context 'for posts query' do
     let!(:users) { create_list(:user, 3) } # creates 3 * 2 posts
 
     it 'returns posts for a page' do
@@ -35,6 +39,36 @@ describe Queries::PostQueryType do
           expect(result_titles).to match_array(test_titles)
           result_ids = result["data"]["posts"].map { |x| x["id"] }
           expect(result_ids).to match_array([nil]*5)
+        end
+      end
+    end
+  end
+
+  context 'for post query' do
+    let!(:user) { create(:user) } # creates 2 posts
+    let(:post) { user.posts[0] }
+
+    it 'returns a post of given id' do
+      result = subject.fields['post'].resolve(nil, {id: post.id}, nil)
+      expect(result.id).to eq(post.id)
+      expect(result.user.id).to eq(user.id)
+    end
+
+    it 'raises and error for a wrong post id' do
+      expect { subject.fields['post'].resolve(nil, {id: 100}, nil) }.to raise_error(GraphQL::ExecutionError)
+    end
+
+    describe 'a query is given' do
+      let(:vars) { {id: post.id} }
+      let(:ctx) { {} }
+      let(:result) { TextblogSchema.execute(query_string, variables: vars, context: ctx) }
+
+      context 'to request all post titles' do
+        let(:query_string) { %|query Post($id: ID!) { post(id: $id) { title user { name } } }| }
+
+        it 'returns title and user name' do
+          expect(result["data"]["post"]["title"]).to eq(post.title)
+          expect(result["data"]["post"]["user"]["name"]).to eq(user.name)
         end
       end
     end
