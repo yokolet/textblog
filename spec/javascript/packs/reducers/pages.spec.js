@@ -5,7 +5,7 @@ describe('pages', () => {
   const initialState = {
     per: 0,
     last: 0,
-    cur: 0
+    cur: 1
   }
 
   it('should return the initial state', () => {
@@ -23,7 +23,7 @@ describe('pages', () => {
     let expectedState = {
       per: 8,
       last: 0,
-      cur: 0
+      cur: 1
     }
 
     expect(reducer(initialState, action)).toEqual(expectedState)
@@ -38,7 +38,7 @@ describe('pages', () => {
     let expectedState = {
       per: 0,
       last: 2,
-      cur: 0
+      cur: 1
     }
 
     expect(reducer(initialState, action)).toEqual(expectedState)
