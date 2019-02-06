@@ -12,10 +12,13 @@ const postList = (state = initialState, action) => {
         posts: action.posts ? action.posts : []
       }
     case ADD_POST:
+      let prevPosts = state.posts.length < 5
+          ? state.posts
+          : state.posts.slice(0, state.posts.length - 1)
       return {
         ...state,
         posts: action.post
-          ? [action.post, ...state.posts.slice(0, state.posts.length - 1)]
+          ? [action.post, ...prevPosts]
           : state.posts
       }
     default:
