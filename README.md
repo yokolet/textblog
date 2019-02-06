@@ -37,6 +37,10 @@ Detailed documents how the app was created are here.
 
 * How to run the test suite
 
+    `rails spec`
+
+    `yarn spec`
+
 * Services (job queues, cache servers, search engines, etc.)
 
 * Deployment instructions
