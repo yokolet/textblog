@@ -18,7 +18,14 @@ const logger = store => next => action => {
   console.groupEnd(action.type)
   return result
 }
-const store = createStore(reducer, applyMiddleware(logger))
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+const store = createStore(
+  reducer,
+  composeEnhancers(
+    applyMiddleware(logger)
+  )
+)
+//const store = createStore(reducer)
 
 const Root = props => {
   return (
