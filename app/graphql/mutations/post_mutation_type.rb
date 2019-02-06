@@ -29,4 +29,28 @@ Mutations::PostMutationType = GraphQL::ObjectType.define do
       end
     }
   end
+
+  field :deletePost, types.ID do
+    description "Delete a post."
+    argument :provider, !types.String
+    argument :post_id, !types.ID
+    resolve -> (obj, args, ctx) {
+      begin
+        user = GraphqlHelper.ensure_user(ctx)
+        post = Post.find(args[:post_id])
+        if user.id == post.user.id
+          deleted = post.delete
+        else
+          raise GraphQL::ExecutionError.new('This is not your post.', options: {status: 400})
+        end
+        deleted.id
+      rescue => e
+        if (e.is_a?(GraphQL::ExecutionError))
+          raise e
+        else
+          raise GraphQL::ExecutionError.new(e.message, options: {status: 500})
+        end
+      end
+    }
+  end
 end
