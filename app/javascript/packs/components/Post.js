@@ -22,7 +22,7 @@ class Post extends Component {
       return <div>Loading...</div>
     }
 
-    let { post } = this.props
+    const { post, isAuthenticated, user_id } = this.props
     return (
       <div className="row" style={styles}>
         <div className="col s12 m12">
@@ -34,6 +34,12 @@ class Post extends Component {
                 <div className="post-content"><pre>{post.content}</pre></div>
               </div>
             </div>
+            { (isAuthenticated && user_id === post.user.id) &&
+              <div>
+                <a className="waves-effect waves-light btn pink darken-1 left"><i className="material-icons right">delete</i>delete</a>
+                <a className="waves-effect waves-light btn right"><i className="material-icons right">create</i>edit</a>
+              </div>
+            }
           </div>
         </div>
       </div>
@@ -65,6 +71,7 @@ Post.propTypes = {
 
 const mapStateToProps = state => ({
   isAuthenticated: state.serverLogin.isAuthenticated,
+  user_id: state.serverLogin.user ? state.serverLogin.user.id : undefined,
   post: state.currentPost.post
 })
 
