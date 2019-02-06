@@ -45,7 +45,7 @@ class User extends Component {
     if (this.props.isAuthenticated) {
       const { user_id, name } = this.props
       return (
-        <li key={user_id} className="grey darken-1">{name}</li>
+        <li key={user_id} className="grey darken-1"><i className="material-icons left">person</i>{name}</li>
       )
     } else {
       return (
