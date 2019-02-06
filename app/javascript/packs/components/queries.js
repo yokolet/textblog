@@ -25,6 +25,22 @@ export const postsGql = gql`
   }
 `
 
+export const currentPostGql = gql`
+  query CurrentPost($id: ID!) {
+    post(id: $id) {
+      id
+      title
+      content
+      updated_at
+      user {
+        id
+        name
+        provider
+      }
+    }
+  }
+`
+
 export const addPostGql = gql`
   mutation AddPost($provider: String!, $title: String!, $content: String!) {
     addPost(provider: $provider, title: $title, content: $content) {

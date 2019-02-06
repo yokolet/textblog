@@ -37,12 +37,14 @@ class PostList extends Component {
       return (
         <li key={post.id} className="collection-item">
           <div className="post-info">{post.user.name} posted at {post.updated_at}</div>
-          <div className="card">
-            <div className="card-content">
-              <span className="card-title">{post.title}</span>
-              <div className="post-content"><pre>{post.content}</pre></div>
+          <Link to={`posts/${post.id}`}>
+            <div className="card">
+              <div className="card-content">
+                <span className="card-title">{post.title}</span>
+                <div className="post-content"><pre>{post.content}</pre></div>
+              </div>
             </div>
-          </div>
+          </Link>
         </li>
       )
     })
