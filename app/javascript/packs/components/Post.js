@@ -14,8 +14,12 @@ class Post extends Component {
   }
 
   render() {
-    let styles = {
+    let row_styles = {
       marginTop: '20px'
+    }
+
+    let card_panel_styles = {
+      paddingBottom: '64px'
     }
 
     if (this.props.data.loading || this.props.post === null) {
@@ -24,9 +28,9 @@ class Post extends Component {
 
     const { post, isAuthenticated, user_id } = this.props
     return (
-      <div className="row" style={styles}>
+      <div className="row" style={row_styles}>
         <div className="col s12 m12">
-          <div className="card-panel white">
+          <div className="card-panel white" style={card_panel_styles}>
             <div className="post-info">{post.user.name} posted at {post.updated_at}</div>
             <div className="card">
               <div className="card-content">
@@ -35,7 +39,7 @@ class Post extends Component {
               </div>
             </div>
             { (isAuthenticated && user_id === post.user.id) &&
-              <div>
+              <div className="card-action">
                 <a className="waves-effect waves-light btn pink darken-1 left"><i className="material-icons right">delete</i>delete</a>
                 <a className="waves-effect waves-light btn right"><i className="material-icons right">create</i>edit</a>
               </div>
