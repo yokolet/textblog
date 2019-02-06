@@ -20,7 +20,7 @@ describe Mutations::UserMutationType do
     let(:args) { { provider: 'facebook' } }
     let(:ctx) { {
         api: {
-            access_token: access_token,
+            provider: 'facebook',
             social_api: social_api
         }
     } }
