@@ -5,12 +5,37 @@ import PropTypes from 'prop-types'
 import { graphql } from 'react-apollo'
 import { currentPostGql } from './queries'
 import { getPost } from '../actions/get_post'
+import DeletePostModel from './DeletePostModel'
 
 class Post extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = { showDeleteModal: false }
+
+    this.onClickEdit.bind(this)
+    this.onClickDelete.bind(this)
+    this.hideDeleteModal.bind(this)
+  }
+
   componentWillUpdate(nextProps) {
     if (this.props.data.loading && !nextProps.data.loading) {
       this.props.getPost(nextProps.data)
     }
+  }
+
+  onClickEdit = event => {
+    event.preventDefault()
+
+  }
+
+  onClickDelete = event => {
+    event.preventDefault()
+    this.setState({ showDeleteModal: true })
+  }
+
+  hideDeleteModal = () => {
+    this.setState( { showDeleteModal: false })
   }
 
   render() {
@@ -40,12 +65,21 @@ class Post extends Component {
             </div>
             { (isAuthenticated && user_id === post.user.id) &&
               <div className="card-action">
-                <a className="waves-effect waves-light btn pink darken-1 left"><i className="material-icons right">delete</i>delete</a>
-                <a className="waves-effect waves-light btn right"><i className="material-icons right">create</i>edit</a>
+                <button className="waves-effect waves-light btn pink darken-1 left"
+                        onClick={e => this.onClickDelete(e)}
+                >
+                  <i className="material-icons right">delete</i>delete
+                </button>
+                <button className="waves-effect waves-light btn right"
+                        onClick={e => this.onClickEdit(e)}
+                >
+                  <i className="material-icons right">create</i>edit
+                </button>
               </div>
             }
           </div>
         </div>
+        <DeletePostModel hideDeleteModal={this.hideDeleteModal} show={this.state.showDeleteModal} />
       </div>
     )
   }
