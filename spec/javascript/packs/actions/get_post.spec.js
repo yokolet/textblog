@@ -5,7 +5,7 @@ import * as types from 'constants/actions'
 const mockStore = configureStore()
 const store = mockStore()
 
-describe('updateServerLogin', () => {
+describe('getPost', () => {
   beforeEach(() => {
     store.clearActions()
   })
