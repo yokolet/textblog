@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { graphql } from 'react-apollo'
+import { updateFacebookLogin } from '../actions/update_facebook_login'
 import { updateServerLogin } from '../actions/update_server_login'
 import { signInUserGql } from './queries'
 
@@ -14,7 +15,13 @@ class User extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener('load', this.handleLoad)
+    const { access_token, isAuthenticated, updateFacebookLogin, updateServerLogin } = this.props
+    if (window.localStorage.getItem("_textblog_.socialLogin") && access_token === null) {
+      updateFacebookLogin(JSON.parse(window.localStorage.getItem("_textblog_.socialLogin")))
+    }
+    if (window.localStorage.getItem("_textblog_.serverLogin") && isAuthenticated === false) {
+      updateServerLogin(JSON.parse(window.localStorage.getItem("_textblog_.serverLogin")))
+    }
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -23,6 +30,7 @@ class User extends Component {
 
   handleLoad() {
     const { access_token, isAuthenticated } = this.props
+
     if (access_token && isAuthenticated === false) {
       const { mutate, provider, updateServerLogin } = this.props
       mutate({
@@ -31,6 +39,13 @@ class User extends Component {
       })
         .then(({ data }) => {
           updateServerLogin(data)
+          const { user_id, name } = this.props
+          window.localStorage.setItem(
+            "_textblog_.socialLogin",
+            JSON.stringify({ provider, accessToken: access_token }))
+          window.localStorage.setItem(
+            "_textblog_.serverLogin",
+            JSON.stringify({ id: user_id, name, provider }))
         })
         .catch(res => {
           if (res.graphQLErrors) {
@@ -42,8 +57,8 @@ class User extends Component {
   }
 
   render () {
+    const { provider, access_token, user_id, name } = this.props
     if (this.props.isAuthenticated) {
-      const { user_id, name } = this.props
       return (
         <li key={user_id} className="grey darken-1"><i className="material-icons left">person</i>{name}</li>
       )
@@ -61,7 +76,9 @@ User.propTypes = {
   isAuthenticated: PropTypes.bool,
   access_token: PropTypes.string,
   name: PropTypes.string.isRequired,
-  user_id: PropTypes.string
+  user_id: PropTypes.string,
+  updateFacebookLogin: PropTypes.func.isRequired,
+  updateServerLogin: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -73,6 +90,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+  updateFacebookLogin: (response) => dispatch(updateFacebookLogin(response)),
   updateServerLogin: (user) => dispatch(updateServerLogin(user))
 })
 

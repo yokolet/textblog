@@ -11,6 +11,11 @@ import User from 'components/User'
 import { signInUserGql } from 'components/queries'
 
 describe('<User />', () => {
+  beforeEach(() => {
+    window.localStorage.removeItem("_textblog_.socialLogin")
+    window.localStorage.removeItem("_textblog_.serverLogin")
+  })
+
   describe('without Redux store', () => {
     let wrapper = shallow(<User/>)
 
@@ -86,7 +91,8 @@ describe('<User />', () => {
           </Provider>
         </MockedProvider>
       )
-      expect(wrapper.find('li').text()).toEqual('my name')
+      // material icon adds 'person'
+      expect(wrapper.find('li').text()).toEqual('personmy name')
     })
   })
 })

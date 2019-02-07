@@ -10,6 +10,8 @@ class NavBar extends Component {
   onSignoutClick() {
     this.props.updateFacebookLogin({})
     this.props.updateServerLogin({})
+    window.localStorage.removeItem("_textblog_.socialLogin")
+    window.localStorage.removeItem("_textblog_.serverLogin")
   }
 
   render () {
