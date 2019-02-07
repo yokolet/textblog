@@ -65,7 +65,7 @@ class PostForm extends Component {
   render() {
     if (this.state.posted) {
       return (
-        <Redirect to="/" />
+        <Redirect push to="/" />
       )
     }
     const { isAuthenticated } = this.props

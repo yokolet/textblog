@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Redirect } from 'react-router-dom'
+import { Redirect, withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import FacebookLogin from 'react-facebook-login'
@@ -14,7 +14,7 @@ class FacebookLoginButton extends Component {
     const { access_token, prevPath } = this.props
     if (access_token) {
       return (
-        <Redirect to={prevPath} />
+        <Redirect push to={prevPath} />
       )
     } else {
       return (
@@ -41,4 +41,4 @@ const mapDispatchToProps = dispatch => ({
   updateFacebookLogin: (response) => dispatch(updateFacebookLogin(response))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(FacebookLoginButton)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(FacebookLoginButton))
