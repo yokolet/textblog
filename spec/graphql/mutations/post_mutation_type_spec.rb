@@ -92,7 +92,7 @@ describe Mutations::PostMutationType do
         result = TextblogSchema.execute(mutate_string, variables: vars, context: ctx)
         expect(result["data"]["addPost"]).to be_nil
         expect(result["errors"]).not_to be_nil
-        expect(result["errors"].first[:status]).to eq(400)
+        expect(result["errors"].first[:type]).to eq("ParamError")
       end
     end
   end

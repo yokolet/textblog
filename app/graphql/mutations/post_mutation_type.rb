@@ -8,25 +8,17 @@ Mutations::PostMutationType = GraphQL::ObjectType.define do
     argument :title, !types.String
     argument :content, !types.String
     resolve -> (obj, args, ctx) {
-      begin
-        user = GraphqlHelper.ensure_user(ctx)
-        title = args[:title]
-        if title.size < 1 || title.size > 50
-          raise GraphQL::ExecutionError.new('title length should be between 1 and 50', options: {status: 400})
-        end
-        content = args[:content]
-        if content.size < 1 || content.size > 5000
-          raise GraphQL::ExecutionError.new('content length should be between 1 and 5000', options: {status: 400})
-        end
-        user.posts.create(title: GraphqlHelper.escape_angle_brackets(title),
-                          content: GraphqlHelper.escape_angle_brackets(content))
-      rescue => e
-        if (e.is_a?(GraphQL::ExecutionError))
-          raise e
-        else
-          raise GraphQL::ExecutionError.new(e.message, options: {status: 500})
-        end
+      user = GraphqlHelper.ensure_user(ctx)
+      title = args[:title]
+      if title.size < 1 || title.size > 50
+        raise GraphQL::ExecutionError.new('title length should be between 1 and 50', options: {type: "ParamError"})
       end
+      content = args[:content]
+      if content.size < 1 || content.size > 5000
+        raise GraphQL::ExecutionError.new('content length should be between 1 and 5000', options: {type: "ParamError"})
+      end
+      user.posts.create(title: GraphqlHelper.escape_angle_brackets(title),
+                        content: GraphqlHelper.escape_angle_brackets(content))
     }
   end
 
@@ -35,22 +27,18 @@ Mutations::PostMutationType = GraphQL::ObjectType.define do
     argument :provider, !types.String
     argument :post_id, !types.ID
     resolve -> (obj, args, ctx) {
+      user = GraphqlHelper.ensure_user(ctx)
       begin
-        user = GraphqlHelper.ensure_user(ctx)
         post = Post.find(args[:post_id])
-        if user.id == post.user.id
-          deleted = post.delete
-        else
-          raise GraphQL::ExecutionError.new('This is not your post.', options: {status: 400})
-        end
-        deleted.id
       rescue => e
-        if (e.is_a?(GraphQL::ExecutionError))
-          raise e
-        else
-          raise GraphQL::ExecutionError.new(e.message, options: {status: 500})
-        end
+        raise GraphQL::ExecutionError.new(e.message, options: {type: "ParamError"})
       end
+      if user.id == post.user.id
+        deleted = post.delete
+      else
+        raise GraphQL::ExecutionError.new('This is not your post.', options: {type: "ParamError"})
+      end
+      deleted.id
     }
   end
 end

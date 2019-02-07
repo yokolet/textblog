@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { graphql } from "react-apollo";
 import { addPost } from '../actions/add_post'
+import { updateFacebookLogin} from '../actions/update_facebook_login'
+import { updateServerLogin} from '../actions/update_server_login'
 import { addPostGql } from './queries'
 import { Redirect } from 'react-router-dom'
 
@@ -46,8 +48,14 @@ class PostForm extends Component {
         })
         .catch(res => {
           if (res.graphQLErrors) {
-            let errors = res.graphQLErrors.map(error => error.message);
+            let errors = res.graphQLErrors.map(error => error.message)
             this.setState({ errors })
+            if (res.graphQLErrors.map(error => error.type).includes('OAuthError')) {
+              window.localStorage.removeItem("_textblog_.socialLogin")
+              window.localStorage.removeItem("_textblog_.serverLogin")
+              this.props.updateFacebookLogin({})
+              this.props.updateServerLogin({})
+            }
             M.toast({html: errors.toString()})
           }
         })
@@ -114,6 +122,8 @@ PostForm.propTypes = {
   access_token: PropTypes.string,
   isAuthenticated: PropTypes.bool,
   addPost: PropTypes.func.isRequired,
+  updateFacebookLogin: PropTypes.func.isRequired,
+  updateServerLogin: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -123,7 +133,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  addPost: (data) => dispatch(addPost(data))
+  addPost: (data) => dispatch(addPost(data)),
+  updateFacebookLogin: (response) => dispatch(updateFacebookLogin(response)),
+  updateServerLogin: (data) => dispatch(updateServerLogin(data))
 })
 
 const reduxWrapper = connect(mapStateToProps, mapDispatchToProps)

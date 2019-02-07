@@ -9,7 +9,7 @@ Queries::PostQueryType = GraphQL::ObjectType.define do
     resolve -> (obj, args, ctx) {
       result = Post.order(updated_at: :desc).page(args[:page])
       if result.empty?
-        raise GraphQL::ExecutionError.new("The page number is out of range", options: {status: 400})
+        raise GraphQL::ExecutionError.new("The page number is out of range", options: {type: "ParamError"})
       end
       result
     }
@@ -20,11 +20,10 @@ Queries::PostQueryType = GraphQL::ObjectType.define do
     description "returns a post of a specified id"
     argument :id, !types.ID
     resolve -> (obj, args, ctx) {
-      puts "post args #{args}"
       begin
         Post.find(args[:id])
       rescue => e
-        raise GraphQL::ExecutionError.new(e.message, options: {status: 400})
+        raise GraphQL::ExecutionError.new(e.message, options: {type: "ParamError"})
       end
     }
   end

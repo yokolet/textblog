@@ -12,7 +12,7 @@ module GraphqlHelper
     if social_api.nil?
       # this happens when GraphQL IDE is used
       # Authorization header is missing, or provider is not facebook
-      raise GraphQL::ExecutionError.new("Sign In again", options: {status: 400})
+      raise GraphQL::ExecutionError.new("Sign In again", options: {type: "AuthHeaderError"})
     end
     social_api
   end
@@ -24,12 +24,12 @@ module GraphqlHelper
       me = social_api.get_object('me', {'fields': 'id'})
     rescue
       # The error message is really lengthy, full explanation. Cut down to a clear message here.
-      raise GraphQL::ExecutionError.new("Sign In again", options: {status: 400})
+      raise GraphQL::ExecutionError.new("Sign In again", options: {type: "OAuthError"})
     end
     user = User.where(provider: ctx[:api][:provider], uid: me['id']).first
     if user.nil?
       # After the user signed in, the account was deleted before submit. Not likely, but may happen.
-      raise GraphQL::ExecutionError.new("Sign In again", options: {status: 400})
+      raise GraphQL::ExecutionError.new("Sign In again", options: {type: "ParamError"})
     end
     user
   end

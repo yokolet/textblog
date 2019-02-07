@@ -32,7 +32,7 @@ class User extends Component {
     const { access_token, isAuthenticated } = this.props
 
     if (access_token && isAuthenticated === false) {
-      const { mutate, provider, updateServerLogin } = this.props
+      const { mutate, provider, updateFacebookLogin, updateServerLogin } = this.props
       mutate({
         variables: { provider },
         context: { headers: { authorization: `Bearer ${access_token}` } }
@@ -49,8 +49,13 @@ class User extends Component {
         })
         .catch(res => {
           if (res.graphQLErrors) {
-            let errors = res.graphQLErrors.map(error => error.message);
+            let errors = res.graphQLErrors.map(error => error.message)
             this.setState({ errors })
+            window.localStorage.removeItem("_textblog_.socialLogin")
+            window.localStorage.removeItem("_textblog_.serverLogin")
+            updateFacebookLogin({})
+            updateServerLogin({})
+            M.toast({html: errors.toString()})
           }
         })
     }

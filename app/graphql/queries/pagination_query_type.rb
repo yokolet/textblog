@@ -6,8 +6,7 @@ Queries::PaginationQueryType = GraphQL::ObjectType.define do
     type Types::PaginationType
     description "returns a first and last page numbers"
     resolve -> (obj, args, ctx) {
-      # Post model defines `paginates_per 5`
-      per = Post.page(1).limit_value
+      per = Post.page(1).limit_value # Post model defines `paginates_per 5`
       last = Post.page(1).total_pages
       return Pages.new(per, last)
     }
