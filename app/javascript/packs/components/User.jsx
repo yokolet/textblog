@@ -45,7 +45,7 @@ class User extends Component {
             JSON.stringify({ provider, accessToken: access_token }))
           window.localStorage.setItem(
             "_textblog_.serverLogin",
-            JSON.stringify({ id: user_id, name, provider }))
+            JSON.stringify({ signInUser: { id: user_id, name, provider } }))
         })
         .catch(res => {
           if (res.graphQLErrors) {
