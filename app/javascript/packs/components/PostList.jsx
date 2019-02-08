@@ -30,6 +30,9 @@ class PostList extends Component {
     if (!this.props.data.loading && (this.props.cur !== nextProps.cur)) {
       this.props.getPostList(nextProps.data)
     }
+    if (!this.props.data.loading && (this.props.data.posts[0].id !== nextProps.data.posts[0].id)) {
+      this.props.getPostList(nextProps.data)
+    }
   }
 
   excerpt = (content) => {
@@ -104,7 +107,7 @@ PostList.propTypes = {
 
 const mapStateToProps = state => ({
   cur: state.pages.cur,
-  posts: state.postList.posts,
+  posts: state.postList.posts
 })
 
 const mapDispatchToProps = dispatch => ({

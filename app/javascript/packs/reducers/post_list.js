@@ -15,22 +15,11 @@ const postList = (state = initialState, action) => {
         ...state,
         posts: action.posts ? action.posts : []
       }
-    case ADD_POST:
-      let prevPosts = state.posts.length < 5
-          ? state.posts
-          : state.posts.slice(0, state.posts.length - 1)
-      return {
-        ...state,
-        posts: action.post
-          ? [action.post, ...prevPosts]
-          : state.posts
-      }
     case DELETE_POST:
       return {
         ...state,
         posts: state.posts.filter(post => post.id !== action.post_id)
       }
-
     default:
       return state
   }

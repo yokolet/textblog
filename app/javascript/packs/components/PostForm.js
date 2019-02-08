@@ -4,16 +4,16 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { graphql } from "react-apollo";
 import { addPost } from '../actions/add_post'
+import { setCurrentPage } from '../actions/set_pages'
 import { updateFacebookLogin} from '../actions/update_facebook_login'
 import { updateServerLogin} from '../actions/update_server_login'
-import { addPostGql } from './queries'
-import { Redirect } from 'react-router-dom'
+import { postsGql, addPostGql, pagesGql } from './queries'
 
 class PostForm extends Component {
   constructor(props) {
     super(props)
 
-    this.state = { title: '', content: '', posted: false, errors: []}
+    this.state = { title: '', content: '', errors: []}
   }
 
   onSubmit(event) {
@@ -37,14 +37,20 @@ class PostForm extends Component {
     }
 
     if (goodTitle && goodContent) {
-      const { mutate, provider, access_token, addPost } = this.props
+      const { mutate, provider, access_token, addPost, setCurrentPage } = this.props
       mutate({
         variables: { provider, title: this.state.title, content: this.state.content },
-        context: { headers: { authorization: `Bearer ${access_token}` } }
+        context: { headers: { authorization: `Bearer ${access_token}` } },
+        refetchQueries: [
+          { query: pagesGql },
+          { query: postsGql, variables: { page: 1 } }
+          ]
       })
         .then(({ data }) => {
           addPost(data)
-          this.setState({ posted: true })
+          setCurrentPage(1)
+
+          this.props.history.push('/')
         })
         .catch(res => {
           if (res.graphQLErrors) {
@@ -63,11 +69,6 @@ class PostForm extends Component {
   }
 
   render() {
-    if (this.state.posted) {
-      return (
-        <Redirect push to="/" />
-      )
-    }
     const { isAuthenticated } = this.props
     let styles = {
       marginTop: '20px'
@@ -115,13 +116,15 @@ class PostForm extends Component {
   }
 }
 
-const gqlWrapper = graphql(addPostGql)
+const addPostGqlWrapper = graphql(addPostGql)
+const pagesGqlWrapper = graphql(pagesGql)
 
 PostForm.propTypes = {
   provider: PropTypes.string,
   access_token: PropTypes.string,
   isAuthenticated: PropTypes.bool,
   addPost: PropTypes.func.isRequired,
+  setCurrentPage: PropTypes.func.isRequired,
   updateFacebookLogin: PropTypes.func.isRequired,
   updateServerLogin: PropTypes.func.isRequired
 }
@@ -134,10 +137,11 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   addPost: (data) => dispatch(addPost(data)),
+  setCurrentPage: (cur) => dispatch(setCurrentPage(cur)),
   updateFacebookLogin: (response) => dispatch(updateFacebookLogin(response)),
   updateServerLogin: (data) => dispatch(updateServerLogin(data))
 })
 
 const reduxWrapper = connect(mapStateToProps, mapDispatchToProps)
 
-export default compose(reduxWrapper, gqlWrapper)(PostForm)
+export default compose(pagesGqlWrapper, addPostGqlWrapper, reduxWrapper)(PostForm)
