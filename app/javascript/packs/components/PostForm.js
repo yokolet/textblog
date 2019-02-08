@@ -12,11 +12,11 @@ import { postsGql, addPostGql, pagesGql } from './queries'
 class PostForm extends Component {
   constructor(props) {
     super(props)
-
+    this.onSubmit = this.onSubmit.bind(this)
     this.state = { title: '', content: '', errors: []}
   }
 
-  onSubmit(event) {
+  onSubmit = (event) => {
     event.preventDefault()
 
     let goodTitle = false
@@ -78,7 +78,7 @@ class PostForm extends Component {
         <div className="col s12 m12">
           <div className="card-panel white">
             {isAuthenticated ? (
-              <form onSubmit={this.onSubmit.bind(this)}>
+              <form onSubmit={this.onSubmit}>
                 <div className="row">
                   <div className="input-field col s12">
                     <input
