@@ -1,4 +1,4 @@
-import { GET_POST } from '../constants/actions'
+import { GET_POST, DELETE_POST } from '../constants/actions'
 
 const initialState = {
   post: null
@@ -10,6 +10,12 @@ const currentPost = (state = initialState, action) => {
       return {
         ...state,
         post: action.post ? action.post : initialState.post
+      }
+    case DELETE_POST:
+      let post_id = action.post_id
+      return {
+        ...state,
+        post: state.post && state.post.id === post_id ? null : state.post
       }
     default:
       return state

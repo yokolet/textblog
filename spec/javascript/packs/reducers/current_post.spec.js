@@ -54,4 +54,18 @@ describe('current post', () => {
       expect(reducer(initialState, action)).toEqual(initialState)
     })
   })
+
+  describe('with DELETE_POST', () => {
+    it('should handle action', () => {
+      let action = {
+        type: types.DELETE_POST,
+        post_id: "1"
+      }
+      let expectedState = {
+        post: null
+      }
+
+      expect(reducer(initialState, action)).toEqual(expectedState)
+    })
+  })
 })
