@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { graphql } from 'react-apollo'
 import { currentPostGql } from './queries'
@@ -11,11 +12,15 @@ class Post extends Component {
   constructor(props) {
     super(props)
 
-    this.state = { showDeleteModal: false }
+    this.state = {
+      showDeleteModal: false,
+      postDeleted: null
+    }
 
     this.onClickEdit.bind(this)
     this.onClickDelete.bind(this)
     this.hideDeleteModal.bind(this)
+    this.completeDelete.bind(this)
   }
 
   componentWillUpdate(nextProps) {
@@ -38,6 +43,10 @@ class Post extends Component {
     this.setState( { showDeleteModal: false })
   }
 
+  completeDelete = (data) => {
+    this.setState( { postDeleted: data.deletePost })
+  }
+
   render() {
     let row_styles = {
       marginTop: '20px'
@@ -47,6 +56,11 @@ class Post extends Component {
       paddingBottom: '64px'
     }
 
+    if (this.state.postDeleted !== null) {
+      return (
+        <Redirect push to="/" />
+      )
+    }
     if (this.props.data.loading || this.props.post === null) {
       return <div>Loading...</div>
     }
@@ -64,22 +78,27 @@ class Post extends Component {
               </div>
             </div>
             { (isAuthenticated && user_id === post.user.id) &&
-              <div className="card-action">
-                <button className="waves-effect waves-light btn pink darken-1 left"
-                        onClick={e => this.onClickDelete(e)}
-                >
-                  <i className="material-icons right">delete</i>delete
-                </button>
-                <button className="waves-effect waves-light btn right"
-                        onClick={e => this.onClickEdit(e)}
-                >
-                  <i className="material-icons right">create</i>edit
-                </button>
-              </div>
+            <div className="card-action">
+              <button className="waves-effect waves-light btn pink darken-1 left"
+                      onClick={e => this.onClickDelete(e)}
+              >
+                <i className="material-icons right">delete</i>delete
+              </button>
+              <button className="waves-effect waves-light btn right"
+                      onClick={e => this.onClickEdit(e)}
+              >
+                <i className="material-icons right">create</i>edit
+              </button>
+            </div>
             }
           </div>
         </div>
-        <DeletePostModel hideDeleteModal={this.hideDeleteModal} show={this.state.showDeleteModal} />
+        { (isAuthenticated && user_id === post.user.id) &&
+        <DeletePostModel
+          hideDeleteModal={this.hideDeleteModal}
+          completeDelete={this.completeDelete}
+          show={this.state.showDeleteModal}/>
+        }
       </div>
     )
   }

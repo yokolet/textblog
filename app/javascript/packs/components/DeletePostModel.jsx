@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
-import { Redirect, withRouter } from 'react-router-dom'
+import { compose } from 'redux'
+import { connect } from 'react-redux'
+import { graphql } from 'react-apollo'
+import { deletePostGql } from './queries'
 import PropTypes from 'prop-types'
+import { deletePost } from '../actions/delete_post'
 
 class DeletePostModel extends Component {
   constructor(props) {
@@ -13,15 +17,35 @@ class DeletePostModel extends Component {
   onClickDelete = event => {
     event.preventDefault()
 
-    this.props.hideDeleteModal()
-    return (
-      <Redirect push to="/" />
-    )
+    const { mutate, provider, access_token, post, deletePost, hideDeleteModal, completeDelete } = this.props
+    mutate({
+      variables: { provider, post_id: post.id },
+      context: { headers: { authorization: `Bearer ${access_token}` } }
+    })
+      .then(({ data }) => {
+        deletePost(data)
+        completeDelete(data)
+      })
+      .catch(res => {
+        if (res.graphQLErrors) {
+          let errors = res.graphQLErrors.map(error => error.message)
+          this.setState({ errors })
+          if (res.graphQLErrors.map(error => error.type).includes('OAuthError')) {
+            window.localStorage.removeItem("_textblog_.socialLogin")
+            window.localStorage.removeItem("_textblog_.serverLogin")
+            this.props.updateFacebookLogin({})
+            this.props.updateServerLogin({})
+          }
+          M.toast({html: errors.toString()})
+        }
+      })
+
+    hideDeleteModal()
   }
 
   onClickCancel = event => {
     event.preventDefault()
-    
+
     this.props.hideDeleteModal()
   }
 
@@ -52,9 +76,40 @@ class DeletePostModel extends Component {
   }
 }
 
+const gqlWrapper = graphql(deletePostGql)
+
 DeletePostModel.propTypes = {
   show: PropTypes.bool.isRequired,
-  hideDeleteModal: PropTypes.func.isRequired
+  provider: PropTypes.string,
+  access_token: PropTypes.string,
+  isAuthenticated: PropTypes.bool,
+  post: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
+    updated_at: PropTypes.string.isRequired,
+    user: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      provider: PropTypes.string.isRequired,
+    })
+  }),
+  hideDeleteModal: PropTypes.func.isRequired,
+  completeDelete: PropTypes.func.isRequired,
+  deletePost: PropTypes.func.isRequired
 }
 
-export default withRouter(DeletePostModel)
+const mapStateToProps = state => ({
+  provider: state.socialLogin.provider ? state.socialLogin.provider : null,
+  access_token: state.socialLogin.access_token ? state.socialLogin.access_token : null,
+  isAuthenticated: state.serverLogin.isAuthenticated,
+  user_id: state.serverLogin.user ? state.serverLogin.user.id : undefined,
+  post: state.currentPost.post
+})
+
+const mapDispatchToProps = dispatch => ({
+  deletePost: (data) => dispatch(deletePost(data))
+})
+
+const reduxWrapper = connect(mapStateToProps, mapDispatchToProps)
+export default compose(reduxWrapper, gqlWrapper)(DeletePostModel)

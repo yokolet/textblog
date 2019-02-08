@@ -56,6 +56,18 @@ export const addPostGql = gql`
   }
 `
 
+export const deletePostGql = gql`
+  mutation DeletePost(
+    $provider: String!,
+    $post_id: ID!)
+  {
+    deletePost(
+      provider: $provider,
+      post_id: $post_id
+    )
+  }
+`
+
 export const pagesGql = gql`
   query {
     pages {
