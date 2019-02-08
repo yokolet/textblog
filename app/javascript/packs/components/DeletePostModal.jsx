@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { graphql } from 'react-apollo'
-import { deletePostGql } from './queries'
+import { postsGql, deletePostGql, pagesGql } from './queries'
 import PropTypes from 'prop-types'
 import { deletePost } from '../actions/delete_post'
 
@@ -20,7 +20,11 @@ class DeletePostModal extends Component {
     const { mutate, provider, access_token, post, deletePost, hideDeleteModal, completeDelete } = this.props
     mutate({
       variables: { provider, post_id: post.id },
-      context: { headers: { authorization: `Bearer ${access_token}` } }
+      context: { headers: { authorization: `Bearer ${access_token}` } },
+      refetchQueries: [
+        { query: pagesGql },
+        { query: postsGql, variables: { page: 1 } }
+      ]
     })
       .then(({ data }) => {
         deletePost(data)
