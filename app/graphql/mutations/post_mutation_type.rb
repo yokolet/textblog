@@ -41,4 +41,34 @@ Mutations::PostMutationType = GraphQL::ObjectType.define do
       deleted.id
     }
   end
+
+  field :updatePost, types.ID do
+    description "Update a post."
+    argument :provider, !types.String
+    argument :post_id, !types.ID
+    argument :title, !types.String
+    argument :content, !types.String
+    resolve -> (obj, args, ctx) {
+      user = GraphqlHelper.ensure_user(ctx)
+      begin
+        post = Post.find(args[:post_id])
+      rescue => e
+        raise GraphQL::ExecutionError.new(e.message, options: {type: "ARError"})
+      end
+      if user.id != post.user.id
+        raise GraphQL::ExecutionError.new('This is not your post.', options: {type: "ParamError"})
+      end
+      title = args[:title]
+      if title.size < 1 || title.size > 50
+        raise GraphQL::ExecutionError.new('title length should be between 1 and 50', options: {type: "ParamError"})
+      end
+      content = args[:content]
+      if content.size < 1 || content.size > 5000
+        raise GraphQL::ExecutionError.new('content length should be between 1 and 5000', options: {type: "ParamError"})
+      end
+      post.update(title: GraphqlHelper.escape_angle_brackets(title),
+                  content: GraphqlHelper.escape_angle_brackets(content))
+      post.id
+    }
+  end
 end

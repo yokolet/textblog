@@ -11,6 +11,10 @@ describe Mutations::PostMutationType do
     expect(subject).to have_a_field(:deletePost).that_returns(types.ID)
   end
 
+  it 'defines a field updatePost that returns ID type' do
+    expect(subject).to have_a_field(:updatePost).that_returns(types.ID)
+  end
+
   let(:facebook) { Faker::Omniauth.facebook }
   let(:access_token) { facebook[:credentials][:token] }
   let(:user) { create(:user) }
@@ -140,6 +144,61 @@ describe Mutations::PostMutationType do
         allow(social_api).to receive(:get_object).and_return(me)
         result = TextblogSchema.execute(mutate_string, variables: vars, context: ctx)
         expect(result["data"]["deletePost"]).to eq(post_id.to_s) # since ID is string
+      end
+    end
+  end
+
+  context 'with updatePost field' do
+    let(:post_id) { user.posts.last.id }
+    let(:args) {
+      {
+          provider: 'facebook',
+          post_id: post_id,
+          title: Faker::Lorem.sentence,
+          content: Faker::Lorem.paragraph
+      }
+    }
+
+    it 'should update a post' do
+      allow(social_api).to receive(:get_object).and_return(me)
+      result = subject.fields['updatePost'].resolve(nil, args, ctx)
+      expect(result).to eq(post_id)
+      expect(Post.find(post_id).title).to eq(args[:title])
+    end
+
+    describe 'given a wrong input' do
+      let(:args) {
+        {
+            provider: 'facebook',
+            post_id: 0
+        }
+      }
+
+      it('should raise error for wrong post id') do
+        allow(social_api).to receive(:get_object).and_return(me)
+        expect {subject.fields['updatePost'].resolve(nil, args, ctx)}.to raise_exception(GraphQL::ExecutionError)
+      end
+    end
+
+    describe 'mutation is given' do
+      let(:mutate_string) {
+        %{mutation UpdatePost($provider: String!, $post_id: ID!, $title: String!, $content: String!) {
+            updatePost(provider: $provider, post_id: $post_id, title: $title, content: $content)
+          }}
+      }
+      let(:vars) {
+        {
+            provider: "facebook",
+            post_id: post_id,
+            title: Faker::Lorem.sentence,
+            content: Faker::Lorem.paragraph
+        }
+      }
+
+      it('should return id of updated post') do
+        allow(social_api).to receive(:get_object).and_return(me)
+        result = TextblogSchema.execute(mutate_string, variables: vars, context: ctx)
+        expect(result["data"]["updatePost"]).to eq(post_id.to_s) # since ID is string
       end
     end
   end
