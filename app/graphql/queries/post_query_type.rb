@@ -23,7 +23,7 @@ Queries::PostQueryType = GraphQL::ObjectType.define do
       begin
         Post.find(args[:id])
       rescue => e
-        raise GraphQL::ExecutionError.new(e.message, options: {type: "ParamError"})
+        raise GraphQL::ExecutionError.new(e.message, options: {type: "ARError"})
       end
     }
   end

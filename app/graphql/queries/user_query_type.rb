@@ -10,7 +10,7 @@ Queries::UserQueryType = GraphQL::ObjectType.define do
       begin
         User.find(args[:id])
       rescue => e
-        raise GraphQL::ExecutionError.new(e.message, options: {type: "ParamError"})
+        raise GraphQL::ExecutionError.new(e.message, options: {type: "ARError"})
       end
     }
   end
