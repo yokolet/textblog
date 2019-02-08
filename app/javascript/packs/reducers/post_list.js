@@ -1,4 +1,8 @@
-import { GET_POST_LIST, ADD_POST } from '../constants/actions'
+import {
+  GET_POST_LIST,
+  ADD_POST,
+  DELETE_POST
+} from '../constants/actions'
 
 const initialState = {
   posts: []
@@ -21,6 +25,12 @@ const postList = (state = initialState, action) => {
           ? [action.post, ...prevPosts]
           : state.posts
       }
+    case DELETE_POST:
+      return {
+        ...state,
+        posts: state.posts.filter(post => post.id !== action.post_id)
+      }
+
     default:
       return state
   }
