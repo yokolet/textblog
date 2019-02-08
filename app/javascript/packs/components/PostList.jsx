@@ -32,6 +32,14 @@ class PostList extends Component {
     }
   }
 
+  excerpt = (content) => {
+    let lines = content.split(/\n/)
+    if (lines.length <= 5) {
+      return content
+    }
+    return lines.slice(0, 5).join('\n')
+  }
+
   renderPosts() {
     return this.props.posts.map(post => {
       return (
@@ -41,7 +49,7 @@ class PostList extends Component {
             <div className="card">
               <div className="card-content">
                 <span className="card-title">{post.title}</span>
-                <div className="post-content"><pre>{post.content}</pre></div>
+                <div className="post-content"><pre>{this.excerpt(post.content)}</pre></div>
               </div>
             </div>
           </Link>
