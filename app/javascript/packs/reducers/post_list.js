@@ -15,6 +15,9 @@ const postList = (state = initialState, action) => {
         ...state,
         posts: action.posts ? action.posts : []
       }
+    case ADD_POST:
+      // post list will be refetched. no need to do something
+      return state
     case DELETE_POST:
       return {
         ...state,
