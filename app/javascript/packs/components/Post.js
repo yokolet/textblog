@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import { graphql } from 'react-apollo'
 import { currentPostGql } from './queries'
 import { getPost } from '../actions/get_post'
-import DeletePostModel from './DeletePostModel'
+import DeletePostModal from './DeletePostModal'
 
 class Post extends Component {
   constructor(props) {
@@ -94,7 +94,7 @@ class Post extends Component {
           </div>
         </div>
         { (isAuthenticated && user_id === post.user.id) &&
-        <DeletePostModel
+        <DeletePostModal
           hideDeleteModal={this.hideDeleteModal}
           completeDelete={this.completeDelete}
           show={this.state.showDeleteModal}/>

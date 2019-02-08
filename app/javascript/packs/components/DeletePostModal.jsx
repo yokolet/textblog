@@ -6,7 +6,7 @@ import { deletePostGql } from './queries'
 import PropTypes from 'prop-types'
 import { deletePost } from '../actions/delete_post'
 
-class DeletePostModel extends Component {
+class DeletePostModal extends Component {
   constructor(props) {
     super(props)
 
@@ -78,7 +78,7 @@ class DeletePostModel extends Component {
 
 const gqlWrapper = graphql(deletePostGql)
 
-DeletePostModel.propTypes = {
+DeletePostModal.propTypes = {
   show: PropTypes.bool.isRequired,
   provider: PropTypes.string,
   access_token: PropTypes.string,
@@ -112,4 +112,4 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const reduxWrapper = connect(mapStateToProps, mapDispatchToProps)
-export default compose(reduxWrapper, gqlWrapper)(DeletePostModel)
+export default compose(reduxWrapper, gqlWrapper)(DeletePostModal)
