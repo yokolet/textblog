@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { graphql } from 'react-apollo'
 import { currentPostGql } from './queries'
@@ -17,7 +17,6 @@ class Post extends Component {
       postDeleted: null
     }
 
-    this.onClickEdit.bind(this)
     this.onClickDelete.bind(this)
     this.hideDeleteModal.bind(this)
     this.completeDelete.bind(this)
@@ -27,11 +26,6 @@ class Post extends Component {
     if (this.props.data.loading && !nextProps.data.loading) {
       this.props.getPost(nextProps.data)
     }
-  }
-
-  onClickEdit = event => {
-    event.preventDefault()
-
   }
 
   onClickDelete = event => {
@@ -84,11 +78,12 @@ class Post extends Component {
               >
                 <i className="material-icons right">delete</i>delete
               </button>
-              <button className="waves-effect waves-light btn right"
-                      onClick={e => this.onClickEdit(e)}
-              >
-                <i className="material-icons right">create</i>edit
-              </button>
+              <Link to={`/posts/${post.id}/edit`}>
+                <button className="waves-effect waves-light btn right"
+                >
+                  <i className="material-icons right">create</i>edit
+                </button>
+              </Link>
             </div>
             }
           </div>
