@@ -48,7 +48,10 @@ class PostList extends Component {
     return this.props.posts.map(post => {
       return (
         <li key={post.id} className="collection-item">
-          <div className="post-info">{post.user.name} posted at {post.updated_at}</div>
+          <div className="post-info">
+            <span className="post-info-name">{post.user.name}</span>
+            <span className="post-info-time">@{post.updated_at}</span>
+          </div>
           <Link to={`posts/${post.id}`}>
             <div className="card">
               <div className="card-content">

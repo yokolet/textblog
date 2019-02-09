@@ -64,7 +64,10 @@ class Post extends Component {
       <div className="row" style={row_styles}>
         <div className="col s12 m12">
           <div className="card-panel white" style={card_panel_styles}>
-            <div className="post-info">{post.user.name} posted at {post.updated_at}</div>
+            <div className="post-info">
+              <span className="post-info-name">{post.user.name}</span>
+              <span className="post-info-time">@{post.updated_at}</span>
+            </div>
             <div className="card">
               <div className="card-content">
                 <span className="card-title">{post.title}</span>
