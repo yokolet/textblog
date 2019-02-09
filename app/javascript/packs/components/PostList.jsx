@@ -30,6 +30,7 @@ class PostList extends Component {
     if (!this.props.data.loading && (this.props.cur !== nextProps.cur)) {
       this.props.getPostList(nextProps.data)
     }
+    // refetchQueries pull out updated data which are in nextProps
     if (!this.props.data.loading && (this.props.data.posts[0].id !== nextProps.data.posts[0].id)) {
       this.props.getPostList(nextProps.data)
     }

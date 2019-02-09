@@ -26,6 +26,10 @@ class Pagination extends Component {
         setCurrentPage(this.state.first)
       }
     }
+    // refetchQueries pull out updated data which are in nextProps
+    if (!this.props.data.loading && (last !== nextProps.data.pages.last)) {
+      setLastPage(nextProps.data.pages.last)
+    }
   }
 
   renderLinks() {
