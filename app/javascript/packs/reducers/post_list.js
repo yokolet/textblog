@@ -17,7 +17,10 @@ const postList = (state = initialState, action) => {
       }
     case ADD_POST:
       // post list will be refetched. no need to do something
-      return state
+      return {
+        ...state,
+        posts: action.post ? [action.post, ...state.posts] : state.posts
+      }
     case DELETE_POST:
       return {
         ...state,
