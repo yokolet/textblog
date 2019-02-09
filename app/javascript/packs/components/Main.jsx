@@ -15,7 +15,7 @@ class Main extends Component {
           <Route exact path="/" component={PostList} />
           <Route exact path="/posts/new" component={AddPostForm} />
           <Route exact path="/posts/:id" component={Post} />
-          <Route path="/posts/:id/edit" component={EditPostForm} />
+          <Route exact path="/posts/:id/edit" component={EditPostForm} />
           <Route exact path="/sign_in" component={SignIn} />
           <Route component={NoMatch} />
         </Switch>

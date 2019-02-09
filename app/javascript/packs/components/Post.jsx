@@ -14,7 +14,8 @@ class Post extends Component {
 
     this.state = {
       showDeleteModal: false,
-      postDeleted: null
+      postDeleted: null,
+      error: null
     }
 
     this.onClickDelete.bind(this)
@@ -23,8 +24,15 @@ class Post extends Component {
   }
 
   componentWillUpdate(nextProps) {
+    if (this.props.post) {
+      return
+    }
     if (this.props.data.loading && !nextProps.data.loading) {
-      this.props.getPost(nextProps.data)
+      if (nextProps.data.error) {
+        this.setState({ error: nextProps.data.error.message })
+      } else {
+        this.props.getPost(nextProps.data)
+      }
     }
   }
 
@@ -54,6 +62,9 @@ class Post extends Component {
       return (
         <Redirect push to="/" />
       )
+    }
+    if (this.state.error != null) {
+      return <div>{this.state.error}</div>
     }
     if (this.props.data.loading || this.props.post === null) {
       return <div>Loading...</div>

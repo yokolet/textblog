@@ -4,17 +4,31 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { graphql } from "react-apollo";
 import PostForm from './PostForm'
+import { getPost } from '../actions/get_post'
 import { updatePost } from '../actions/update_post'
 import { setCurrentPage } from '../actions/set_pages'
 import { updateFacebookLogin} from '../actions/update_facebook_login'
 import { updateServerLogin} from '../actions/update_server_login'
-import { postsGql, updatePostGql, pagesGql } from './queries'
+import { postsGql, updatePostGql, pagesGql, currentPostGql } from './queries'
 
 class EditPostForm extends Component {
   constructor(props) {
     super(props)
     this.onSubmit = this.onSubmit.bind(this)
-    this.state = { errors: []}
+    this.state = { error: null }
+  }
+
+  componentWillUpdate(nextProps) {
+    if (this.props.post) {
+      return
+    }
+    if (this.props.data.loading && !nextProps.data.loading) {
+      if (nextProps.data.error) {
+        this.setState({ error: nextProps.data.error.message })
+      } else {
+        this.props.getPost(nextProps.data)
+      }
+    }
   }
 
   onSubmit = ({ title, content }) => {
@@ -52,6 +66,14 @@ class EditPostForm extends Component {
   }
 
   render() {
+    if (this.state.error != null) {
+      return <div>{this.state.error}</div>
+    }
+
+    if (this.props.data.loading || this.props.post === null) {
+      return <div>Loading...</div>
+    }
+
     const { isAuthenticated, post } = this.props
     let styles = {
       marginTop: '20px'
@@ -67,7 +89,12 @@ class EditPostForm extends Component {
   }
 }
 
-const gqlWrapper = graphql(updatePostGql)
+const updatePostGqlWrapper = graphql(updatePostGql)
+const currentPostGqlWrapper = graphql(currentPostGql, {
+  options: (props) => {
+    return { variables: { id: props.match.params.id } }
+  }
+})
 
 EditPostForm.propTypes = {
   provider: PropTypes.string,
@@ -83,7 +110,8 @@ EditPostForm.propTypes = {
       name: PropTypes.string.isRequired,
       provider: PropTypes.string.isRequired,
     })
-  }).isRequired,
+  }),
+  getPost: PropTypes.func.isRequired,
   updatePost: PropTypes.func.isRequired,
   setCurrentPage: PropTypes.func.isRequired,
   updateFacebookLogin: PropTypes.func.isRequired,
@@ -98,6 +126,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+  getPost: (data) => dispatch(getPost(data)),
   updatePost: (data) => dispatch(updatePost(data)),
   setCurrentPage: (cur) => dispatch(setCurrentPage(cur)),
   updateFacebookLogin: (response) => dispatch(updateFacebookLogin(response)),
@@ -106,4 +135,4 @@ const mapDispatchToProps = dispatch => ({
 
 const reduxWrapper = connect(mapStateToProps, mapDispatchToProps)
 
-export default compose(reduxWrapper, gqlWrapper)(EditPostForm)
+export default compose(updatePostGqlWrapper, currentPostGqlWrapper, reduxWrapper)(EditPostForm)
