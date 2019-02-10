@@ -22,7 +22,7 @@ class PostList extends Component {
         this.setState({
           errors: [
             ...this.state.errors,
-            this.props.data.error.message
+            nextProps.data.error.message
           ]
         })
       }
@@ -31,7 +31,9 @@ class PostList extends Component {
       this.props.getPostList(nextProps.data)
     }
     // refetchQueries pull out updated data which are in nextProps
-    if (!this.props.data.loading && (this.props.data.posts[0].id !== nextProps.data.posts[0].id)) {
+    if (!this.props.data.loading
+      && this.props.data.posts
+      && (this.props.data.posts[0].id !== nextProps.data.posts[0].id)) {
       this.props.getPostList(nextProps.data)
     }
   }
@@ -66,6 +68,9 @@ class PostList extends Component {
   }
 
   render() {
+    if (this.state.errors.length !== 0) {
+      return <div>{this.state.errors.toString()}</div>
+    }
     if (this.props.data.loading) {
       return <div>Loading...</div>
     }
