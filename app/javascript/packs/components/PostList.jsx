@@ -68,9 +68,6 @@ class PostList extends Component {
   }
 
   render() {
-    if (this.state.errors.length !== 0) {
-      return <div>{this.state.errors.toString()}</div>
-    }
     if (this.props.data.loading) {
       return <div>Loading...</div>
     }
@@ -82,9 +79,13 @@ class PostList extends Component {
         >
           <i className="material-icons">add</i>
         </Link>
-        <ul className="collection">
-          {this.renderPosts()}
-        </ul>
+        {this.state.errors.length !== 0 ? (
+          <div>{this.state.errors.toString()}</div>
+        ) : (
+          <ul className="collection">
+            {this.renderPosts()}
+          </ul>
+        )}
         <Pagination/>
       </div>
     )
