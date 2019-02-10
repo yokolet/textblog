@@ -5,7 +5,6 @@ import { Link, Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { graphql } from 'react-apollo'
 import { currentPostGql } from './queries'
-import { getPost } from '../actions/get_post'
 import DeletePostModal from './DeletePostModal'
 
 class Post extends Component {
@@ -27,8 +26,6 @@ class Post extends Component {
     if (this.props.data.loading && !nextProps.data.loading) {
       if (nextProps.data.error) {
         this.setState({ error: nextProps.data.error.message })
-      } else {
-        this.props.getPost(nextProps.data)
       }
     }
   }
@@ -60,14 +57,17 @@ class Post extends Component {
         <Redirect push to="/" />
       )
     }
-    if (this.state.error != null) {
-      return <div>{this.state.error}</div>
-    }
-    if (this.props.data.loading || this.props.post === null) {
+
+    if (this.props.data.loading) {
       return <div>Loading...</div>
     }
 
-    const { post, isAuthenticated, user_id } = this.props
+    if (this.state.error != null) {
+      return <div>{this.state.error}</div>
+    }
+
+    const { isAuthenticated, user_id } = this.props
+    const { post } = this.props.data
     return (
       <div className="row" style={row_styles}>
         <div className="col s12 m12">
@@ -103,7 +103,9 @@ class Post extends Component {
         <DeletePostModal
           hideDeleteModal={this.hideDeleteModal}
           completeDelete={this.completeDelete}
-          show={this.state.showDeleteModal}/>
+          show={this.state.showDeleteModal}
+          post={post}
+        />
         }
       </div>
     )
@@ -117,29 +119,16 @@ const gqlWrapper = graphql(currentPostGql, {
 })
 
 Post.propTypes = {
-  post: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
-    updated_at: PropTypes.string.isRequired,
-    user: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      provider: PropTypes.string.isRequired,
-    })
-  }),
-  isAuthenticated: PropTypes.bool,
-  getPost: PropTypes.func.isRequired
+  isAuthenticated: PropTypes.bool.isRequired,
+  user_id: PropTypes.string
 }
 
 const mapStateToProps = state => ({
   isAuthenticated: state.serverLogin.isAuthenticated,
   user_id: state.serverLogin.user ? state.serverLogin.user.id : undefined,
-  post: state.currentPost.post
 })
 
 const mapDispatchToProps = dispatch => ({
-  getPost: (data) => dispatch(getPost(data))
 })
 
 const reduxWrapper = connect(mapStateToProps, mapDispatchToProps)

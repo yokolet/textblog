@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { graphql } from "react-apollo";
 import PostForm from './PostForm'
-import { getPost } from '../actions/get_post'
 import { updatePost } from '../actions/update_post'
 import { setCurrentPage } from '../actions/set_pages'
 import { updateFacebookLogin} from '../actions/update_facebook_login'
@@ -19,23 +18,19 @@ class EditPostForm extends Component {
   }
 
   componentWillUpdate(nextProps) {
-    if (this.props.post) {
-      return
-    }
     if (this.props.data.loading && !nextProps.data.loading) {
       if (nextProps.data.error) {
         this.setState({ error: nextProps.data.error.message })
-      } else {
-        this.props.getPost(nextProps.data)
       }
     }
   }
 
   onSubmit = ({ title, content }) => {
     const {
-      mutate, provider, access_token, post,
+      mutate, provider, access_token,
       updatePost, setCurrentPage
     } = this.props
+    const { post } = this.props.data
     mutate({
       variables: { provider, post_id: post.id, title: title, content: content },
       context: { headers: { authorization: `Bearer ${access_token}` } },
@@ -53,7 +48,7 @@ class EditPostForm extends Component {
       .catch(res => {
         if (res.graphQLErrors) {
           let errors = res.graphQLErrors.map(error => error.message)
-          this.setState({ errors })
+          this.setState({ error: errors.toString() })
           if (res.graphQLErrors.map(error => error.type).includes('OAuthError')) {
             window.localStorage.removeItem("_textblog_.socialLogin")
             window.localStorage.removeItem("_textblog_.serverLogin")
@@ -70,11 +65,12 @@ class EditPostForm extends Component {
       return <div>{this.state.error}</div>
     }
 
-    if (this.props.data.loading || this.props.post === null) {
+    if (this.props.data.loading) {
       return <div>Loading...</div>
     }
 
-    const { isAuthenticated, post } = this.props
+    const { isAuthenticated } = this.props
+    const { post } = this.props.data
     let styles = {
       marginTop: '20px'
     }
@@ -99,19 +95,7 @@ const currentPostGqlWrapper = graphql(currentPostGql, {
 EditPostForm.propTypes = {
   provider: PropTypes.string,
   access_token: PropTypes.string,
-  isAuthenticated: PropTypes.bool,
-  post: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
-    updated_at: PropTypes.string.isRequired,
-    user: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      provider: PropTypes.string.isRequired,
-    })
-  }),
-  getPost: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
   updatePost: PropTypes.func.isRequired,
   setCurrentPage: PropTypes.func.isRequired,
   updateFacebookLogin: PropTypes.func.isRequired,
@@ -122,11 +106,9 @@ const mapStateToProps = state => ({
   provider: state.socialLogin.provider ? state.socialLogin.provider : null,
   access_token: state.socialLogin.access_token ? state.socialLogin.access_token : null,
   isAuthenticated: state.serverLogin.isAuthenticated,
-  post: state.currentPost.post
 })
 
 const mapDispatchToProps = dispatch => ({
-  getPost: (data) => dispatch(getPost(data)),
   updatePost: (data) => dispatch(updatePost(data)),
   setCurrentPage: (cur) => dispatch(setCurrentPage(cur)),
   updateFacebookLogin: (response) => dispatch(updateFacebookLogin(response)),

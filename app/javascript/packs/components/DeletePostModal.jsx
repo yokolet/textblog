@@ -17,7 +17,10 @@ class DeletePostModal extends Component {
   onClickDelete = event => {
     event.preventDefault()
 
-    const { mutate, provider, access_token, post, deletePost, hideDeleteModal, completeDelete } = this.props
+    const {
+      mutate, provider, access_token, post,
+      deletePost, hideDeleteModal, completeDelete
+    } = this.props
     mutate({
       variables: { provider, post_id: post.id },
       context: { headers: { authorization: `Bearer ${access_token}` } },
@@ -84,9 +87,10 @@ const gqlWrapper = graphql(deletePostGql)
 
 DeletePostModal.propTypes = {
   show: PropTypes.bool.isRequired,
-  provider: PropTypes.string,
-  access_token: PropTypes.string,
-  isAuthenticated: PropTypes.bool,
+  provider: PropTypes.string.isRequired,
+  access_token: PropTypes.string.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  user_id: PropTypes.string.isRequired,
   post: PropTypes.shape({
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
@@ -108,7 +112,6 @@ const mapStateToProps = state => ({
   access_token: state.socialLogin.access_token ? state.socialLogin.access_token : null,
   isAuthenticated: state.serverLogin.isAuthenticated,
   user_id: state.serverLogin.user ? state.serverLogin.user.id : undefined,
-  post: state.currentPost.post
 })
 
 const mapDispatchToProps = dispatch => ({
