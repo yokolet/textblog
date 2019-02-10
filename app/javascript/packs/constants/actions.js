@@ -1,7 +1,6 @@
 export const UPDATE_SOCIAL_LOGIN = 'UPDATE_SOCIAL_LOGIN'
 export const UPDATE_SERVER_LOGIN = 'UPDATE_SERVER_LOGIN'
 export const GET_POST_LIST = 'GET_POST_LIST'
-export const GET_POST = 'GET_POST'
 export const ADD_POST = 'ADD_POST'
 export const DELETE_POST = 'DELETE_POST'
 export const UPDATE_POST = 'UPDATE_POST'
