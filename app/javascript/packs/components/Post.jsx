@@ -24,9 +24,6 @@ class Post extends Component {
   }
 
   componentWillUpdate(nextProps) {
-    if (this.props.post) {
-      return
-    }
     if (this.props.data.loading && !nextProps.data.loading) {
       if (nextProps.data.error) {
         this.setState({ error: nextProps.data.error.message })
