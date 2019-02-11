@@ -18,7 +18,7 @@ class DeletePostModal extends Component {
     event.preventDefault()
 
     const {
-      mutate, provider, access_token, post,
+      mutate, provider, access_token, post, cur,
       deletePost, hideDeleteModal, completeDelete
     } = this.props
     mutate({
@@ -26,7 +26,7 @@ class DeletePostModal extends Component {
       context: { headers: { authorization: `Bearer ${access_token}` } },
       refetchQueries: [
         { query: pagesGql },
-        { query: postsGql, variables: { page: 1 } }
+        { query: postsGql, variables: { page: cur } }
       ]
     })
       .then(({ data }) => {
@@ -91,6 +91,7 @@ DeletePostModal.propTypes = {
   access_token: PropTypes.string.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   user_id: PropTypes.string.isRequired,
+  cur: PropTypes.number,
   post: PropTypes.shape({
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
@@ -112,6 +113,7 @@ const mapStateToProps = state => ({
   access_token: state.socialLogin.access_token ? state.socialLogin.access_token : null,
   isAuthenticated: state.serverLogin.isAuthenticated,
   user_id: state.serverLogin.user ? state.serverLogin.user.id : undefined,
+  cur: state.pages.cur
 })
 
 const mapDispatchToProps = dispatch => ({
