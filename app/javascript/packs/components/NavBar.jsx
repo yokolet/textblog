@@ -15,21 +15,33 @@ class NavBar extends Component {
   }
 
   render () {
-    const { isAuthenticated } = this.props
+    const { location, isAuthenticated } = this.props
+    let backLink
+    if (location.pathname === "/") {
+      backLink = <div id="logo-container" className="brand-logo left">textblog</div>
+    } else {
+      let style = { marginRight: '0px' }
+      backLink =
+        <Link to="/" className="grey-text text-darken-3 left">
+          <i className="material-icons left" style={style}>arrow_back_ios</i>Back
+        </Link>
+    }
     let linkContent
     if (isAuthenticated) {
-      linkContent = <li><a onClick={this.onSignoutClick.bind(this)}>Sign Out</a></li>
+      linkContent = <a onClick={this.onSignoutClick.bind(this)}>Sign Out</a>
     } else {
-      linkContent = <li><Link to={{pathname: "/sign_in", state: {prevPath: this.props.location.pathname}}}>Sign In</Link></li>
+      linkContent = <Link to={{pathname: "/sign_in", state: {prevPath: location.pathname}}}>Sign In</Link>
     }
     return (
       <div className="navbar-fixed">
         <nav className="white">
           <div className="nav-wrapper container">
-            <Link id="logo-container" to="/" className="brand-logo left">textblog</Link>
+            {backLink}
             <ul id="nav-mobile" className="right">
               <User/>
-              {linkContent}
+              <li>
+                {linkContent}
+              </li>
             </ul>
           </div>
         </nav>
