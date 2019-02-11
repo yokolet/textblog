@@ -77,6 +77,7 @@ class EditPostForm extends Component {
     return (
       <PostForm
         isAuthenticated={isAuthenticated}
+        type="Edit"
         title={post.title}
         content={post.content}
         onSubmit={this.onSubmit}

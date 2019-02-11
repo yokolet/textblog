@@ -55,6 +55,7 @@ class AddPostForm extends Component {
     return (
       <PostForm
         isAuthenticated={isAuthenticated}
+        type="Add"
         title=""
         content=""
         onSubmit={this.onSubmit}

@@ -39,7 +39,7 @@ class PostForm extends Component {
   }
 
   render() {
-    const { isAuthenticated } = this.props
+    const { isAuthenticated, type } = this.props
 
     let styles = {
       marginTop: '20px'
@@ -81,7 +81,7 @@ class PostForm extends Component {
                 </div>
               </form>
             ) : (
-              <div className="flow-text center">Please Sign In to Post</div>
+              <div className="flow-text center">{`Please Sign In to ${type} Post`}</div>
             )}
           </div>
         </div>
@@ -92,6 +92,7 @@ class PostForm extends Component {
 
 PostForm.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
+  type: PropTypes.string.isRequired,
   title: PropTypes.string,
   content: PropTypes.string,
   onSubmit: PropTypes.func.isRequired,
