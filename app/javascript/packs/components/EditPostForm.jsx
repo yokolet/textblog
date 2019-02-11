@@ -17,10 +17,10 @@ class EditPostForm extends Component {
     this.state = { error: null }
   }
 
-  componentWillUpdate(nextProps) {
-    if (this.props.data.loading && !nextProps.data.loading) {
-      if (nextProps.data.error) {
-        this.setState({ error: nextProps.data.error.message })
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.data.loading && !this.props.data.loading) {
+      if (this.props.data.error) {
+        this.setState({ error: this.props.data.error.message })
       }
     }
   }
@@ -61,11 +61,15 @@ class EditPostForm extends Component {
   }
 
   render() {
+    if (this.props.data.loading) {
+      return <div>Loading...</div>
+    }
+
     if (this.state.error != null) {
       return <div>{this.state.error}</div>
     }
 
-    if (this.props.data.loading) {
+    if (!this.props.data.post) {
       return <div>Loading...</div>
     }
 

@@ -22,10 +22,12 @@ class Post extends Component {
     this.completeDelete.bind(this)
   }
 
-  componentWillUpdate(nextProps) {
-    if (this.props.data.loading && !nextProps.data.loading) {
-      if (nextProps.data.error) {
-        this.setState({ error: nextProps.data.error.message })
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.data.loading && !this.props.data.loading) {
+      if (this.props.data.error) {
+        this.setState({
+          ...this.state,
+          error: this.props.data.error.message })
       }
     }
   }
@@ -64,6 +66,10 @@ class Post extends Component {
 
     if (this.state.error != null) {
       return <div>{this.state.error}</div>
+    }
+
+    if (!this.props.data.post) {
+      return <div>Loading...</div>
     }
 
     const { isAuthenticated, user_id } = this.props
