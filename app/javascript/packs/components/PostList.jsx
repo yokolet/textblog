@@ -12,29 +12,40 @@ class PostList extends Component {
   constructor(props) {
     super(props)
 
+    this.excerpt = this.excerpt.bind(this)
     this.state = { errors: [] }
   }
 
-  componentWillUpdate(nextProps) {
-    if (this.props.data.loading && !nextProps.data.loading) {
-      this.props.getPostList(nextProps.data)
-      if (nextProps.data.error) {
+  areEqualPosts = (posts1, posts2) => {
+    if (posts1.length !== posts2.length) { return false }
+    let ids1 = posts1.map(post => post.id)
+    let ids2 = posts2.map(post => post.id)
+    return Array.from(ids1, (x, i) => x - ids2[i]).every(v => v === 0)
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.data.loading && !this.props.data.loading) {
+      this.props.getPostList(this.props.data)
+      if (this.props.data.error) {
         this.setState({
           errors: [
             ...this.state.errors,
-            nextProps.data.error.message
+            this.props.data.error.message
           ]
         })
       }
+      return
     }
-    if (!this.props.data.loading && (this.props.cur !== nextProps.cur)) {
-      this.props.getPostList(nextProps.data)
-    }
-    // refetchQueries pull out updated data which are in nextProps
-    if (!this.props.data.loading
-      && this.props.data.posts
-      && (this.props.data.posts[0].id !== nextProps.data.posts[0].id)) {
-      this.props.getPostList(nextProps.data)
+
+    // edit, delete, or add post is performed
+    // refetchQueries and refetch pull out updated posts which are in nextProps
+    // when the first page's first post was edited, areEqualPosts check passes through
+    if (!this.props.data.loading && this.props.data.posts) {
+      if (!this.areEqualPosts(this.props.data.posts, prevProps.data.posts) ||
+        (this.props.data.posts[0].title !== prevProps.data.posts[0].title) ||
+        (this.props.data.posts[0].content !== prevProps.data.posts[0].content)) {
+        this.props.getPostList(this.props.data)
+      }
     }
   }
 
@@ -86,7 +97,7 @@ class PostList extends Component {
             {this.renderPosts()}
           </ul>
         )}
-        <Pagination/>
+        <Pagination fetchMore={this.props.data.fetchMore}/>
       </div>
     )
   }

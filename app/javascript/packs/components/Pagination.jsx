@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { graphql } from 'react-apollo'
+import { getPostList } from '../actions/get_post_list'
 import { setPerPage, setLastPage, setCurrentPage } from '../actions/set_pages'
 import { pagesGql } from './queries'
 
@@ -10,6 +11,9 @@ class Pagination extends Component {
   constructor(props) {
     super(props)
 
+    this.onClickNumber = this.onClickNumber.bind(this)
+    this.dec = this.dec.bind(this)
+    this.inc = this.inc.bind(this)
     this.state = { first: 1 }
   }
 
@@ -32,15 +36,36 @@ class Pagination extends Component {
     }
   }
 
+  updatePosts = number => {
+    const { setCurrentPage, getPostList, fetchMore } = this.props
+    setCurrentPage(number)
+    fetchMore({
+      variables: {
+        page: number
+      },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (fetchMoreResult) {
+          getPostList(fetchMoreResult)
+        }
+      }
+    })
+  }
+
+  onClickNumber = (event, number) => {
+    event.preventDefault()
+
+    this.updatePosts(number)
+  }
+
   renderLinks() {
     const { first } = this.state
-    const { cur, last, setCurrentPage } = this.props
+    const { cur, last } = this.props
     let numbers = Array.from(Array(last - first + 1), (x, i) => i + first)
     return numbers.map(number => {
       return (
         <li className={number === cur ? "active" : "waves-effect"}
             key={number}
-            onClick={e => setCurrentPage(number)}
+            onClick={e => this.onClickNumber(e, number)}
         >
           <a>{number}</a>
         </li>
@@ -48,22 +73,22 @@ class Pagination extends Component {
     })
   }
 
-  dec(event) {
+  dec = event => {
     event.preventDefault()
 
     const { first } = this.state
-    const { cur, setCurrentPage } = this.props
+    const { cur } = this.props
     if (cur > first) {
-      setCurrentPage(cur - 1)
+      this.updatePosts(cur - 1)
     }
   }
 
-  inc(event) {
+  inc = event => {
     event.preventDefault()
 
-    const { cur, last, setCurrentPage } = this.props
+    const { cur, last } = this.props
     if (cur < last) {
-      setCurrentPage(cur + 1)
+      this.updatePosts(cur + 1)
     }
   }
 
@@ -98,7 +123,9 @@ Pagination.propTypes = {
   cur: PropTypes.number,
   setPerPage: PropTypes.func.isRequired,
   setLastPage: PropTypes.func.isRequired,
-  setCurrentPage: PropTypes.func.isRequired
+  setCurrentPage: PropTypes.func.isRequired,
+  getPostList: PropTypes.func.isRequired,
+  fetchMore: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -110,8 +137,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   setPerPage: (per) => dispatch(setPerPage(per)),
   setLastPage: (last) => dispatch(setLastPage(last)),
-  setCurrentPage: (cur) => dispatch(setCurrentPage(cur))
+  setCurrentPage: (cur) => dispatch(setCurrentPage(cur)),
+  getPostList: (data) => dispatch(getPostList(data)),
 })
 
 const reduxWrapper = connect(mapStateToProps, mapDispatchToProps)
-export default compose(reduxWrapper, gqlWrapper)(Pagination)
+export default compose(gqlWrapper, reduxWrapper)(Pagination)
