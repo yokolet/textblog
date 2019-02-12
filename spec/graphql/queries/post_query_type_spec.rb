@@ -12,7 +12,14 @@ describe Queries::PostQueryType do
   end
 
   context 'for posts query' do
-    let!(:users) { create_list(:user, 3) } # creates 3 * 2 posts
+    let!(:users) {
+      users = create_list(:user, 3)
+      users.each do |user|
+        user.posts.create(attributes_for(:post))
+        user.posts.create(attributes_for(:post))
+      end
+      users
+    } # creates 3 * 2 posts
 
     it 'returns posts for a page' do
       result = subject.fields['posts'].resolve(nil, {page: 1}, nil)
@@ -45,7 +52,12 @@ describe Queries::PostQueryType do
   end
 
   context 'for post query' do
-    let!(:user) { create(:user) } # creates 2 posts
+    let!(:user) {
+      user = create(:user)
+      user.posts.create(attributes_for(:post))
+      user.posts.create(attributes_for(:post))
+      user
+    } # creates 2 posts
     let(:post) { user.posts[0] }
 
     it 'returns a post of given id' do

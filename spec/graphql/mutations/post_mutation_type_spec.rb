@@ -17,7 +17,12 @@ describe Mutations::PostMutationType do
 
   let(:facebook) { Faker::Omniauth.facebook }
   let(:access_token) { facebook[:credentials][:token] }
-  let(:user) { create(:user) }
+  let!(:user) {
+    user = create(:user)
+    user.posts.create(attributes_for(:post))
+    user.posts.create(attributes_for(:post))
+    user
+  }
   let(:me) {
     {
         "id" => user.uid
@@ -102,7 +107,7 @@ describe Mutations::PostMutationType do
   end
 
   context 'with deletePost field' do
-    let(:post_id) { user.posts[0].id }
+    let(:post_id) { user.posts.first.id }
     let(:args) {
       {
           provider: 'facebook',
@@ -132,7 +137,7 @@ describe Mutations::PostMutationType do
     end
 
     describe 'mutation is given' do
-      let(:post_id) { Post.last.id }
+      let(:post_id) { user.posts.last.id }
       let(:mutate_string) {
         %{mutation DeletePost($provider: String!, $post_id: ID!) {
             deletePost(provider: $provider, post_id: $post_id)

@@ -8,7 +8,14 @@ describe Queries::PaginationQueryType do
   end
 
   context 'with posts' do
-    let!(:users) { create_list(:user, 3) } # creates 3 * 2 posts
+    let!(:users) {
+      users = create_list(:user, 3)
+      users.each do |user|
+        user.posts.create(attributes_for(:post))
+        user.posts.create(attributes_for(:post))
+      end
+      users
+    } # creates 3 * 2 posts
 
     it 'returns per 5 and last 2' do
       result = subject.fields['pages'].resolve(nil, nil, nil)

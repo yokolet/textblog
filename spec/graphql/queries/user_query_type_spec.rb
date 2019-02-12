@@ -8,8 +8,14 @@ describe Queries::UserQueryType do
   end
 
   context 'with users' do
-    let!(:users) { create_list(:user, 3) }
-    let!(:a_user) { users.last }
+    let(:users) {
+      users = create_list(:user, 3)
+      users.each do |user|
+        user.posts.create(attributes_for(:post))
+      end
+      users
+    }
+    let(:a_user) { users.last }
 
     it 'returns a user of id' do
       result = subject.fields['user'].resolve(nil, {id: a_user.id}, nil)
