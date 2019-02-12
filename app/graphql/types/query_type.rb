@@ -4,5 +4,6 @@ Types::QueryType = GraphQL::ObjectType.define do
   fields Util::FieldComposer.compose([
       Queries::UserQueryType,
       Queries::PostQueryType,
-      Queries::PaginationQueryType])
+      Queries::PaginationQueryType,
+      Queries::CommentQueryType])
 end
