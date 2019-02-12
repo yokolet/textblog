@@ -7,4 +7,5 @@ Types::PostType = GraphQL::ObjectType.define do
   field :content, !types.String
   field :updated_at, !types.String
   field :user, !Types::UserType
+  field :comments, types[Types::CommentType]
 end
