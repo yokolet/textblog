@@ -7,12 +7,8 @@ Queries::CommentQueryType = GraphQL::ObjectType.define do
     description "returns a comment list of a specified post"
     argument :post_id, !types.ID
     resolve -> (obj, args, ctx) {
-      begin
-        post = Post.find(args[:post_id])
-      rescue => e
-        raise GraphQL::ExecutionError.new(e.message, options: {type: "ARError"})
-      end
-      return post.comments.order(updated_at: :desc)
+      post = GraphqlHelper.ensure_post(args[:post_id])
+      return post.comments
     }
   end
 end

@@ -23,7 +23,7 @@ describe Queries::PostQueryType do
 
     it 'returns posts for a page' do
       result = subject.fields['posts'].resolve(nil, {page: 1}, nil)
-      expect(result.size).to eq(5)
+      expect(result.length).to eq(5)
       expect(result.first.user.id).to eq(users.last.id)
     end
 

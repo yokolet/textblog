@@ -7,7 +7,11 @@ Queries::PostQueryType = GraphQL::ObjectType.define do
     description "returns a post list of a specified page"
     argument :page, !types.Int
     resolve -> (obj, args, ctx) {
-      result = Post.order(updated_at: :desc).page(args[:page])
+      result = Post.left_outer_joins(:comments)
+                   .select('posts.*, count(comments.*) as comments_count')
+                   .group(:id)
+                   .order(updated_at: :desc)
+                   .page(args[:page])
       if result.empty?
         raise GraphQL::ExecutionError.new("The page number is out of range", options: {type: "ParamError"})
       end

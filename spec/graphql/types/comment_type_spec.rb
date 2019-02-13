@@ -18,4 +18,8 @@ describe Types::CommentType do
   it 'defines a field user of type Types::UserType!' do
     expect(subject).to have_field(:user).that_returns(!Types::UserType)
   end
+
+  it 'defines a field post of type Types::PostType!' do
+    expect(subject).to have_field(:post).that_returns(!Types::PostType)
+  end
 end
