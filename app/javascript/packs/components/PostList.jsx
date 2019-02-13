@@ -69,7 +69,13 @@ class PostList extends Component {
             <div className="card-panel">
               <div className="card-content">
                 <span className="card-title">{post.title}</span>
-                <div className="post-content"><pre>{this.excerpt(post.content)}</pre></div>
+                <div className="post-content">
+                  <pre>{this.excerpt(post.content)}</pre>
+                  <div className="post-comment right">
+                    <i className="material-icons left">comment</i>
+                    {post.comments_count}
+                  </div>
+                </div>
               </div>
             </div>
           </Link>
