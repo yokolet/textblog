@@ -10,6 +10,15 @@ export const signInUserGql = gql`
   }
 `
 
+export const pagesGql = gql`
+  query {
+    pages {
+      per
+      last
+    }
+  }
+`
+
 export const postsGql = gql`
   query Posts($page: Int!) {
     posts(page: $page) {
@@ -21,6 +30,7 @@ export const postsGql = gql`
         id
         name
       }
+      comments_count
     }
   }
 `
@@ -84,11 +94,43 @@ export const updatePostGql = gql`
     }
 `
 
-export const pagesGql = gql`
-  query {
-    pages {
-      per
-      last
+export const commentsGql = gql`
+  query Comment($post_id: ID!) {
+    comments(post_id: $post_id) {
+      id
+      body
+      user {
+        name
+      }
     }
+  }
+`
+
+export const addCommentGql = gql`
+  mutation AddComment(
+    $provider: String!,
+    $post_id: ID!,
+    $body: String!) {
+      addComment(
+        provider: $provider,
+        post_id: $post_id,
+        body: $body) {
+        id
+        body
+        user {
+          id
+        }
+      }
+  }
+`
+
+export const deleteCommentGql = gql`
+  mutation DeleteComment(
+    $provider: String!,
+    $comment_id: ID!
+  ) {
+    deleteComment(
+      provider: $provider,
+      comment_id: $comment_id)
   }
 `
