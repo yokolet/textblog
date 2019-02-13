@@ -5,6 +5,7 @@ Types::MutationType = GraphQL::ObjectType.define do
   fields Util::FieldComposer.compose(
       [
           Mutations::UserMutationType,
-          Mutations::PostMutationType
+          Mutations::PostMutationType,
+          Mutations::CommentMutationType
       ])
 end

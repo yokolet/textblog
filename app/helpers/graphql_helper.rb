@@ -34,6 +34,14 @@ module GraphqlHelper
     user
   end
 
+  def self.ensure_post(post_id)
+    begin
+      Post.find(post_id)
+    rescue => e
+      raise GraphQL::ExecutionError.new(e.message, options: {type: "ARError"})
+    end
+  end
+
   def self.escape_angle_brackets(s)
     s.gsub('<', '&lt;').gsub('>', '&gt;')
   end
