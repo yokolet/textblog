@@ -24,11 +24,14 @@ Queries::PostQueryType = GraphQL::ObjectType.define do
     description "returns a post of a specified id"
     argument :id, !types.ID
     resolve -> (obj, args, ctx) {
-      begin
-        Post.find(args[:id])
-      rescue => e
-        raise GraphQL::ExecutionError.new(e.message, options: {type: "ARError"})
+      result = Post.left_outer_joins(:comments)
+                   .where(id: args[:id])
+                   .select("posts.*, count(comments.*) as comments_count")
+                   .group(:id).first
+      if result.nil?
+        raise GraphQL::ExecutionError.new("The page number is out of range", options: {type: "ParamError"})
       end
+      result
     }
   end
 end

@@ -3,6 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 $text-color: #353439;
 $font-size: 14px;
+$comment-font-size: 12px;
 
 nav {
   ul {
@@ -17,6 +18,23 @@ nav {
 
 .collection {
   border: 1px solid #fff;
+}
+
+.comment-info {
+  font-size: $comment-font-size;
+  float: right;
+}
+
+.comment-info-name {
+  color: #37474f;
+}
+
+.comment-info-time {
+  color: #6a8692;
+}
+
+.comment-content {
+  font-size: $comment-font-size;
 }
 
 .post-info {

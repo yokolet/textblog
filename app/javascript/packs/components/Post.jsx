@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 import { graphql } from 'react-apollo'
 import { currentPostGql } from './queries'
 import DeletePostModal from './DeletePostModal'
+import CommentList from './CommentList'
 
 class Post extends Component {
   constructor(props) {
@@ -71,42 +72,49 @@ class Post extends Component {
     const { isAuthenticated, user_id } = this.props
     const { post } = this.props.data
     return (
-      <div className="row" style={row_styles}>
-        <div className="col s12 m12">
-          <div className="post-info">
-            <span className="post-info-name">{post.user.name}</span>
-            <span className="post-info-time">@{post.updated_at}</span>
-          </div>
-          <div className="card-panel">
-            <div className="card-content">
-              <span className="card-title">{post.title}</span>
-              <div className="post-content"><pre>{post.content}</pre></div>
+      <div>
+        <div className="row" style={row_styles}>
+          <div className="col s12 m12">
+            <div className="post-info">
+              <span className="post-info-name">{post.user.name}</span>
+              <span className="post-info-time">@{post.updated_at}</span>
             </div>
+            <div className="card-panel">
+              <div className="card-content">
+                <span className="card-title">{post.title}</span>
+                <div className="post-content"><pre>{post.content}</pre></div>
+              </div>
+            </div>
+            { (isAuthenticated && user_id === post.user.id) &&
+            <div className="card-action">
+              <button className="waves-effect waves-light btn pink darken-1 left"
+                      onClick={e => this.onClickDelete(e)}
+              >
+                <i className="material-icons right">delete</i>delete
+              </button>
+              <Link to={`/posts/${post.id}/edit`}>
+                <button className="waves-effect waves-light btn right"
+                >
+                  <i className="material-icons right">create</i>edit
+                </button>
+              </Link>
+            </div>
+            }
           </div>
           { (isAuthenticated && user_id === post.user.id) &&
-          <div className="card-action">
-            <button className="waves-effect waves-light btn pink darken-1 left"
-                    onClick={e => this.onClickDelete(e)}
-            >
-              <i className="material-icons right">delete</i>delete
-            </button>
-            <Link to={`/posts/${post.id}/edit`}>
-              <button className="waves-effect waves-light btn right"
-              >
-                <i className="material-icons right">create</i>edit
-              </button>
-            </Link>
-          </div>
+          <DeletePostModal
+            hideDeleteModal={this.hideDeleteModal}
+            completeDelete={this.completeDelete}
+            show={this.state.showDeleteModal}
+            post={post}
+          />
           }
         </div>
-        { (isAuthenticated && user_id === post.user.id) &&
-        <DeletePostModal
-          hideDeleteModal={this.hideDeleteModal}
-          completeDelete={this.completeDelete}
-          show={this.state.showDeleteModal}
-          post={post}
-        />
-        }
+        <div className="row">
+          <div className="col s12 m12">
+            <CommentList post_id={post.id} comments_count={post.comments_count} />
+          </div>
+        </div>
       </div>
     )
   }

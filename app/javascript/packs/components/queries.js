@@ -47,6 +47,7 @@ export const currentPostGql = gql`
         name
         provider
       }
+      comments_count
     }
   }
 `
