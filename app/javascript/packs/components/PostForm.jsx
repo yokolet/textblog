@@ -48,7 +48,6 @@ class PostForm extends Component {
     return (
       <div className="row" style={styles}>
         <div className="col s12 m12">
-          <div className="card-panel white">
             {isAuthenticated ? (
               <form onSubmit={this.onSubmit}>
                 <div className="row">
@@ -83,7 +82,6 @@ class PostForm extends Component {
             ) : (
               <div className="flow-text center">{`Please Sign In to ${type} Post`}</div>
             )}
-          </div>
         </div>
       </div>
     )

@@ -66,7 +66,7 @@ class PostList extends Component {
             <span className="post-info-time">@{post.updated_at}</span>
           </div>
           <Link to={`posts/${post.id}`}>
-            <div className="card">
+            <div className="card-panel">
               <div className="card-content">
                 <span className="card-title">{post.title}</span>
                 <div className="post-content"><pre>{this.excerpt(post.content)}</pre></div>

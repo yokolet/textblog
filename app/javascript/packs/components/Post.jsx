@@ -50,10 +50,6 @@ class Post extends Component {
       marginTop: '20px'
     }
 
-    let card_panel_styles = {
-      paddingBottom: '64px'
-    }
-
     if (this.state.postDeleted !== null) {
       return (
         <Redirect push to="/" />
@@ -77,33 +73,31 @@ class Post extends Component {
     return (
       <div className="row" style={row_styles}>
         <div className="col s12 m12">
-          <div className="card-panel white" style={card_panel_styles}>
-            <div className="post-info">
-              <span className="post-info-name">{post.user.name}</span>
-              <span className="post-info-time">@{post.updated_at}</span>
-            </div>
-            <div className="card">
-              <div className="card-content">
-                <span className="card-title">{post.title}</span>
-                <div className="post-content"><pre>{post.content}</pre></div>
-              </div>
-            </div>
-            { (isAuthenticated && user_id === post.user.id) &&
-            <div className="card-action">
-              <button className="waves-effect waves-light btn pink darken-1 left"
-                      onClick={e => this.onClickDelete(e)}
-              >
-                <i className="material-icons right">delete</i>delete
-              </button>
-              <Link to={`/posts/${post.id}/edit`}>
-                <button className="waves-effect waves-light btn right"
-                >
-                  <i className="material-icons right">create</i>edit
-                </button>
-              </Link>
-            </div>
-            }
+          <div className="post-info">
+            <span className="post-info-name">{post.user.name}</span>
+            <span className="post-info-time">@{post.updated_at}</span>
           </div>
+          <div className="card-panel">
+            <div className="card-content">
+              <span className="card-title">{post.title}</span>
+              <div className="post-content"><pre>{post.content}</pre></div>
+            </div>
+          </div>
+          { (isAuthenticated && user_id === post.user.id) &&
+          <div className="card-action">
+            <button className="waves-effect waves-light btn pink darken-1 left"
+                    onClick={e => this.onClickDelete(e)}
+            >
+              <i className="material-icons right">delete</i>delete
+            </button>
+            <Link to={`/posts/${post.id}/edit`}>
+              <button className="waves-effect waves-light btn right"
+              >
+                <i className="material-icons right">create</i>edit
+              </button>
+            </Link>
+          </div>
+          }
         </div>
         { (isAuthenticated && user_id === post.user.id) &&
         <DeletePostModal

@@ -57,8 +57,13 @@ class DeletePostModal extends Component {
   }
 
   render () {
-    const display = { display: 'block' }
-    const hide = { display: 'none' }
+    const display = {
+      display: 'block',
+      zIndex: '10'
+    }
+    const hide = {
+      display: 'none',
+    }
 
     return (
       <div id="delete-post-model" className="modal" style={this.props.show ? display : hide}>

@@ -36,16 +36,17 @@ nav {
   font-size: $font-size;
 }
 
-.card {
+.card-panel {
   margin: 2rem 0 1rem 0;
   color: #212121;
+  padding: 0px;
 }
 
-.card .card-content {
+.card-panel .card-content {
   padding: 16px;
 }
 
-.card .card-title {
+.card-panel .card-title {
   font-size: 15px;
   font-weight: 500;
 }
