@@ -1,8 +1,11 @@
 import React from 'react'
 
 export default () => {
+  let footer_style = {
+    backgroundColor: '#3a4f59'
+  }
   return (
-    <footer className="page-footer teal darken-1">
+    <footer className="page-footer" style={footer_style}>
       <div className="footer-copyright">
         <div className="container">
           © 2019 Yoko Harada

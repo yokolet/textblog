@@ -62,10 +62,13 @@ class User extends Component {
   }
 
   render () {
+    let name_style = {
+      backgroundColor: '#3a4f59'
+    }
     const { provider, access_token, user_id, name } = this.props
     if (this.props.isAuthenticated) {
       return (
-        <li key={user_id} className="grey darken-1"><i className="material-icons left">person</i>{name}</li>
+        <li key={user_id} style={name_style}><i className="material-icons left">person</i>{name}</li>
       )
     } else {
       return (

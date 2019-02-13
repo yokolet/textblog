@@ -23,7 +23,7 @@ class NavBar extends Component {
       let style = { marginRight: '0px' }
       backLink =
         <Link to="/" className="grey-text text-darken-3 left">
-          <i className="material-icons left" style={style}>arrow_back_ios</i>Back
+          <i className="material-icons left" style={style}>arrow_back_ios</i>Top
         </Link>
     }
     let linkContent

@@ -1,7 +1,8 @@
 // Place all the styles related to the home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-$text-color: #444;
+$text-color: #353439;
+$font-size: 14px;
 
 nav {
   ul {
@@ -19,7 +20,7 @@ nav {
 }
 
 .post-info {
-  color: $text-color;
+  font-size: $font-size;
   float: right;
 }
 
@@ -28,7 +29,11 @@ nav {
 }
 
 .post-info-time {
-  color: #546e7a;
+  color: #6a8692;
+}
+
+.post-content {
+  font-size: $font-size;
 }
 
 .card {
@@ -36,8 +41,21 @@ nav {
   color: #212121;
 }
 
+.card .card-content {
+  padding: 16px;
+}
+
+.card .card-title {
+  font-size: 15px;
+  font-weight: 500;
+}
+
 .sign_in_container {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.pagination li.active {
+  background-color: #f3ae93;
 }

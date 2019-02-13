@@ -82,11 +82,16 @@ class PostList extends Component {
     if (this.props.data.loading) {
       return <div>Loading...</div>
     }
+
+    let add_style = {
+      backgroundColor: '#f3ae93'
+    }
     return (
       <div>
         <Link
           to="/posts/new"
-          className="btn-floating btn-large teal darken-1 right"
+          className="btn-floating btn-large right"
+          style={add_style}
         >
           <i className="material-icons">add</i>
         </Link>
