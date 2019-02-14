@@ -92,8 +92,8 @@ const gqlWrapper = graphql(deletePostGql)
 
 DeletePostModal.propTypes = {
   show: PropTypes.bool.isRequired,
-  provider: PropTypes.string.isRequired,
-  access_token: PropTypes.string.isRequired,
+  provider: PropTypes.string,
+  access_token: PropTypes.string,
   isAuthenticated: PropTypes.bool.isRequired,
   user_id: PropTypes.string.isRequired,
   cur: PropTypes.number,
