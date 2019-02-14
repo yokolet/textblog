@@ -100,6 +100,7 @@ export const commentsGql = gql`
     comments(post_id: $post_id) {
       id
       body
+      updated_at
       user {
         name
       }
