@@ -34,7 +34,7 @@ Mutations::PostMutationType = GraphQL::ObjectType.define do
         raise GraphQL::ExecutionError.new(e.message, options: {type: "ARError"})
       end
       if user.id == post.user.id
-        deleted = post.delete
+        deleted = post.destroy!
       else
         raise GraphQL::ExecutionError.new('This is not your post.', options: {type: "ParamError"})
       end
