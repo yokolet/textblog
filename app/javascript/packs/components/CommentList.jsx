@@ -104,13 +104,15 @@ class CommentList extends Component {
           hideCommentForm={this.hideCommentForm}
           post_id={post_id}
         />
-        <button
-          className="waves-effect btn-floating right"
-          style={add_style}
-          onClick={e => this.onClickAdd(e)}
-        >
-          <i className="material-icons">add_comment</i>
-        </button>
+        {!this.state.showForm &&
+          <button
+            className="waves-effect btn-floating right"
+            style={add_style}
+            onClick={e => this.onClickAdd(e)}
+          >
+            <i className="material-icons">add_comment</i>
+          </button>
+        }
       </div>
     )
   }
