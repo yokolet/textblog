@@ -5,30 +5,45 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import CommentForm from './CommentForm'
-import { getCommentList } from '../actions/get_comment_list'
 
 class CommentList extends Component {
   constructor(props) {
     super(props)
 
     this.onClickAdd = this.onClickAdd.bind(this)
+    this.hideCommentForm = this.hideCommentForm.bind(this)
     this.state = {
+      count: null,
       showForm: false,
       error: null
     }
   }
 
+  componentDidMount() {
+    const { comments_count } = this.props
+    this.setState({ count: comments_count })
+  }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.data.loading && !this.props.data.loading) {
-      getCommentList(this.props.data)
+      this.setState( {
+        ...this.state,
+        count: this.props.data.comments.length
+      })
     }
-    /*
-    if (!this.props.data.loading
-      && this.props.data.comments
-      && this.props.data.comments.length != prevProps.comments.length) {
-      getCommentList(this.props.data)
+
+    // refetchQueries updates this.posts.data.comments
+    if (!this.props.data.loading && this.props.data.comments &&
+      (!prevProps.data.comments || (prevProps.data.comments.length != this.props.data.comments.length))) {
+      this.setState( {
+        ...this.state,
+        count: this.props.data.comments.length
+      })
     }
-    */
+
+    if (!this.props.data.loading && this.props.data.error) {
+      M.toast({html: this.props.data.error})
+    }
   }
 
   onClickAdd = (event) => {
@@ -68,14 +83,15 @@ class CommentList extends Component {
       return <div>Loading...</div>
     }
 
-    const { post_id, comments_count } = this.props
+    const { post_id } = this.props
+    const { count } = this.state
 
     let add_style = {
       backgroundColor: '#f3ae93'
     }
     return (
       <div>
-        <div>{comments_count} {comments_count < 2 ? 'Comment' : 'Comments'}</div>
+        <div>{count} {count < 2 ? 'Comment' : 'Comments'}</div>
         {this.state.error !== null ? (
           <div>{this.state.error}</div>
         ) : (
@@ -112,18 +128,15 @@ CommentList.propTypes = {
   provider: PropTypes.string,
   access_token: PropTypes.string,
   isAuthenticated: PropTypes.bool.isRequired,
-  getCommentList: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
   provider: state.socialLogin.provider ? state.socialLogin.provider : null,
   access_token: state.socialLogin.access_token ? state.socialLogin.access_token : null,
   isAuthenticated: state.serverLogin.isAuthenticated,
-  comments: state.commentList.comments
 })
 
 const mapDispatchToProps = dispatch => ({
-  getCommentList: (data) => dispatch(getCommentList(data))
 })
 
 const reduxWrapper = connect(mapStateToProps, mapDispatchToProps)

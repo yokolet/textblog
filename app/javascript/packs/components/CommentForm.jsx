@@ -17,7 +17,6 @@ class CommentForm extends Component {
 
   onClickAdd = (event) => {
     event.preventDefault()
-    console.log(event)
 
     if (this.state.body.length < 1) {
       M.toast({html: 'Comment should not be empty '})
@@ -36,7 +35,6 @@ class CommentForm extends Component {
         ]
       })
         .then(({ data }) => {
-          console.log("after mutation", data)
           this.setState({
             ...this.state,
             body: ''
@@ -57,6 +55,7 @@ class CommentForm extends Component {
               updateServerLogin({})
             }
             M.toast({html: errors.toString()})
+            hideCommentForm()
           }
         })
     }
