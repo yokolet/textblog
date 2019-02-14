@@ -102,6 +102,7 @@ export const commentsGql = gql`
       body
       updated_at
       user {
+        id
         name
       }
     }
