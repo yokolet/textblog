@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import { graphql } from 'react-apollo'
-import { commentsGql } from './queries'
+import { commentsGql, deleteCommentGql } from './queries'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import CommentForm from './CommentForm'
+import { updateFacebookLogin } from '../actions/update_facebook_login'
+import { updateServerLogin } from '../actions/update_server_login'
 
 class CommentList extends Component {
   constructor(props) {
@@ -12,6 +14,7 @@ class CommentList extends Component {
 
     this.onClickAdd = this.onClickAdd.bind(this)
     this.hideCommentForm = this.hideCommentForm.bind(this)
+    this.onClickDelete = this.onClickDelete.bind(this)
     this.state = {
       count: null,
       showForm: false,
@@ -64,15 +67,70 @@ class CommentList extends Component {
       showForm: false })
   }
 
+  onClickDelete = (commend_id) => {
+    const { provider, access_token, post_id, mutate } = this.props
+    mutate({
+      variables: { provider, comment_id: commend_id },
+      context: { headers: { authorization: `Bearer ${access_token}` } },
+      refetchQueries: [
+        { query: commentsGql, variables: { post_id: post_id } }
+      ]
+    })
+      .catch(res => {
+        if (res.graphQLErrors) {
+          let errors = res.graphQLErrors.map(error => error.message)
+          this.setState({
+            ...this.state,
+            error: errors.toString()
+          })
+          if (res.graphQLErrors.map(error => error.type).includes('OAuthError')) {
+            window.localStorage.removeItem("_textblog_.socialLogin")
+            window.localStorage.removeItem("_textblog_.serverLogin")
+            this.props.updateFacebookLogin({})
+            this.props.updateServerLogin({})
+          }
+          M.toast({html: errors.toString()})
+        }
+      })
+  }
+
   renderComments() {
+    const { user_id } = this.props
+
+    let delete_style = {
+      color: '#6a8692',
+      cursor: 'pointer'
+    }
+    let row_style = {
+      marginBottom: '0px'
+    }
     return this.props.data.comments.map(comment => {
       return (
         <li key={comment.id} className="collection-item">
-          <div className="comment-info">
-            <span className="comment-info-name">{comment.user.name}</span>
-            <span className="comment-info-time">@{comment.updated_at}</span>
+          <div className="row" style={row_style}>
+            <div className="col s12">
+              <div className="comment-info">
+                <span className="comment-info-name">{comment.user.name}</span>
+                <span className="comment-info-time">@{comment.updated_at}</span>
+              </div>
+            </div>
           </div>
-          <div className="comment-body"><pre>{comment.body}</pre></div>
+          <div className="row" style={row_style}>
+            <div className="col s11">
+              <div className="comment-body"><pre>{comment.body}</pre></div>
+            </div>
+            <div className="col s1">
+              { user_id === comment.user.id &&
+                <i
+                  className="material-icons"
+                  style={delete_style}
+                  onClick = {() => this.onClickDelete(comment.id)}
+                >
+                  delete
+                </i>
+              }
+            </div>
+          </div>
         </li>
       )
     })
@@ -92,13 +150,9 @@ class CommentList extends Component {
     return (
       <div>
         <div>{count} {count < 2 ? 'Comment' : 'Comments'}</div>
-        {this.state.error !== null ? (
-          <div>{this.state.error}</div>
-        ) : (
-          <ul className="collection">
-            {this.renderComments()}
-          </ul>
-        )}
+        <ul className="collection">
+          {this.renderComments()}
+        </ul>
         <CommentForm
           showForm={this.state.showForm}
           hideCommentForm={this.hideCommentForm}
@@ -124,22 +178,30 @@ const gqlWrapper = graphql(commentsGql, {
   }
 })
 
+const deleteCommentGqlWrapper = graphql(deleteCommentGql)
+
 CommentList.propTypes = {
   post_id: PropTypes.string.isRequired,
   comments_count: PropTypes.number.isRequired,
   provider: PropTypes.string,
   access_token: PropTypes.string,
   isAuthenticated: PropTypes.bool.isRequired,
+  updateFacebookLogin: PropTypes.func.isRequired,
+  updateServerLogin: PropTypes.func.isRequired,
+  user_id: PropTypes.string
 }
 
 const mapStateToProps = state => ({
   provider: state.socialLogin.provider ? state.socialLogin.provider : null,
   access_token: state.socialLogin.access_token ? state.socialLogin.access_token : null,
   isAuthenticated: state.serverLogin.isAuthenticated,
+  user_id: state.serverLogin.user !== null ? state.serverLogin.user.id : null
 })
 
 const mapDispatchToProps = dispatch => ({
+  updateFacebookLogin: (response) => dispatch(updateFacebookLogin(response)),
+  updateServerLogin: (data) => dispatch(updateServerLogin(data))
 })
 
 const reduxWrapper = connect(mapStateToProps, mapDispatchToProps)
-export default compose(reduxWrapper, gqlWrapper)(CommentList)
+export default compose(deleteCommentGqlWrapper, gqlWrapper, reduxWrapper)(CommentList)
