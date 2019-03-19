@@ -7,4 +7,5 @@ RSpec.describe Post, type: :model do
   it { should validate_length_of(:content).is_at_least(1).is_at_most(5000) }
   it { should belong_to(:user) }
   it { should have_many(:comments).dependent(:destroy) }
+  it { should have_many(:votes).dependent(:destroy) }
 end
