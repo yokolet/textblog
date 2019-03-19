@@ -7,7 +7,7 @@ describe Types::CommentType do
     expect(subject).to have_field(:id).that_returns(!types.ID)
   end
 
-  it 'defines a field provider of type String!' do
+  it 'defines a field body of type String!' do
     expect(subject).to have_field(:body).that_returns(!types.String)
   end
 
